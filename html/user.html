@@ -72,7 +72,7 @@
 						</li>
 						<li><a href="contacts.html">Контакты</a></li>
 						<li class="active"><a href="user.html">Войти</a></li>
-						<li class="btn-cta"><a href="#"><span>Корзина</span></a></li>
+						<li class="btn-cta"><a href="basket.html"><span>Корзина</span></a></li>
 					</ul>	
 				</div>
 			</div>
@@ -102,8 +102,25 @@
 								<span class="label label-info">Горячие блюда</span>
 								<span class="label label-info">Холодные блюда</span>
 							</p>
-							<p><strong>Текущие заказы: </strong> <span class="label label-success">Есть хочу!</span></p>
-							<p><strong>Прошлые заказы: </strong> <span class="label label-default">Уже не хочу!</span></p>
+
+							<ul id="menu">
+							 <li><span><strong>Текущие заказы: </strong></span>
+							    <ul>
+							     <li>подпункт 1</li>
+							     <li>подпункт 2</li>
+							     <li>подпункт 3</li>
+							    </ul>
+							 </li>
+							 <li><span><strong>Прошлые заказы: </strong></span>
+							    <ul>
+							        <li>подпункт 1</li>
+							        <li>подпункт 2</li>
+							        <li>подпункт 3</li>
+							        <li>подпункт 4</li>
+							    </ul>
+							 </li>
+							</ul>
+
 						</div>
 						<div class="col-xs-12 col-sm-4 text-center">
 							<figure>
@@ -330,6 +347,19 @@
 
 	<!-- Main -->
 	<script src="js/main.js"></script>
+
+<!-- Скрипты для развёртывания списка заказов -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+		$("#menu ul").hide();
+		$("#menu li span").click(function() {
+		    $("#menu ul:visible").slideUp("normal");
+		    if (($(this).next().is("ul")) && (!$(this).next().is(":visible"))) {
+		        $(this).next().slideDown("normal");
+		    }
+		});
+		});
+	</script>
 
 <!-- Скрипты для загрузки аватарки -->
     <script type="text/javascript" src="js/demo.min.js"></script>
