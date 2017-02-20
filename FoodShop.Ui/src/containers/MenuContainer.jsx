@@ -8,7 +8,8 @@ import Menu from '../components/menus/Menu.jsx';
 
 class MenusContainer extends Component {
   render() {
-    const {model, actions, params} = this.props;
+    const { view, app, actions, params } = this.props;
+    const model = Object.assign({}, view, app);
     return (
       <Menu model={model} actions={actions} {...params} />
     );
@@ -17,10 +18,7 @@ class MenusContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    model: {
-      view: state.MenuReducer,
-      app: state.AppReducer
-    }
+    view: state.MenuReducer
   };
 }
 

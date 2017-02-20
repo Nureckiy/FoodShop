@@ -1,45 +1,44 @@
+/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
-import { Link } from 'react-router';
-import icon from '../../sources/img/basket.png';
 
 class Header extends Component {
   constructor() {
     super();
-    injectTapEventPlugin();
   }
   render() {
-    const { total } = this.props;
+    const { backgroundUrl, title, subtitle } = this.props;
+    let { className } = this.props;
+    if (!className)
+      className = '';
+    const style = {
+      'backgroundImage': `url(${backgroundUrl})`
+    };
     return (
-      <header>
-        <Toolbar className="head">
-          <ToolbarGroup className="container top_menu">
-            <Item to="/home">Главная</Item>
-            <Item to="/menu/salads">Салаты</Item>
-            <Item to="/menu/hot">Горячие блюда</Item>
-            <Item to="/menu/pizza">Пицца</Item>
-            <Item to="/menu/sushi">Суши</Item>
-            <div className="basket">
-              <Link to="/basket">
-                <img src={icon} />
-                <p>Total: ${total.toFixed(2)}</p>
-              </Link>
+      <header
+        style={style}
+        className={'gtco-cover gtco-cover-sm ' + className}
+        role="banner"
+        data-stellar-background-ratio="0.5"
+        id="gtco-header"
+      >
+        <div className="overlay"></div>
+        {(title || subtitle) &&
+          <div className="gtco-container">
+            <div className="row">
+              <div className="col-md-12 col-md-offset-0 text-center">
+                <div className="row row-mt-15em">
+                  <div className="col-md-12 mt-text animate-box" data-animate-effect="fadeInUp">
+                    <span className="intro-text-small">{subtitle}</span>
+                    <h1 className="cursive-font">{title}</h1>
+                  </div>
+                </div>
+              </div>
             </div>
-          </ToolbarGroup>
-        </Toolbar>
+          </div>
+        }
       </header>
     );
   }
 }
-
-let Item = (props) => {
-  const { children, to } = props;
-  return (
-    <Link to={to} className="menu_item">
-      <p>{children}</p>
-    </Link>
-  );
-};
 
 export default Header;

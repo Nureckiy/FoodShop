@@ -7,8 +7,8 @@ import LandingPage from '../components/landingPage/LandingPage.jsx';
 
 class LandingContainer extends Component {
   render() {
-    const {model, actions} = this.props;
-
+    const { view, app, actions } = this.props;
+    const model = Object.assign({}, view, app);
     return (
       <LandingPage model={model} actions={actions} />
     );
@@ -17,10 +17,7 @@ class LandingContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    model: {
-      view: state.LandingPageReducer,
-      app: state.AppReducer
-    }
+    view: state.LandingPageReducer,
   };
 }
 

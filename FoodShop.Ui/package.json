@@ -16,6 +16,7 @@
     "auth0-lock": "^10.11.0",
     "jquery": "^3.1.0",
     "jquery-browserify": "^1.8.1",
+    "json-loader": "^0.5.4",
     "jwt-decode": "^2.1.0",
     "lodash": "^4.17.4",
     "material-ui": "^0.16.7",

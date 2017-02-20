@@ -8,8 +8,8 @@ export function mergeSelected(selected, newItem) {
   return selected;
 }
 
-export function mergeMeals(selected, meals) {
-  meals.map((meal) => {
+export function mergeGoods(selected, goods) {
+  goods.map((meal) => {
     let index = selected.findIndex((item) => item.configurationId === meal.configurationId);
     if (~index) {
       selected[index] = meal;
@@ -57,9 +57,11 @@ export function findSelectedConfigurations(selected, configurations) {
   });
   return result;
 }
-
+export function getProfile() {
+  return JSON.parse(localStorage.getItem('profile'));
+}
 export function getProfileItem(itemName) {
-  const profile = JSON.parse(localStorage.getItem('profile'));
+  const profile = getProfile();
   if (profile) {
     return profile[itemName];
   }

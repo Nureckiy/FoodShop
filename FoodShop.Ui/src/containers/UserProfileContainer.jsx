@@ -7,7 +7,8 @@ import Profile from '../components/userProfile/Profile.jsx';
 
 class UserProfileContainer extends Component {
   render() {
-    const { model, actions, auth } = this.props;
+    const { view, app, actions, auth } = this.props;
+    const model = Object.assign({}, view, app);
     return (
       <Profile model={model} actions={actions} auth={auth} />
     );
@@ -16,10 +17,7 @@ class UserProfileContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    model: {
-      view: state.UserProfileReducer,
-      app: state.AppReducer
-    }
+    view: state.UserProfileReducer,
   };
 }
 

@@ -5,15 +5,15 @@ import FlatButton from 'material-ui/FlatButton';
 import history from '../../store/History';
 
 class Basket extends Component {
-  componentWillMount() {
-    const { updateTotal }  = this.props.actions;
-    const { selectedMeals } = this.props.app;
-
-    updateTotal(selectedMeals);
-  }
-  goToOrder() {
-    history.push('/order');
-  }
+  // componentWillMount() {
+  //   const { updateTotal }  = this.props.actions;
+  //   const { selectedGoods } = this.props.app;
+  //
+  //   updateTotal(selectedGoods);
+  // }
+  // goToOrder() {
+  //   history.push('/order');
+  // }
   render() {
     const { total } = this.props.view;
     return (

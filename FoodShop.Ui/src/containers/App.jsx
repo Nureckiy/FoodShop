@@ -1,15 +1,24 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import { connect } from 'react-redux';
 import * as actions from '../actions/AppActions';
 
-import Content from '../components/layout/Content.jsx';
+import Navigation from '../components/layout/Navigation';
+import Footer from '../components/layout/Footer.jsx';
 
 class App extends Component {
   render() {
+    const { auth } = this.props.route;
+    let { children, app, actions } = this.props;
+    if (children) {
+      children = React.cloneElement(children, { auth, app, actions });
+    }
     return (
-      <Content {...this.props} />
+      <div id="page">
+        <Navigation />
+        { children }
+        <Footer />
+      </div>
     );
   }
 }

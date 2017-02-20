@@ -7,8 +7,8 @@ import Order from '../components/order/Order.jsx';
 
 class OrderContainer extends Component {
   render() {
-    const {model, actions} = this.props;
-
+    const { view, app, actions } = this.props;
+    const model = Object.assign({}, view, app);
     return (
       <Order model={model} actions={actions} />
     );
@@ -17,10 +17,7 @@ class OrderContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    model: {
-      view: state.OrderReducer,
-      app: state.AppReducer
-    }
+    view: state.OrderReducer,
   };
 }
 

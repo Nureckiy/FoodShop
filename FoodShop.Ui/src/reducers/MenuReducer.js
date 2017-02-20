@@ -2,16 +2,32 @@
 import * as types from '../constants/MenuConstants';
 
 const initialState = {
-  menus: []
+  goods: [],
+  activeRequestStatus: false,
+  requestError: false
 };
 
 export default function MenuReducer(state = initialState, action) {
   switch (action.type) {
 
+    case types.GET_GOOD:
+      return {
+        ...state,
+        activeRequestStatus: true
+      };
+
+    case types.GET_GOOD_FAIL:
+      return {
+        ...state,
+        activeRequestStatus: false,
+        requestError: true
+      };
+
     case types.GET_GOOD_SUCCESS:
       return {
         ...state,
-        menus: action.data
+        goods: action.data,
+        activeRequestStatus: false
       };
 
     default:

@@ -1,0 +1,148 @@
+@font-face{
+	font-family:'FontAwesome';
+	src: url('../fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.eot');
+	src: 
+		url('../fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.eot') format('embedded-opentype'),
+		url('../fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.woff') format('woff'),
+		url('../fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.ttf') format('truetype'),
+		url('../fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.svg') format('svg');
+	font-weight:normal;
+	font-style:normal
+}
+
+.gtco-cover.gtco-cover-sm {
+    height: 82px;
+}
+@media screen and (max-width: 992px) {
+  #gtco-header.gtco-cover {
+    height: 75px !important;
+    padding: 0 !important;
+  }
+}
+
+.profile {
+	min-height: 355px;
+	display: inline-block;
+	width: 100%;
+}
+.profile-2 {
+	min-height: 105px;
+	display: inline-block;
+}
+figcaption.ratings {
+	margin-top:20px;
+}
+figcaption.ratings a {
+	color:#f1c40f;
+	font-size:11px;
+}
+figcaption.ratings a:hover {
+	color:#f39c12;
+	text-decoration:none;
+}
+.divider {
+	border-top:1px solid rgba(0,0,0,0.1);
+}
+.emphasis {
+	border-top: 4px solid transparent;
+}
+.emphasis:hover {
+	order-top: 4px solid #1abc9c;
+}
+.emphasis h2 {
+	margin-bottom:0;
+}
+.dropdown-menu {
+	background-color: #34495e;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	width: 250px;
+	margin-left: -125px;
+	left: 50%;
+}
+.dropdown-menu .divider {
+	background:none;
+}
+.dropdown-menu>li>a {
+	color:#f5f5f5;
+}
+.dropup .dropdown-menu {
+	margin-bottom:10px;
+}
+.dropup .dropdown-menu:before {
+	content: "";
+	border-top: 10px solid #34495e;
+	border-right: 10px solid transparent;
+	border-left: 10px solid transparent;
+	position: absolute;
+	bottom: -10px;
+	left: 50%;
+	margin-left: -10px;
+	z-index: 10;
+}
+.fa {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.fa-gear:before, .fa-cog:before {
+    content: "\f013";
+}
+.fa-list:before {
+    content: "\f03a";
+}
+.fa-user:before {
+    content: "\f2be";
+}
+.fa-window-close:before {
+    content: "\f2d3";
+}
+.fa-cutlery:before {
+    content: "\f0f5";
+}
+input[type="checkbox"], .check-label,
+input[type="checkbox"]:checked + .check-label {
+    color: rgb(119, 119, 119);
+}
+.subscribe {
+	text-align:right; 
+	margin-top: 70px;
+}
+
+/* Стили для развёртывания списка заказов */
+#menu {
+  margin-bottom: 20px;	
+}
+ul#menu, ul#menu ul {
+  list-style:none;
+  padding: 0px;
+  min-width: 250px;
+  max-width: 550px;
+  -webkit-box-shadow:0px 0px 5px 0px rgba(50, 50, 50, 0.2);
+  -moz-box-shadow:0px 0px 5px 0px rgba(50, 50, 50, 0.2);
+  box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.2);
+}
+ul#menu a,ul#menu span {
+	display: block; 
+	text-decoration: none;
+}
+ul#menu li {
+	margin-top: 1px;
+  	background: #e2f5ce;
+  	color: #649566;
+  	padding: 7px;
+}
+ul#menu li:hover {
+	background: #dbf5ce;
+}
+ul#menu li ul li {
+  	background: #f0f3ee;
+  	padding-left: 20px;
+}
+ul#menu li ul li:hover {
+	background: #ddd;
+}

@@ -7,8 +7,8 @@ import * as utils from '../../utils/utils';
 
 class Content extends Component {
   render() {
-    const { route: { auth }, app : { selectedMeals } } = this.props;
-    const total = utils.calculateTotal(selectedMeals);
+    const { route: { auth }, app : { selectedGoods } } = this.props;
+    const total = utils.calculateTotal(selectedGoods);
     let { children } = this.props;
     if (children) {
       children = React.cloneElement(children, {auth});

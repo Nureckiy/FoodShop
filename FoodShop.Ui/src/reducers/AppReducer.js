@@ -2,7 +2,7 @@ import * as types from '../constants/AppConstants';
 import * as utils from '../utils/utils';
 
 const initialState = {
-  selectedMeals: []
+  selectedGoods: []
 };
 
 export default function AppReducer(state = initialState, action) {
@@ -11,7 +11,7 @@ export default function AppReducer(state = initialState, action) {
     case types.SELECT_MEAL:
       return {
         ...state,
-        selectedMeals: mergeMeals(action)
+        selectedGoods: mergeMeals(state.selectedGoods, action.selected)
       };
 
     default:
@@ -19,7 +19,6 @@ export default function AppReducer(state = initialState, action) {
   }
 }
 
-function mergeMeals(action) {
-  let { selected, meals } = action;
-  return utils.mergeMeals(selected, meals);
+function mergeMeals(oldGoods, newGoods) {
+  return utils.mergeGoods(oldGoods, newGoods);
 }
