@@ -1,28 +1,62 @@
 /*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
-import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
-import history from '../../store/History';
+
+import Header from '../layout/Header.jsx';
+import TotalGoodItem from './TotalGoodItem.jsx';
+import * as utils from '../../utils/utils';
 
 class Basket extends Component {
-  // componentWillMount() {
-  //   const { updateTotal }  = this.props.actions;
-  //   const { selectedGoods } = this.props.app;
-  //
-  //   updateTotal(selectedGoods);
-  // }
-  // goToOrder() {
-  //   history.push('/order');
-  // }
+  renderGoodItems() {
+    const { model: { selectedGoods }, actions: { changeConfiguration } } = this.props;
+    let selected = [];
+    selectedGoods.map(good => {
+       good.selected.map(item =>
+        selected.push(<TotalGoodItem
+          key={item.Id}
+          title={good.Name}
+          item={item}
+          onChange={changeConfiguration}
+        />)
+       );
+    });
+    return selected;
+  }
   render() {
-    const { total } = this.props.view;
+    const { selectedGoods } = this.props.model;
+    const goodItems = this.renderGoodItems();
+    const total = utils.calculateTotal(selectedGoods);
     return (
-      <div>
-        <p>Всего выбрано на сумму: {total}</p>
-        <FlatButton primary label="Продолжить" backgroundColor="#fff" onClick={this.goToOrder} />
-        <hr />
-        <Paper className="title" rounded={false}>Выбранные товары</Paper>
+      <span>
+        <Header
+          backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
+          className="cut"
+        />
+      <div className="gtco-section">
+        <div className="gtco-container">
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2 text-center gtco-heading">
+              <h2 className="cursive-font primary-color">Корзина</h2>
+            </div>
+          </div>
+          <div className="row">
+            <form className="col-sm-12 col-xs-12">
+              <ul >
+                { goodItems }
+                <li className=" dotted">
+                  <span className="col-sm-10 item">
+                    <span className="sum">Итог</span><span>{total.toFixed(2)} $</span>
+                  </span>
+                </li>
+              </ul>
+              <div className="col-md-12 buttons">
+                <input type="submit" value="Заказать" className="btn btn-warning"/>
+                  <input type="submit" value="Очистить" className="btn btn-defult"/>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
+      </span>
     );
   }
 }

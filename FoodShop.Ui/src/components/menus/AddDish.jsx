@@ -20,7 +20,7 @@ class AddDish extends Component {
   }
   calculateTotal() {
     const { selected } = this.props;
-    const total = utils.calculateTotal(selected);
+    const total = utils.calculateGoodTotal(selected);
     this.setState({ total });
   }
   getNumber(confId) {

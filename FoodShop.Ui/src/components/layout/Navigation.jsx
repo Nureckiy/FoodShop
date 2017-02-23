@@ -1,6 +1,7 @@
 /*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
+import { ButtonToolbar, DropdownButton, MenuItem, Dropdown, NavDropdown } from 'react-bootstrap';
 import mainCategories from '!json!../../sources/mainCategories.json';
 import TabItem from './NavTabItem.jsx';
 import * as utils from '../../utils/utils';
@@ -39,28 +40,29 @@ class Navigation extends Component {
     const { activeTab } = this.state;
     const userTab = this.renderUserTab();
     return (
-      <nav className="gtco-nav" role="navigation">
-        <div className="gtco-container">
-          <div className="row">
+      <nav className="row">
+          <div className="container">
             <div className="col-sm-4 col-xs-12">
-              <div id="gtco-logo"><a href="menu.html">FoodShop <em>.</em></a></div>
+              <div id="logo"><a href="menu.html">FOODSHOP <em>.</em></a></div>
             </div>
-            <div className="col-xs-8 text-right menu-1">
-              <ul>
+            <div className="col-xs-8">
+              <ButtonToolbar className="pull-right">
                 <TabItem
-                  className="has-dropdown"
                   onClick={this.toggleTab}
                   tabName="menu"
                   active={activeTab === 'menu'}
                 >
-                  <a href="#/menu/">Меню</a>
-                  <ul className="dropdown">
-                    {
-                      Object.keys(mainCategories).map((key) =>
-                        <li key={key}><a href={`#/menu/${key}`}>{mainCategories[key]}</a></li>
-                      )
-                    }
-                  </ul>
+                <NavDropdown title="Меню" noCaret id="menu-category" href="#/menu/">
+                  {Object.keys(mainCategories).map(key =>
+                    <MenuItem
+                      key={key}
+                      eventKey={key}
+                      href={`#/menu/${key}`}
+                    >
+                      {mainCategories[key]}
+                    </MenuItem>
+                  )}
+                </NavDropdown>
                 </TabItem>
                 <TabItem
                   onClick={this.toggleTab}
@@ -76,10 +78,9 @@ class Navigation extends Component {
                   active={activeTab === 'basket'}
                 ><a href="#/basket"><span>Корзина</span></a>
                 </TabItem>
-              </ul>
+              </ButtonToolbar>
             </div>
           </div>
-        </div>
       </nav>
     );
   }

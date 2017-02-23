@@ -11,14 +11,16 @@ export default function AppReducer(state = initialState, action) {
     case types.SELECT_MEAL:
       return {
         ...state,
-        selectedGoods: mergeMeals(state.selectedGoods, action.selected)
+        selectedGoods: utils.mergeGoods(state.selectedGoods, action.good)
+      };
+
+    case types.CHANGE_CONFIGURATION:
+      return {
+        ...state,
+        selectedGoods: utils.changeConfiguration(state.selectedGoods, action.configuration)
       };
 
     default:
       return state;
   }
-}
-
-function mergeMeals(oldGoods, newGoods) {
-  return utils.mergeGoods(oldGoods, newGoods);
 }

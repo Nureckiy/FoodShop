@@ -1,3 +1,4 @@
+/*eslint no-unused-vars: "off"*/
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -14,10 +15,10 @@ class App extends Component {
       children = React.cloneElement(children, { auth, app, actions });
     }
     return (
-      <div id="page">
-        <Navigation />
-        { children }
-        <Footer />
+      <div>
+        <Navigation/>
+        {children}
+        <Footer/>
       </div>
     );
   }

@@ -31,13 +31,13 @@ export function getGoods(data, byName) {
   };
 }
 
-export function getPopularGoods() {
+export function getPopularGoods(count) {
   return (dispatch) => {
     dispatch({
       type: types.GET_GOOD
     });
 
-    service.getPopularGoods(success, fail);
+    service.getPopularGoods({ count }, success, fail);
 
     function success(data, status) {
       dispatch({

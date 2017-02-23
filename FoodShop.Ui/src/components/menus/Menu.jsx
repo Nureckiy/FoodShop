@@ -5,6 +5,7 @@ import Header from '../layout/Header.jsx';
 import GoodList from './GoodList.jsx';
 import mainCategories from '!json!../../sources/mainCategories.json';
 import Loader from '../common/Loader.jsx';
+import config from '../../config';
 
 class Menu extends Component {
   componentWillMount() {
@@ -12,17 +13,17 @@ class Menu extends Component {
     if (category) {
       getGoods(category, true);
     } else {
-      getPopularGoods();
+      getPopularGoods(config.popularGoodsCount);
     }
   }
   componentWillReceiveProps(props) {
     const { category, actions: { getGoods, getPopularGoods } } = this.props;
     const newCategory = props.category;
     if (category !== newCategory) {
-      if (category) {
+      if (newCategory) {
         getGoods(newCategory, true);
       } else {
-        getPopularGoods();
+        getPopularGoods(config.popularGoodsCount);
       }
     }
   }
@@ -34,23 +35,22 @@ class Menu extends Component {
     return (
       <div>
         <Header
+          className="row"
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
           title="Оцените наше меню!"
           subtitle="интернет&mdash;магазин вкусностей"
         />
-        <div className="gtco-section">
-          <div className="gtco-container">
-            <div className="row">
-              <div className="col-md-8 col-md-offset-2 text-center gtco-heading">
-                <h2 className="cursive-font primary-color">{categoryName}</h2>
-                <p>Приготовлением вкусностей занимаются профессиональные повара и используются только самые свежие продукты.</p>
-              </div>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2 text-center title">
+              <h2 className="cursive-font primary-color">{categoryName}</h2>
+              <p>Приготовлением вкусностей занимаются профессиональные повара и используются только самые свежие продукты.</p>
             </div>
-            { activeRequestStatus
-              ? <Loader />
-              : <GoodList selected={selectedGoods} items={goods} onSelect={selectGoods} />
-            }
           </div>
+          { activeRequestStatus
+            ? <Loader />
+            : <GoodList selected={selectedGoods} items={goods} onSelect={selectGoods} />
+          }
         </div>
       </div>
     );

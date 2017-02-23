@@ -5,21 +5,33 @@ import RenderSelect from '../common/RenderSelect.jsx';
 import * as utils from '../../utils/utils';
 
 class AddGoodModal extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { selected } = props.model;
     this.state = {
-      currentSelected: []
+      currentSelected: selected ? selected : []
     };
     this.onSave = this.onSave.bind(this);
+  }
+  componentWillReceiveProps(props) {
+    const { model: { Id, selected } } = props;
+    const oldId = this.props.model.Id;
+    if (Id !== oldId) {
+      this.setState({
+        currentSelected: selected ? selected : []
+      });
+    }
   }
   onSave() {
     const { onSave } = this.props;
     const { currentSelected } = this.state;
-    onSave(currentSelected);
+    let { model } = this.props;
+    model.selected = currentSelected;
+    onSave(model);
   }
   getNumber(confId) {
-    const { selected } = this.props;
-    return utils.findNumber(selected, confId);
+    const { currentSelected } = this.state;
+    return utils.findNumber(currentSelected, confId);
   }
   handleSelect(value, good) {
     const { currentSelected } = this.state;

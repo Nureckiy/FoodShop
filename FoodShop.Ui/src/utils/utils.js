@@ -8,22 +8,48 @@ export function mergeSelected(selected, newItem) {
   return selected;
 }
 
-export function mergeGoods(selected, goods) {
-  goods.map((meal) => {
-    let index = selected.findIndex((item) => item.configurationId === meal.configurationId);
-    if (~index) {
-      selected[index] = meal;
-    } else {
-      selected.push(meal);
-    }
-  });
-  return selected;
+export function mergeGoods(selected, good) {
+  let goodSelected = good.selected;
+  if (Array.isArray(goodSelected)) {
+    goodSelected = goodSelected.filter(x => x.number != 0);
+  }
+  if (goodSelected && goodSelected.length) {
+    return includeGood(selected, good);
+  } else {
+    return excludeGood(selected, good);
+  }
 }
 
-export function calculateTotal(selected) {
+function includeGood(arr, good) {
+  let index = arr.findIndex(x => x.Id === good.Id);
+  if(~index) {
+    arr[index] = good;
+  } else {
+    arr.push(good);
+  }
+  return arr;
+}
+
+function excludeGood(arr, good) {
+  let index = arr.findIndex(x => x.Id === good.Id);
+  if (~index) {
+    arr.splice(index, 1);
+  }
+  return arr;
+}
+
+export function calculateTotal(goods) {
   let total = 0;
-  selected.map((item) =>
-    total += item.price * item.number
+  goods.map(good =>
+    total += calculateGoodTotal(good)
+  );
+  return total;
+}
+
+export function calculateGoodTotal(good) {
+  let total = 0;
+  good.selected.map((item) =>
+    total += item.Price * item.number
   );
   return total;
 }
@@ -39,12 +65,32 @@ export function renderNumberOptions(number) {
   return options;
 }
 
+export function changeConfiguration(goods, configuration) {
+  goods.map(good => {
+    const index = good.selected.findIndex(x => x.Id === configuration.Id);
+    if (~index) {
+      if (configuration.number) {
+        good.selected[index] = configuration;
+      } else {
+        good.selected.splice(index, 1);
+      }
+    }
+  });
+  return goods;
+}
+
 export function findNumber(selected, id) {
   for (let i = 0; i < selected.length; i++) {
-    if (selected[i].configurationId === id)
+    if (selected[i].Id === id)
       return selected[i].number;
   }
   return 0;
+}
+
+export function separateSelected(goods) {
+  let configs = [];
+  goods.map((good) => configs = configs.concat(good.selected));
+  return configs;
 }
 
 export function findSelectedConfigurations(selected, configurations) {

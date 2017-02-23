@@ -11,9 +11,24 @@
   font-style: normal;
 }
 
-.container-fluid {
-  padding: 0;
+@media (max-width: 978px) {
+  .container {
+    padding:0;
+    margin:0;
+    width: 100%;
+  }
+
+  body {
+    padding:0;
+  }
+
+  .navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom:0;
+  }
 }
+
 /****** links & type *********/
 a {
   color: #FBB448;
@@ -41,6 +56,10 @@ h1, h2, h3, h4, h5, h6, figure {
 ul li {
   list-style: none;
 }
+
+.active * {
+  color: #FBB448;
+}
 /******  navbar *********/
 nav {
   position: absolute;
@@ -48,10 +67,10 @@ nav {
   padding: 20px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   a {
-    color: #fff;
-    padding: 5px 25px;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 30px 10px;
 
-    &:hover, &:focus, &:active {
+    &:hover {
       color: #fff;
     }
   }
@@ -61,10 +80,17 @@ nav {
   ul, li {
     display: inline;
   }
+  .btn-toolbar {
+    display: flex;
+    margin-top: 7px;
+  }
 }
 #logo {
   font-size: 20px;
   font-weight: bold;
+  a {
+    color: #fff;
+  }
 }
 /******  head *********/
 header {
@@ -72,6 +98,7 @@ header {
   text-align: center;
   height: 600px;
   background-size: cover;
+  background-attachment: fixed;
   .btn {
     display: block;
     width: 100%;
@@ -81,13 +108,53 @@ header {
     font-size: 80px;
     line-height: 1.5;
   }
-  .title {
-    position: relative;
-    z-index: 2;
-  }
 }
 /******  content *********/
 /******  footer *********/
+footer {
+  background: rgba(0, 0, 0, 0.8);
+  position: relative;
+  padding: 100px 0;
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("../img/fon2.jpg");
+    background-size: cover;
+    z-index: -1;
+  }
+}
+
+.top-info {
+  text-align: center;
+  h3 {
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 15px 0;
+  }
+  li {
+    display: inline-block;
+    padding: 0 20px;
+  }
+}
+
+.copyright {
+  margin: 50px 0;
+  padding: 50px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: #666666;
+  font-size: 20px;
+
+  span {
+    display: block;
+    font-size: 15px;
+  }
+}
 /****** common *********/
 body {
   font-family: "Lato", Arial, sans-serif;
@@ -120,13 +187,44 @@ body {
 .overlay {
   background-color: rgba(0,0,0,0.5);
 }
-.dropdown:hover .dropdown-menu {
+
+.dropdown-menu {
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+
   display: block;
+  max-height: 0;
+  opacity: 0;
 }
-/******  *********/
-/******  *********/
-/******  *********/
-/******  *********/
-/******  *********/
-/******  *********/
-/******  *********/
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  max-height: 300px;
+}
+
+.btn-cta {
+  span {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    padding: 8px 20px;
+    color: #fff;
+    transition: 0.2s;
+  }
+
+  &:hover span {
+    color: #FBB448;
+    background-color: #fff;
+  }
+}
+
+.primary-color {
+  color: #FBB448;
+}
+
+.loader {
+  display: block;
+  margin: 0 auto;
+}

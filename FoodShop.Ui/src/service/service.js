@@ -10,7 +10,7 @@ class service {
   };
 
   getPopularGoods = (data, success, failed) => {
-    return this.requestHelper.getWithAjax('Good/getPopularGoods', '', success, failed);
+    return this.requestHelper.getWithAjax('Good/GetPopularGoods', data, success, failed);
   };
 
   getGoodsByCategoryName = (data, success, failed) => {
@@ -22,11 +22,11 @@ class service {
   }
 
   sendFeedback(data, success, failed) {
-    return this.requestHelper.postWithAjax('Contacts/sendFeedback', data, success, failed);
+    return this.requestHelper.postWithAjax('Feedback/addFeedback', data, success, failed);
   }
 
-  getSubstitutions(data, success, failed) {
-    return this.requestHelper.postWithAjax('Substitutions/getSubstitutions', data, success, failed);
+  getSubscriptions(data, success, failed) {
+    return this.requestHelper.getWithAjax('User/GetSubscriptions', data, success, failed);
   }
 
   updateUser(data, success, fail) {

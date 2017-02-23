@@ -38,6 +38,10 @@ h1, h2, h3, h4, h5, h6, figure {
   margin: 0 0 20px 0;
 }
 
+ul, li {
+  list-style-type: none;
+}
+
 ::-webkit-selection {
   color: #fff;
   background: #FBB448;

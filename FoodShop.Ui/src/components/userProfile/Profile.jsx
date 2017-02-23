@@ -32,11 +32,11 @@ class Profile extends Component {
   }
   render() {
     const { viewMode, profile } = this.state;
-    const { getSubstitutions } = this.props.actions;
+    const { getSubscriptions } = this.props.actions;
     const profileProps = {
       goToViewMode: this.goToViewMode,
       goToEditMode: this.goToEditMode,
-      getSubstitutions,
+      getSubscriptions,
       profile
     };
     return (

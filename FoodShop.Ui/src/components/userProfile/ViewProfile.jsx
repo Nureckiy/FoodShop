@@ -1,11 +1,12 @@
 /*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
+import { ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
 
 class ViewProfile extends Component {
   constructor(props) {
     super(props);
-    const { getSubstitutions, profile } = props;
-    getSubstitutions(profile.user_id);
+    const { getSubscriptions, profile } = props;
+    getSubscriptions(profile.user_id);
   }
   render() {
     const { profile } = this.props;
@@ -56,19 +57,15 @@ class ViewProfile extends Component {
               <div className="col-xs-12 text-center">
                 <div className="col-xs-12 col-sm-3 emphasis">
                   <div className="btn-group dropup btn-block">
-                    <button type="button" className="btn btn-primary"><span className="fa fa-gear"/> Опции</button>
-                    <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                      <span className="caret"/>
-                      <span className="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul className="dropdown-menu text-right" role="menu">
-                      <li><a href="#"><span className="fa fa-list pull-right"/> Редактировать профиль </a></li>
-                      <li><a href="#"><span className="fa fa-user pull-right"/> Изменить аватар </a></li>
-                      <li className="divider"/>
-                      <li><a href="#"><span className="fa fa-cutlery pull-right"/> Управление подписками </a></li>
-                      <li className="divider"/>
-                      <li><a href="#"><span className="fa fa-window-close pull-right"/> Выход </a></li>
-                    </ul>
+                    <ButtonToolbar>
+                      <DropdownButton className="btn btn-primary" title="Опции" dropup id="options" onSelect={(a, b, c) => {debugger;}}>
+                        <MenuItem eventKey="1">Редактировать профиль</MenuItem>
+                        <MenuItem eventKey="2">Изменить аватар</MenuItem>
+                        <MenuItem eventKey="3">Управление подписками</MenuItem>
+                        <MenuItem divider />
+                        <MenuItem eventKey="4">Выйти</MenuItem>
+                      </DropdownButton>
+                    </ButtonToolbar>
                   </div>
                 </div>
               </div>

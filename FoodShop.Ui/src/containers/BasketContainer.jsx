@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/BasketActions';
+import * as appActions from '../actions/AppActions';
 
 import Basket from '../components/basket/Basket.jsx';
 
@@ -24,7 +25,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch),
+    actions: bindActionCreators(Object.assign(actions, appActions), dispatch),
   };
 }
 

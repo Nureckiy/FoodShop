@@ -1,10 +1,17 @@
 import * as types from '../constants/AppConstants';
 import service from '../service/service';
 
-export function selectGoods(selected) {
+export function selectGoods(good) {
   return {
     type: types.SELECT_MEAL,
-    selected
+    good
+  };
+}
+
+export function changeConfiguration(configuration) {
+  return {
+    type: types.CHANGE_CONFIGURATION,
+    configuration
   };
 }
 
@@ -14,7 +21,7 @@ export function sendFeedback(feedback) {
       type: types.SEND_FEEDBACK
     });
 
-    service.sendFeedback({data: feedback}, success, fail);
+    service.sendFeedback(feedback, success, fail);
 
     function success(data, status) {
       dispatch({
