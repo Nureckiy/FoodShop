@@ -145,3 +145,6 @@ ul#menu li ul li {
 ul#menu li ul li:hover {
 	background: #ddd;
 }
+ul#menu i {
+	font-size: 12px;
+}

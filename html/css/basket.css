@@ -76,12 +76,12 @@ input[type=button].gray, input[type=submit].gray, .button.gray {
 .wrapper .remove {
 	margin-left: 20px;
 }
-.wrapper input[type="text"] {
+.dotted .wrapper input[type="text"] {
     vertical-align: middle;
     max-width: 45px;
     text-align: center;
 }
-input[type=text] {
+.dotted input[type=text] {
     background-color: transparent;
     border: none;
     border-radius: 4px;
@@ -99,7 +99,7 @@ input[type=text] {
     width: 100%;
 }
 .fa {
-    font-size: 16px;
+    font-size: 12px;
     vertical-align: middle;
     display: inline-block;
     font-family: FontAwesome;
@@ -113,6 +113,7 @@ input[type=text] {
     content: "\f067";
 }
 .fa-times-circle-o:before {
+    font-size: 16px;
     content: "\f05c";
 }
 .fa-minus:before {
@@ -120,4 +121,18 @@ input[type=text] {
 }
 .col-sm-10 {
 	padding: 0;
+}
+input[type="checkbox"] + #adress-group #samLabel {
+    color: #000;
+}
+input[type="checkbox"]:checked + #adress-group #adress {
+    background: #000;
+    display: none;
+    overflow: hidden;
+}
+.adress-header {
+    margin: 20px 0;
+}
+#tel {
+    max-width: 270px;
 }

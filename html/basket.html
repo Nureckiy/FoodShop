@@ -68,7 +68,7 @@
 						</li>
 						<li><a href="contacts.html">Контакты</a></li>
 						<li><a href="user.html">Войти</a></li>
-						<li class="btn-cta active"><a href="basket.html"><span>Корзина</span></a></li>
+						<li class="btn-cta"><a href="basket.html"><span>Корзина <i id="basket-icon" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i></span></a></li>
 					</ul>	
 				</div>
 			</div>
@@ -80,7 +80,7 @@
 		<div class="overlay"></div>
 	</header>
 
-	<!-- Корзина -->
+	<!-- Корзина. Шаг1 -->
 
 	<div class="gtco-section">
 		<div class="gtco-container">
@@ -89,7 +89,7 @@
 					<h2 class="cursive-font primary-color">Корзина</h2>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row animate-box">
 				<form class="col-sm-12 col-xs-12">
 					<ul class="dotted">
 						<li class="col-sm-10"><span>Биг Мак</span><span>2 $</span></li>
@@ -136,10 +136,42 @@
 					</ul>
 
 					<div class="col-md-12 buttons">
-						<input type="submit" value="Заказать" class="btn btn-warning">
+						<input type="submit" value="Оформить" class="btn btn-warning">
 						<input type="submit" value="Очистить" class="btn btn-defult"> 
 					</div>
       			</form>
+    		</div>
+    	</div>
+    </div>
+
+	<!-- Корзина. Шаг2 -->
+
+	<div class="gtco-section">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+					<h2 class="cursive-font primary-color">Корзина</h2>
+				</div>
+			</div>
+			<div class="row animate-box">
+				<form class="col-sm-12 col-xs-12">
+					<div class="row form-group">	
+						<label class="sr-only" for="tel">Phone</label>
+						<input type="text" id="tel" class="form-control" placeholder="Номер телефона: 80259239940" pattern="8[0-9]{10}" required>
+
+						<h3 class="adress-header">Способ доставки</h3>
+						<input type="checkbox" id="sam" />
+						<div id ="adress-group">
+							<label for="sam" class="check-label" id="samLabel"><span></span>Самовывоз</label>
+							<label for="adress" class="sr-only">Adress</label>
+							<input type="text" class="form-control" id="adress" placeholder="Адрес доставки">
+						</div>
+					</div>
+					<div class="col-md-12 buttons">
+						<input type="submit" value="Заказать" class="btn btn-warning">
+						<input type="submit" value="Отмена" class="btn btn-defult"> 
+					</div>
+				</form>	
     		</div>
     	</div>
     </div>
