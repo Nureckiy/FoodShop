@@ -1,6 +1,8 @@
 // Select meal item
 export const SELECT_MEAL = 'SELECT_MEAL';
 
+export const CLEAR_SELECTED = 'CLEAR_SELECTED';
+
 // send feedback
 export const SEND_FEEDBACK = 'SEND_FEEDBACK';
 export const SEND_FEEDBACK_SUCCESS = 'SEND_FEEDBACK_SUCCESS';

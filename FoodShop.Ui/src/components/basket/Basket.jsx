@@ -22,41 +22,39 @@ class Basket extends Component {
     return selected;
   }
   render() {
-    const { selectedGoods } = this.props.model;
+    const { model: { selectedGoods }, actions: { clearSelected } } = this.props;
     const goodItems = this.renderGoodItems();
     const total = utils.calculateTotal(selectedGoods);
     return (
-      <span>
+      <div>
         <Header
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
-          className="cut"
+          className="cut row"
         />
-      <div className="gtco-section">
-        <div className="gtco-container">
+        <div className="container basket-section">
           <div className="row">
-            <div className="col-md-8 col-md-offset-2 text-center gtco-heading">
+            <div className="col-md-8 col-md-offset-2 text-center">
               <h2 className="cursive-font primary-color">Корзина</h2>
             </div>
           </div>
-          <div className="row">
+          <div className="row good-list">
             <form className="col-sm-12 col-xs-12">
               <ul >
                 { goodItems }
-                <li className=" dotted">
+                <li className="dotted">
                   <span className="col-sm-10 item">
-                    <span className="sum">Итог</span><span>{total.toFixed(2)} $</span>
+                    <span>Итог</span><span className="sum">{total.toFixed(2)} $</span>
                   </span>
                 </li>
               </ul>
-              <div className="col-md-12 buttons">
-                <input type="submit" value="Заказать" className="btn btn-warning"/>
-                  <input type="submit" value="Очистить" className="btn btn-defult"/>
+              <div className="col-sm-12 buttons">
+                <input type="button" value="Заказать" className="btn btn-warning"/>
+                <input type="button" value="Очистить" className="btn btn-defult" onClick={clearSelected}/>
               </div>
             </form>
           </div>
         </div>
       </div>
-      </span>
     );
   }
 }

@@ -8,6 +8,12 @@ export function selectGoods(good) {
   };
 }
 
+export function clearSelected() {
+  return {
+    type: types.CLEAR_SELECTED,
+  };
+}
+
 export function changeConfiguration(configuration) {
   return {
     type: types.CHANGE_CONFIGURATION,

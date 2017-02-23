@@ -14,6 +14,12 @@ export default function AppReducer(state = initialState, action) {
         selectedGoods: utils.mergeGoods(state.selectedGoods, action.good)
       };
 
+    case types.CLEAR_SELECTED:
+      return {
+        ...state,
+        selectedGoods: []
+      };
+
     case types.CHANGE_CONFIGURATION:
       return {
         ...state,

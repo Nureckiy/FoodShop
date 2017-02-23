@@ -6,7 +6,7 @@ class Header extends Component {
     super();
   }
   render() {
-    const { backgroundUrl } = this.props;
+    const { backgroundUrl, title, subtitle } = this.props;
     let { className } = this.props;
     const style = {
       'backgroundImage': `url(${backgroundUrl})`
@@ -21,8 +21,8 @@ class Header extends Component {
         role="banner"
       >
         <div className="middle overlay">
-          <span className="intro-text-small">интернет&mdash;магазин вкусностей</span>
-          <h1 className="cursive-font">Оцените наше меню!</h1>
+          <span className="intro-text-small">{subtitle}</span>
+          <h1 className="cursive-font">{title}</h1>
         </div>
       </header>
     );

@@ -26,9 +26,34 @@
     margin-left: 0;
     margin-right: 0;
     margin-bottom:0;
+
   }
 }
 
+.form-control {
+  border: 2px solid rgba(0,0,0,0.1);
+  padding: 20px 15px;
+  font-size: 16px;
+}
+
+.control-label {
+  font-weight: normal;
+}
+
+.btn-primary {
+  background: #FBB448;
+  border: none;
+  padding: 10px 30px;
+  font-size: 16px;
+  transition: 0.2s;
+  &:hover {
+    background: #fcbe61;
+  }
+}
+
+.btn-gray {
+  color: #9F9F9F;
+}
 /****** links & type *********/
 a {
   color: #FBB448;
@@ -108,7 +133,11 @@ header {
     font-size: 80px;
     line-height: 1.5;
   }
+  &.cut {
+    height: 75px;
+  }
 }
+
 /******  content *********/
 /******  footer *********/
 footer {

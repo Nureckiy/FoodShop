@@ -32,15 +32,14 @@ class TotalGoodItem extends Component {
     const total = number * Price;
     return (
       <li className="dotted">
-        <span className="col-sm-10 item"><span>{title} ({Size})</span><span>{total.toFixed(2)} $</span></span>
-        <div className="wrapper">
-          <a className="plus button gray" onClick={this.increase}><span className="fa fa-plus"/></a>
+        <span className="col-sm-10 item"><span>{title} ({Size})</span><span className="sum">{total.toFixed(2)} $</span></span>
+        <div className="col-sm-2 wrapper">
+          <a className="btn-gray" onClick={this.increase}><span className="glyphicon glyphicon-plus"/></a>
           <input type="text" name="quantity" value={number} onChange={this.handleEnter}/>
-          <a className="plus button gray" onClick={this.decrease}><span className="fa fa-minus"/></a>
-          <a className="remove button gray" onClick={this.remove}><span className="fa fa-times-circle-o"/></a>
+          <a className="btn-gray" onClick={this.decrease}><span className="glyphicon glyphicon-minus"/></a>
+          <a className="btn-gray" onClick={this.remove}><span className="glyphicon glyphicon-remove-circle"/></a>
         </div>
       </li>
-
     );
   }
 }
