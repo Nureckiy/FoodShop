@@ -54,6 +54,38 @@
 .btn-gray {
   color: #9F9F9F;
 }
+
+input[type="checkbox"] {
+  box-shadow: none;
+}
+
+input[type="checkbox"],
+.check-label {
+  width: 49%;
+  padding-left: 25px;
+  color: rgba(255, 255, 255, 0.7);
+}
+input[type="checkbox"] {
+  display:none;
+}
+input[type="checkbox"] + label span,
+input[type="checkbox"] + #adress-group label span {
+  display:inline-block;
+  width:19px;
+  height:19px;
+  margin:-1px 4px 0 -25px;
+  vertical-align:middle;
+  background:url(../img/checkbox.png) left top no-repeat;
+  cursor:pointer;
+}
+input[type="checkbox"]:checked + label span,
+input[type="checkbox"]:checked + #adress-group label span {
+  background:url(../img/checkbox.png) -19px top no-repeat;
+}
+input[type="checkbox"]:checked + .check-label,
+input[type="checkbox"]:checked + #adress-group .check-label {
+  color: rgba(255, 255, 255, 0.9);
+}
 /****** links & type *********/
 a {
   color: #FBB448;

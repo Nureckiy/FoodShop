@@ -8,9 +8,8 @@ import Profile from '../components/userProfile/Profile.jsx';
 class UserProfileContainer extends Component {
   render() {
     const { view, app, actions, auth } = this.props;
-    const model = Object.assign({}, view, app);
     return (
-      <Profile model={model} actions={actions} auth={auth} />
+      <Profile {...view} {...app} {...actions} auth={auth} />
     );
   }
 }

@@ -1,5 +1,8 @@
 import * as types from '../constants/BasketConstants';
-const initialState = {};
+
+const initialState = {
+  order: {}
+};
 
 export default function BasketReducer(state = initialState, action) {
   switch (action.type) {

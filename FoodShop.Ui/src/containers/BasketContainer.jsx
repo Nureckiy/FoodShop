@@ -8,10 +8,9 @@ import Basket from '../components/basket/Basket.jsx';
 
 class BasketContainer extends Component {
   render() {
-    const { view, app, actions } = this.props;
-    const model = Object.assign({}, view, app);
+    const { view, app, actions, auth } = this.props;
     return (
-      <Basket model={model} actions={actions} />
+      <Basket {...view} {...app} {...actions} auth={auth} />
     );
   }
 }

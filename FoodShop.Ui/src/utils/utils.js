@@ -112,3 +112,9 @@ export function getProfileItem(itemName) {
     return profile[itemName];
   }
 }
+
+export function getProfileItemFromMetadata(itemName) {
+  const profile = getProfile();
+  if (profile)
+    return profile.user_metadata[itemName];
+}

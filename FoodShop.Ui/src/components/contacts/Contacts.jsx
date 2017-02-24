@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import Header from '../layout/Header.jsx';
 import contactInfo from '!json!../../sources/contactInfo.json';
-import { Form } from 'react-bootstrap';
+import { Form, FormGroup } from 'react-bootstrap';
 import FieldGroup from '../common/FieldGroup.jsx';
 import * as utils from '../../utils/utils';
 
@@ -49,35 +49,39 @@ class Contacts extends Component {
               <div className="col-md-6">
                 <h3>Пишите нам</h3>
                 <Form onSubmit={this.handleSubmit}>
-                  <FieldGroup
-                    id="name"
-                    type="text"
-                    placeholder="Представтесь"
-                    label="Имя"
-                    value={this.state.name}
-                    onChange={this.handleInputChange}
-                  />
-                  <FieldGroup
-                    id="email"
-                    type="email"
-                    placeholder="Ваш e-mail"
-                    label="E-mail"
-                    value={this.state.email}
-                    onChange={this.handleInputChange}
-                  />
-                  <FieldGroup
-                    id="message"
-                    componentClass="textarea"
-                    placeholder="Введите сообщение"
-                    label="Сообщение"
-                    cols="30"
-                    rows="10"
-                    value={this.state.message}
-                    onChange={this.handleInputChange}
-                  />
-                  <div className="form-group">
-                    <input type="submit" value="Отправить" className="btn btn-primary"/>
-                  </div>
+                  <FormGroup controlId={name}>
+                    <FieldGroup
+                      id="name"
+                      type="text"
+                      placeholder="Представтесь"
+                      label="Имя"
+                      value={this.state.name}
+                      onChange={this.handleInputChange}
+                    />
+                    <FieldGroup
+                      id="email"
+                      type="email"
+                      placeholder="Ваш e-mail"
+                      label="E-mail"
+                      value={this.state.email}
+                      onChange={this.handleInputChange}
+                      required
+                    />
+                    <FieldGroup
+                      id="message"
+                      componentClass="textarea"
+                      placeholder="Введите сообщение"
+                      label="Сообщение"
+                      cols="30"
+                      rows="10"
+                      value={this.state.message}
+                      onChange={this.handleInputChange}
+                      required
+                    />
+                    <div className="form-group">
+                      <input type="submit" value="Отправить" className="btn btn-primary"/>
+                    </div>
+                  </FormGroup>
                 </Form>
               </div>
               <div className="col-md-5 col-md-push-1 animate-box">

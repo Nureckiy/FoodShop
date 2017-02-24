@@ -4,6 +4,7 @@ import service from '../service/service';
 import auth0 from 'auth0-js';
 
 export function getSubscriptions(userId) {
+  console.log(userId);
   return (dispatch) => {
     dispatch({
       type: types.GET_PROFILE_SUBSCRIPTIONS

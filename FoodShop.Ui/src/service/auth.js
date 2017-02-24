@@ -6,6 +6,7 @@ import { isTokenExpired } from '../utils/jwtHelper.js';
 export default class AuthService extends EventEmitter {
   constructor(clientId, domain) {
     super();
+    this.state = { clientId, domain };
     this.lock = new Auth0Lock(clientId, domain, {
       auth: {
         redirectUrl: 'http://localhost:3000/#/order',
@@ -25,7 +26,7 @@ export default class AuthService extends EventEmitter {
     this.login = this.login.bind(this);
     this.getProfile = this.getProfile.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
-    this.domain = domain;
+    // this.domain = domain;
   }
 
   _doAuthentication(authResult) {
@@ -67,14 +68,16 @@ export default class AuthService extends EventEmitter {
 
   logout() {
     localStorage.removeItem('id_token');
+    localStorage.removeItem('profile');
+    window.location.reload();
   }
 
   updateProfile(userId, data, callback) {
-    const { domain } = this;
+    const { domain } = this.state;
     api.updateUser({ userId, domain, data })
       .then(newProfile => {
         this.setProfile(newProfile);
-        callback(newProfile);
+        callback && callback(newProfile);
       });
   }
 }

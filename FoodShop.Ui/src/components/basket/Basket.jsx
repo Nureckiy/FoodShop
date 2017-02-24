@@ -2,29 +2,69 @@
 import React, { Component } from 'react';
 
 import Header from '../layout/Header.jsx';
-import TotalGoodItem from './TotalGoodItem.jsx';
-import * as utils from '../../utils/utils';
+import EditSelectedList from './EditSelectedList.jsx';
+import DeliveryDetailsForm from './DeliveryDetailsForm.jsx';
+import OrserSummary from './OrderSummary.jsx';
 
 class Basket extends Component {
-  renderGoodItems() {
-    const { model: { selectedGoods }, actions: { changeConfiguration } } = this.props;
-    let selected = [];
-    selectedGoods.map(good => {
-       good.selected.map(item =>
-        selected.push(<TotalGoodItem
-          key={item.Id}
-          title={good.Name}
-          item={item}
-          onChange={changeConfiguration}
-        />)
-       );
+  constructor() {
+    super();
+    this.state = {
+      step: 0
+    };
+    this.goToNext = this.goToNext.bind(this);
+    this.goBack = this.goBack.bind(this);
+    this.addOrder = this.addOrder.bind(this);
+  }
+  goToNext() {
+    let { step } = this.state;
+    step++;
+    this.setState({ step });
+  }
+  goBack() {
+    let { step } = this.state;
+    step--;
+    this.setState({ step });
+  }
+  addOrder(details) {
+    const { addOrder, selectedGoods, clearSelected } = this.props;
+    addOrder(selectedGoods, details, () => {
+      this.goToNext();
+      clearSelected();
     });
-    return selected;
+  }
+  renderChild() {
+    const { auth, selectedGoods, clearSelected, changeConfiguration } = this.props;
+    const { step } = this.state;
+    if (!selectedGoods.length) {
+      return 'Корзина пуста';
+    }
+    switch(step) {
+      case 0:
+        return (
+          <EditSelectedList
+            selected={selectedGoods}
+            onChange={changeConfiguration}
+            clearAll={clearSelected}
+            onSubmit={this.goToNext}
+          />
+        );
+      case 1:
+        return(
+          <DeliveryDetailsForm
+            auth={auth}
+            onSubmit={this.addOrder}
+            onBack={this.goBack}
+          />
+        );
+      case 2:
+        return (
+          <OrserSummary />
+        );
+    }
   }
   render() {
-    const { model: { selectedGoods }, actions: { clearSelected } } = this.props;
-    const goodItems = this.renderGoodItems();
-    const total = utils.calculateTotal(selectedGoods);
+    const child = this.renderChild();
     return (
       <div>
         <Header
@@ -32,27 +72,7 @@ class Basket extends Component {
           className="cut row"
         />
         <div className="container basket-section">
-          <div className="row">
-            <div className="col-md-8 col-md-offset-2 text-center">
-              <h2 className="cursive-font primary-color">Корзина</h2>
-            </div>
-          </div>
-          <div className="row good-list">
-            <form className="col-sm-12 col-xs-12">
-              <ul >
-                { goodItems }
-                <li className="dotted">
-                  <span className="col-sm-10 item">
-                    <span>Итог</span><span className="sum">{total.toFixed(2)} $</span>
-                  </span>
-                </li>
-              </ul>
-              <div className="col-sm-12 buttons">
-                <input type="button" value="Заказать" className="btn btn-warning"/>
-                <input type="button" value="Очистить" className="btn btn-defult" onClick={clearSelected}/>
-              </div>
-            </form>
-          </div>
+          { child }
         </div>
       </div>
     );

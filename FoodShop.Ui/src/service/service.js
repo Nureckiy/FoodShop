@@ -29,6 +29,10 @@ class service {
     return this.requestHelper.getWithAjax('User/GetSubscriptions', data, success, failed);
   }
 
+  addOrder(data, success, failed) {
+    return this.requestHelper.postWithAjax('Order/addOrder', data, success, failed);
+  }
+
   updateUser(data, success, fail) {
     return this.requestHelper.patchToExternal(`https://${data.domain}/api/v2/users/${data.userId}`, data.data, success, fail);
   }

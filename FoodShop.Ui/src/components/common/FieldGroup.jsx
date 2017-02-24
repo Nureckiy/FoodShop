@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 
-import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
 class FieldGroup extends Component {
   render() {
-    const { name, label, help } = this.props;
+    const { label, help } = this.props;
+    let { className } = this.props;
+    if (!className) {
+      className = '';
+    }
     return (
-      <FormGroup controlId={name} className="form-group">
+      <span className={className}>
         {label && <ControlLabel>{label}</ControlLabel>}
         <FormControl {...this.props} />
         {help && <HelpBlock>{help}</HelpBlock>}
-      </FormGroup>
+      </span>
     );
   }
 }

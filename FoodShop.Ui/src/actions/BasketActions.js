@@ -26,3 +26,29 @@ export function updateTotal(goods) {
     }
   };
 }
+
+export function addOrder(configurationsList, deliveryDetails) {
+  return (dispatch) => {
+    dispatch({
+      type: types.ADD_ORDER
+    });
+
+    service.addOrder({configurationsList, ...deliveryDetails}, success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.ADD_ORDER_SUCCSESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.ADD_ORDER_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}

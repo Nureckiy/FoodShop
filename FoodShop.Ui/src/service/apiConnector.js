@@ -23,10 +23,12 @@ var RequestHelper = function() {
         type: 'PATCH',
         dataType: 'json',
         contentType: 'application/json',
+        connection: 'Username-Password-Authentication',
         data: JSON.stringify(entity)
       },
       success,
       failed
+
     );
   };
 
