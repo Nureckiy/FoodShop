@@ -136,3 +136,9 @@ input[type="checkbox"]:checked + #adress-group #adress {
 #tel {
     max-width: 270px;
 }
+.thank {
+    text-align: center;
+}
+.thank img {
+    width: 100%;
+}
