@@ -1,34 +1,56 @@
+/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
+import { Form, FormGroup } from 'react-bootstrap';
+import * as utils from '../../utils/utils';
+
 class SubscriptionManagement extends Component {
+  constructor(props) {
+    super(props);
+    const { getAllSubscriptions, userSubscriptions } = props;
+    this.state = {
+      selected: userSubscriptions.map(item => item.Id)
+    };
+    getAllSubscriptions();
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentWillReceiveProps(props) {
+    const { userSubscriptions } = props;
+    if (userSubscriptions !== this.props.userSubscriptions) {
+      this.setState({
+        selected: userSubscriptions.map(item => item.Id)
+      });
+    }
+  }
+  handleInputChange(event) {
+    const id = event.target.id;
+    const selected = utils.mergeSubstitutions(this.state.selected, id);
+    this.setState({ selected });
+  }
+  handleSubmit() {
+    const { selected } = this.state;
+    const { onSave } = this.props;
+    onSave(selected);
+  }
   render() {
+    const { subscriptions } = this.props;
+    const { selected } = this.state;
     return (
       <div className="well subscriptions-manage-form col-sm-12">
-
-        <form className="form-inline">
-          <div className="col-md-8">
-            <input type="checkbox" id="c1" />
-            <label htmlFor="c1" className="check-label"><span></span>Холодные блюда</label>
-
-            <input type="checkbox" id="c2" checked />
-            <label htmlFor="c2" className="check-label"><span></span>Горячие блюда</label>
-
-            <input type="checkbox" id="c3" checked />
-            <label htmlFor="c3" className="check-label"><span></span>Напитки</label>
-
-            <input type="checkbox" id="c4" checked />
-            <label htmlFor="c4" className="check-label"><span></span>Фреши</label>
-
-            <input type="checkbox" id="c5" />
-            <label htmlFor="c5" className="check-label"><span></span>Вегетарианские блюда</label>
-          </div>
-
+        <Form className="subscriptions-list">
+          <FormGroup bsClass="col-md-8">
+            { subscriptions.map(item =>
+              <span key={item.Id}>
+                    <input type="checkbox" id={item.Id} checked={selected.includes(item.Id)} onChange={this.handleInputChange} />
+                    <label htmlFor={item.Id} className="check-label gray" id="samLabel"><span></span>{item.Name}</label>
+                  </span>
+            )}
+          </FormGroup>
           <div className="col-md-4 subscribe">
-            <input type="submit" value="Подписаться" className="btn btn-warning"/>
-              <input type="submit" value="Отмена" className="btn btn-defult"/>
+            <button type="button" className="btn btn-warning" onClick={this.handleSubmit} >Сохранить</button>
           </div>
-        </form>
-
+        </Form>
       </div>
   );
   }

@@ -25,8 +25,24 @@ class service {
     return this.requestHelper.postWithAjax('Feedback/addFeedback', data, success, failed);
   }
 
-  getSubscriptions(data, success, failed) {
-    return this.requestHelper.getWithAjax('User/GetSubscriptions', data, success, failed);
+  getSubscriptions(success, failed) {
+    return this.requestHelper.getWithAjax('User/GetSubscriptions', '', success, failed);
+  }
+
+  getAllSubscriptions(success, failed) {
+    return this.requestHelper.getWithAjax('User/GetAllSubscriptions', '', success, failed);
+  }
+
+  saveUserSubscriptions(data, success, failed) {
+    return this.requestHelper.postWithAjax('User/SetSubscription', data, success, failed);
+  }
+
+  publishSubscriptions(data, success, failed) {
+    return this.requestHelper.postWithAjax('User/PublishSubscriptions', data, success, failed);
+  }
+
+  getOrders(success, failed) {
+    return this.requestHelper.getWithAjax('Order/getOrders', '', success, failed);
   }
 
   addOrder(data, success, failed) {
@@ -37,6 +53,5 @@ class service {
     return this.requestHelper.patchToExternal(`https://${data.domain}/api/v2/users/${data.userId}`, data.data, success, fail);
   }
 }
-
 
 export default new service();

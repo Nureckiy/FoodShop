@@ -11,23 +11,28 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: 2
+      activeTab: 0
     };
     this.handleTabSelected = this.handleTabSelected.bind(this);
     this.goToView = this.goToView.bind(this);
   }
   componentWillMount() {
-    const { getSubscriptions, auth } = this.props;
-    getSubscriptions(auth.getProfile().user_id);
+    const { getSubscriptions, getOrders } = this.props;
+    getSubscriptions();
+    getOrders();
   }
   renderChild() {
-    const { auth } = this.props;
+    const { auth, orders, userSubscriptions, subscriptions, getAllSubscriptions, saveUserSubscriptions } = this.props;
     const { activeTab } = this.state;
     const profile = auth.getProfile();
     switch(activeTab) {
       case 0:
         return (
-          <ViewProfile profile={profile} />
+          <ViewProfile
+            profile={profile}
+            userSubscriptions={userSubscriptions}
+            orders={orders}
+          />
         );
       case 1:
         return (
@@ -35,7 +40,13 @@ class Profile extends Component {
         );
       case 2:
         return (
-          <SubscriptionManagement profile={profile} />
+          <SubscriptionManagement
+            profile={profile}
+            userSubscriptions={userSubscriptions}
+            subscriptions={subscriptions}
+            getAllSubscriptions={getAllSubscriptions}
+            onSave={saveUserSubscriptions}
+          />
         );
     }
   }

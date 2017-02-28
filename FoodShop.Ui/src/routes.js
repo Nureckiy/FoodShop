@@ -9,6 +9,7 @@ import UserProfileContainer from '../src/containers/UserProfileContainer.jsx';
 import Contacts from '../src/components/contacts/Contacts.jsx';
 import Login from '../src/components/login/Login.jsx';
 import NotFound from './components/layout/NotFound.jsx';
+import Admin from './containers/AdminContainer';
 
 import auth from './service/auth';
 
@@ -27,6 +28,15 @@ const logout = (nextState, replace) => {
   replace({ pathname: '/login' });
 };
 
+const requireAdminRole = (nextState, replace) => {
+    if (!authService.loggedIn()) {
+      replace({ pathname: '/login' });
+    }
+    if(!authService.isAdmin()) {
+      replace({ pathname: '/menu' });
+    }
+};
+
 const routes = (
   <div>
     <Route path="/" component={App} auth={authService}>
@@ -37,6 +47,7 @@ const routes = (
       <Route path="/order" component={OrderContainer} onEnter={requireAuth} />
       <Route path="/profile" component={UserProfileContainer} onEnter={requireAuth} />
       <Route path="/contacts" component={Contacts} />
+      <Route path="/admin" component={Admin} onEnter={requireAdminRole} />
       <Route path="/login" component={Login} />
       <Route path="/logout" component={Login} onEnter={logout} />
     </Route>

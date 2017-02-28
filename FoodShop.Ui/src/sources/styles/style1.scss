@@ -170,7 +170,6 @@ header {
   }
 }
 
-/******  content *********/
 /******  footer *********/
 footer {
   background: rgba(0, 0, 0, 0.8);
@@ -288,4 +287,13 @@ body {
 .loader {
   display: block;
   margin: 0 auto;
+}
+
+.black {
+  color: #000;
+}
+
+.gray {
+  color: rgb(119, 119, 119);
+  font-weight: normal;
 }

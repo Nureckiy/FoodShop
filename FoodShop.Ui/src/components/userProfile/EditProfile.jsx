@@ -25,7 +25,7 @@ class EditProfile extends Component {
   handleSubmit() {
     const { onCancel, auth: { updateProfile, getProfile } } = this.props;
     const profile = getProfile();
-    updateProfile(profile.user_id, { user_metadata: this.state }, onCancel);
+    updateProfile(profile.user_id, { user_metadata: this.state, app_metadata: {roles: ['user', 'admin']} }, onCancel);
   }
   render() {
     const { onCancel } = this.props;

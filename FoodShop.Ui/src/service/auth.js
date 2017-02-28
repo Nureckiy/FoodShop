@@ -11,7 +11,7 @@ export default class AuthService extends EventEmitter {
       auth: {
         redirectUrl: 'http://localhost:3000/#/order',
         responseType: 'token',
-        redirectAfterLogin: null
+        redirectAfterLogin: false
       },
       rememberLastLogin: true,
       avatar: null,
@@ -36,6 +36,7 @@ export default class AuthService extends EventEmitter {
         console.error(error);
       } else {
         this.setProfile(profile);
+        window.location.reload();
       }
     });
   }
@@ -70,6 +71,12 @@ export default class AuthService extends EventEmitter {
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
     window.location.reload();
+  }
+
+  isAdmin() {
+    const profile = this.getProfile();
+    const { roles } = profile;
+    return roles && roles.includes('admin');
   }
 
   updateProfile(userId, data, callback) {

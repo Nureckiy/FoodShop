@@ -118,3 +118,17 @@ export function getProfileItemFromMetadata(itemName) {
   if (profile)
     return profile.user_metadata[itemName];
 }
+
+export function mergeSubstitutions(selected, id) {
+  const index = selected.indexOf(id);
+  if (~index) {
+    selected.splice(index, 1);
+  } else {
+    selected.push(id);
+  }
+  return selected;
+}
+
+// export function markSubscriptions(subscriptions, userSubscriptions) {
+//   subscriptions.map
+// }

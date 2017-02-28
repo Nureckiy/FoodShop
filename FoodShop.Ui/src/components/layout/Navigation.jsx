@@ -19,7 +19,8 @@ class Navigation extends Component {
   }
   renderUserTab() {
     const { activeTab } = this.state;
-    const name = utils.getProfileItem('name');
+    const { auth } = this.props;
+    const name = auth.getProfile().name;
     let href = 'login';
     let text = 'Войти';
     if (name) {
@@ -36,9 +37,25 @@ class Navigation extends Component {
       </TabItem>
     );
   }
+  renderAdminTab() {
+    const { activeTab } = this.state;
+    const { auth } = this.props;
+    if (auth.isAdmin()) {
+      return (
+        <TabItem
+          onClick={this.toggleTab}
+          tabName="admin"
+          active={activeTab === 'admin'}
+        >
+          <a href="#/admin/">Админ</a>
+        </TabItem>
+      );
+    }
+  }
   render() {
     const { activeTab } = this.state;
     const userTab = this.renderUserTab();
+    const adminTab = this.renderAdminTab();
     return (
       <nav className="row">
           <div className="container">
@@ -47,6 +64,7 @@ class Navigation extends Component {
             </div>
             <div className="col-xs-8">
               <ButtonToolbar className="pull-right">
+                  { adminTab }
                 <TabItem
                   onClick={this.toggleTab}
                   tabName="menu"
