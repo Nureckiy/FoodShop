@@ -1,5 +1,7 @@
+/*eslint no-unused-vars: "off"*/
 import * as types from '../constants/BasketConstants';
 import service from '../service/service';
+import * as utils from '../utils/utils';
 
 export function updateTotal(goods) {
   return (dispatch) => {
@@ -27,13 +29,15 @@ export function updateTotal(goods) {
   };
 }
 
-export function addOrder(configurationsList, deliveryDetails) {
+export function addOrder(selected, deliveryDetails) {
   return (dispatch) => {
     dispatch({
       type: types.ADD_ORDER
     });
 
-    service.addOrder({configurationsList, ...deliveryDetails}, success, fail);
+    const configurationsList = utils.makeConfigurationsList(selected);
+
+    service.addOrder({configurationsList, ...deliveryDetails, UserId: 'UserId'}, success, fail);
 
     function success(data, status) {
       dispatch({

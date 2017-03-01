@@ -115,7 +115,7 @@ export function getProfileItem(itemName) {
 
 export function getProfileItemFromMetadata(itemName) {
   const profile = getProfile();
-  if (profile)
+  if (profile && profile.user_metadata)
     return profile.user_metadata[itemName];
 }
 
@@ -129,6 +129,15 @@ export function mergeSubstitutions(selected, id) {
   return selected;
 }
 
-// export function markSubscriptions(subscriptions, userSubscriptions) {
-//   subscriptions.map
-// }
+export function makeConfigurationsList(selected) {
+  let res = {};
+
+  selected.forEach(item =>
+    item.Configurations.forEach(configuration =>
+      res[configuration.Id] = configuration.number
+    )
+  );
+
+  return res;
+}
+

@@ -1,4 +1,3 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
 class Header extends Component {
@@ -8,15 +7,12 @@ class Header extends Component {
   render() {
     const { backgroundUrl, title, subtitle } = this.props;
     let { className } = this.props;
-    const style = {
-      'backgroundImage': `url(${backgroundUrl})`
-    };
     if(!className) {
       className = '';
     }
     return (
       <header
-        style={style}
+        style={{ 'backgroundImage': `url(${backgroundUrl})` }}
         className={className}
         role="banner"
       >

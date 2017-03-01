@@ -29,10 +29,6 @@ class AddGoodModal extends Component {
     model.selected = currentSelected;
     onSave(model);
   }
-  getNumber(confId) {
-    const { currentSelected } = this.state;
-    return utils.findNumber(currentSelected, confId);
-  }
   handleSelect(value, good) {
     const { currentSelected } = this.state;
     good.number = value;
@@ -42,6 +38,7 @@ class AddGoodModal extends Component {
   }
   render() {
     const { show, onHide, model } = this.props;
+    const { currentSelected } = this.state;
     const values = utils.renderNumberOptions(10);
     return (
       <Modal show={show} onHide={onHide}>
@@ -65,7 +62,7 @@ class AddGoodModal extends Component {
                     <th>{item.Size}</th>
                     <th>
                       <RenderSelect
-                        defaultValue={this.getNumber(item.Id)}
+                        defaultValue={utils.findNumber(currentSelected, item.Id)}
                         onChange={v => this.handleSelect(v, item)}
                         options={values}
                       />

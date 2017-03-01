@@ -44,7 +44,7 @@ class ViewProfile extends Component {
           <li><h3>{profile.name}</h3></li>
           <li><strong>E-mail:</strong> {profile.email}</li>
           <li><strong>Адрес:</strong> {profile.user_metadata && profile.user_metadata.address}</li>
-          <li><strong>Телефон:</strong> {profile.user_metadata && profile.user_metadata.phone}</li>
+          <li><strong>Телефон:</strong> {profile.user_metadata && profile.user_metadata.phoneNumber}</li>
           <li><strong>Подписки:</strong> {userSubscriptions.map(subscription =>
             <label key={subscription.Id} className="label label-info">{subscription.Name}</label>
           )}</li>

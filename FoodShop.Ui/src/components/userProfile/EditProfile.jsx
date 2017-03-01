@@ -1,61 +1,53 @@
+/*eslint no-unused-vars: "off"*/
+
 import React, { Component } from 'react';
 
-import { Form, FormGroup } from 'react-bootstrap';
+import { FormGroup } from 'react-bootstrap';
 import FieldGroup from '../common/FieldGroup.jsx';
+import ControlledForm from '../common/ControlledForm.jsx';
+import * as utils from '../../utils/utils';
 
 class EditProfile extends Component {
   constructor(props) {
     super(props);
-    this.state = this.getDefaults(props);
-    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  getDefaults(props) {
-    const { user_metadata: { phone, address } } = props.auth.getProfile();
-    return { phone, address  };
+  getDefaults() {
+    const phoneNumber = utils.getProfileItemFromMetadata('phoneNumber');
+    const address = utils.getProfileItemFromMetadata('address');
+    return { phoneNumber, address  };
   }
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.id;
-    this.setState({
-      [name]: value
-    });
-  }
-  handleSubmit() {
+  handleSubmit(values) {
     const { onCancel, auth: { updateProfile, getProfile } } = this.props;
     const profile = getProfile();
-    updateProfile(profile.user_id, { user_metadata: this.state, app_metadata: {roles: ['user', 'admin']} }, onCancel);
+    updateProfile(profile.user_id, { user_metadata: values }, onCancel);
   }
   render() {
     const { onCancel } = this.props;
+    const initial = this.getDefaults();
     return (
       <div className="well profile col-sm-12">
         <h3>Настройки профиля</h3>
-        <Form onSubmit={this.handleSubmit}>
+        <ControlledForm onSubmit={this.handleSubmit} initialValues={initial}>
           <FormGroup>
             <FieldGroup
-              id="phone"
+              id="phoneNumber"
               type="text"
               label="Телефон"
               placeholder="Введите номер в формате: 80291234567"
-              value={this.state.phone}
-              onChange={this.handleInputChange}
             />
             <FieldGroup
               type="text"
               id="address"
               label="Адрес"
               placeholder="Ваш адрес"
-              value={this.state.address}
-              onChange={this.handleInputChange}
             />
           </FormGroup>
           <div className="form-group">
             <button type="submit" className="btn btn-warning">Сохранить</button>
             <button className="btn btn-defult" onClick={onCancel}>Отмена</button>
           </div>
-        </Form>
+        </ControlledForm>
       </div>
     );
   }

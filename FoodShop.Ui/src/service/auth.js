@@ -26,7 +26,6 @@ export default class AuthService extends EventEmitter {
     this.login = this.login.bind(this);
     this.getProfile = this.getProfile.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
-    // this.domain = domain;
   }
 
   _doAuthentication(authResult) {

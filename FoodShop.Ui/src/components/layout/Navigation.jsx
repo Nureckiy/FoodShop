@@ -1,10 +1,9 @@
 /*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
-import { ButtonToolbar, DropdownButton, MenuItem, Dropdown, NavDropdown } from 'react-bootstrap';
+import { ButtonToolbar, MenuItem, NavDropdown } from 'react-bootstrap';
 import mainCategories from '!json!../../sources/mainCategories.json';
 import TabItem from './NavTabItem.jsx';
-import * as utils from '../../utils/utils';
 
 class Navigation extends Component {
   constructor() {
@@ -21,19 +20,16 @@ class Navigation extends Component {
     const { activeTab } = this.state;
     const { auth } = this.props;
     const name = auth.getProfile().name;
-    let href = 'login';
-    let text = 'Войти';
-    if (name) {
-      href = 'profile';
-      text = name;
-    }
     return (
       <TabItem
         onClick={this.toggleTab}
-        tabName={href}
-        active={activeTab === 'login'}
+        tabName="userTab"
+        active={activeTab === 'userTab'}
       >
-        <a href={`#/${href}`}>{text}</a>
+        {name
+          ? <a href="#/profile/">{ name }</a>
+          : <a onClick={auth.login}>Войти</a>
+        }
       </TabItem>
     );
   }
@@ -60,7 +56,7 @@ class Navigation extends Component {
       <nav className="row">
           <div className="container">
             <div className="col-sm-4 col-xs-12">
-              <div id="logo"><a href="menu.html">FOODSHOP <em>.</em></a></div>
+              <div id="logo"><a href="#">FOODSHOP <em>.</em></a></div>
             </div>
             <div className="col-xs-8">
               <ButtonToolbar className="pull-right">

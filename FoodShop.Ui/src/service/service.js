@@ -34,7 +34,7 @@ class service {
   }
 
   saveUserSubscriptions(data, success, failed) {
-    return this.requestHelper.postWithAjax('User/SetSubscription', data, success, failed);
+    return this.requestHelper.postWithAjax('User/SetSubscriptions', data, success, failed);
   }
 
   publishSubscriptions(data, success, failed) {

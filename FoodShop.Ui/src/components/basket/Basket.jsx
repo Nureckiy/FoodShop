@@ -28,15 +28,14 @@ class Basket extends Component {
   }
   addOrder(details) {
     const { addOrder, selectedGoods, clearSelected } = this.props;
-    addOrder(selectedGoods, details, () => {
-      this.goToNext();
-      clearSelected();
-    });
+    addOrder(selectedGoods, details);
+    clearSelected();
+    this.setState({ step: 2 });
   }
   renderChild() {
     const { auth, selectedGoods, clearSelected, changeConfiguration } = this.props;
     const { step } = this.state;
-    if (!selectedGoods.length) {
+    if (!selectedGoods.length && step !== 2) {
       return 'Корзина пуста';
     }
     switch(step) {
