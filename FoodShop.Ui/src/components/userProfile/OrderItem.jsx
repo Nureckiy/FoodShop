@@ -20,16 +20,26 @@ class OrderItem extends Component {
     const { open } = this.state;
     const { order, order: { Configurations } } = this.props;
     return (
-      <li className="order-item">
-        <Panel onClick={this.toggleHeader} className="order-item-head">{dateformat(order.Date)}</Panel>
-        <Panel collapsible expanded={open}>
-          {Configurations.map(item => (
-            <ul key={item.Id}>
-              <li>{item.Configuration.ParentGood.Name} ({item.Configuration.Size}) - {item.Count} шт.</li>
+      <div className="order-summary">
+        <li className="order-item">
+          <Panel onClick={this.toggleHeader} className="order-item-head"><span className="price">{order.Total}$</span> {dateformat(order.Date, 'fullDate')}</Panel>
+          <Panel collapsible expanded={open}>
+            <ul>
+              <li><strong>Самовывоз:</strong> {order.TakeAway ? 'Да' : 'Нет'}</li>
+              {!order.TakeAway && <li><strong>Адрес:</strong> {order.Address}</li>}
+              <li><strong>Телефон:</strong> {order.PhoneNumber}</li>
+              <li><strong>Заказ:</strong></li>
+              <li>
+                {Configurations.map(item => (
+                  <ul key={item.Id}>
+                    <li>{item.Configuration.ParentGood.Name} ({item.Configuration.Size}) - {item.Count} шт.</li>
+                  </ul>
+                ))}
+              </li>
             </ul>
-          ))}
-        </Panel>
-      </li>
+          </Panel>
+        </li>
+      </div>
     );
   }
 }

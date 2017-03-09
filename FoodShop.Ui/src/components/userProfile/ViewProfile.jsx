@@ -26,12 +26,6 @@ class ViewProfile extends Component {
         <ul>
           { closed.map(order => <OrderItem key={order.Id} order={order}/>) }
         </ul>
-        {/*// <Panel header="Текущие заказы" className="panel panel-success">*/}
-        {/*//   <UserOrdersList orders={open}/>*/}
-        {/*// </Panel>*/}
-        {/*<Panel header="Завершенные заказы" className="panel panel-success">*/}
-          {/*<UserOrdersList orders={closed}/>*/}
-        {/*</Panel>*/}
       </div>
     );
   }

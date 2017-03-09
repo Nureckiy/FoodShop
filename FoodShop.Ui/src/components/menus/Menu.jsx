@@ -35,7 +35,6 @@ class Menu extends Component {
     return (
       <div>
         <Header
-          className="row"
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
           title="Оцените наше меню!"
           subtitle="интернет&mdash;магазин вкусностей"

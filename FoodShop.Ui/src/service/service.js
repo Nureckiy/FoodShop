@@ -25,8 +25,8 @@ class service {
     return this.requestHelper.postWithAjax('Feedback/addFeedback', data, success, failed);
   }
 
-  getSubscriptions(success, failed) {
-    return this.requestHelper.getWithAjax('User/GetSubscriptions', '', success, failed);
+  getSubscriptions(data, success, failed) {
+    return this.requestHelper.getWithAjax('User/GetSubscriptions', data, success, failed);
   }
 
   getAllSubscriptions(success, failed) {

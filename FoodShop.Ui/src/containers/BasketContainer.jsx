@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/BasketActions';
 import * as appActions from '../actions/AppActions';
 
-import Basket from '../components/basket/Basket.jsx';
+import Basket from '../components/dishesBasket/Basket.jsx';
 
 class BasketContainer extends Component {
   render() {

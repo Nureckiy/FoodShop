@@ -12,9 +12,9 @@ class DeliveryDetailsForm extends Component {
   }
   getDefault() {
     const name = utils.getProfileItem('name');
-    const phone = utils.getProfileItemFromMetadata('phoneNumber');
+    const phoneNumber = utils.getProfileItemFromMetadata('phoneNumber');
     const address = utils.getProfileItemFromMetadata('address');
-    return { name, phone, address };
+    return { name, phoneNumber, address };
   }
   handleDeliveryClick(event) {
     this.setState({
@@ -66,7 +66,7 @@ class DeliveryDetailsForm extends Component {
           </FormGroup>
           <div className="col-md-12 buttons">
             <input type="submit" value="Заказать" className="btn btn-warning" />
-            <input value="Назад" className="btn btn-defult" onClick={onBack} />
+            <input type="button" value="Отменить" className="btn btn-default" onClick={onBack} />
           </div>
         </ControlledForm>
       </div>

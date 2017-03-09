@@ -2,13 +2,13 @@
 import * as types from '../constants/UserProfileConstants';
 import service from '../service/service';
 
-export function getSubscriptions() {
+export function getSubscriptions(userId) {
   return (dispatch) => {
     dispatch({
       type: types.GET_PROFILE_SUBSCRIPTIONS
     });
 
-    service.getSubscriptions(success, fail);
+    service.getSubscriptions({userId}, success, fail);
 
     function success(data, status) {
       dispatch({

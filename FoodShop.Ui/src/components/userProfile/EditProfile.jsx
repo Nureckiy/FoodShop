@@ -43,7 +43,7 @@ class EditProfile extends Component {
               placeholder="Ваш адрес"
             />
           </FormGroup>
-          <div className="form-group">
+          <div className="form-group buttons">
             <button type="submit" className="btn btn-warning">Сохранить</button>
             <button className="btn btn-defult" onClick={onCancel}>Отмена</button>
           </div>

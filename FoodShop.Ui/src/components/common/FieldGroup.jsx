@@ -5,11 +5,22 @@ import { ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 class FieldGroup extends Component {
   renderLabel() {
     const { label, id, type } = this.props;
+    let { labelClass } = this.props;
     if (!label) return;
-    if (type === 'checkbox') {
-      return <ControlLabel  id="samLabel" className="check-label black" htmlFor={id}><span/>{label}</ControlLabel>;
+    if (!labelClass) {
+      labelClass = '';
     }
-    return <ControlLabel htmlFor={id}>{label}</ControlLabel>;
+    if (type === 'checkbox') {
+      return <ControlLabel
+        id="samLabel"
+        className={'check-label black ' + labelClass}
+        htmlFor={id}
+      >
+        <span/>
+        {label}
+      </ControlLabel>;
+    }
+    return <ControlLabel htmlFor={id} className={labelClass}>{label}</ControlLabel>;
   }
   render() {
     const { help, type } = this.props;

@@ -10,13 +10,13 @@ export function selectGoods(good) {
 
 export function clearSelected() {
   return {
-    type: types.CLEAR_SELECTED,
+    type: types.CLEAR_SELECTED_MEALS,
   };
 }
 
 export function changeConfiguration(configuration) {
   return {
-    type: types.CHANGE_CONFIGURATION,
+    type: types.CHANGE_MEAL_CONFIGURATION,
     configuration
   };
 }

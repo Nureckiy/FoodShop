@@ -17,8 +17,8 @@ class Profile extends Component {
     this.goToView = this.goToView.bind(this);
   }
   componentWillMount() {
-    const { getSubscriptions, getOrders } = this.props;
-    getSubscriptions();
+    const { getSubscriptions, getOrders, auth } = this.props;
+    getSubscriptions(auth.getProfile().user_id);
     getOrders();
   }
   renderChild() {
@@ -64,7 +64,7 @@ class Profile extends Component {
       <div>
         <Header
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
-          className="row cut"
+          className="cut"
         />
         <div className="container user-section">
           <div className="row summary">

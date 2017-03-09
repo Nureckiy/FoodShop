@@ -13,7 +13,7 @@ class Header extends Component {
     return (
       <header
         style={{ 'backgroundImage': `url(${backgroundUrl})` }}
-        className={className}
+        className={'row ' + className}
         role="banner"
       >
         <div className="middle overlay">

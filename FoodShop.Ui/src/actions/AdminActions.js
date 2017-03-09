@@ -1,13 +1,13 @@
 import * as types from '../constants/AdminConstants';
 import service from '../service/service';
 
-export function getSubscriptions() {
+export function getAllSubscriptions() {
   return (dispatch) => {
     dispatch({
       type: types.GET_SUBSCRIPTIONS
     });
 
-    service.getSubscriptions('', success, fail);
+    service.getAllSubscriptions(success, fail);
 
     function success(data, status) {
       dispatch({
