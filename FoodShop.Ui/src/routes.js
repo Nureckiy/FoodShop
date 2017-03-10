@@ -15,6 +15,7 @@ const authService = new auth(config.auth0.clientId, config.auth0.domain);
 
 const requireAuth = (nextState, replace) => {
   if (!authService.loggedIn()) {
+    authService.logout();
     login(replace);
   }
 };

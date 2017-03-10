@@ -72,6 +72,12 @@ export default class AuthService extends EventEmitter {
     window.location.reload();
   }
 
+  refreshProfile() {
+    if (!this.loggedIn() && (this.getToken() || Object.keys(this.getProfile()).length)) {
+      this.logout();
+    }
+  }
+
   isAdmin() {
     const profile = this.getProfile();
     const { roles } = profile;

@@ -23,7 +23,7 @@ class OrderItem extends Component {
       <div className="order-summary">
         <li className="order-item">
           <Panel onClick={this.toggleHeader} className="order-item-head"><span className="price">{order.Total}$</span> {dateformat(order.Date, 'fullDate')}</Panel>
-          <Panel collapsible expanded={open}>
+          <Panel collapsible expanded={open} className="noborder">
             <ul>
               <li><strong>Самовывоз:</strong> {order.TakeAway ? 'Да' : 'Нет'}</li>
               {!order.TakeAway && <li><strong>Адрес:</strong> {order.Address}</li>}

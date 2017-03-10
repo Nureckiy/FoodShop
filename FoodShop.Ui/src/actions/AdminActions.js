@@ -33,7 +33,7 @@ export function publishSubscriptions(subscriptions) {
       type: types.PUBLISH_SUBSCRIPTIONS
     });
 
-    service.publishSubscriptions({ subscriptions }, success, fail);
+    service.publishSubscriptions(subscriptions, success, fail);
 
     function success(data, status) {
       dispatch({

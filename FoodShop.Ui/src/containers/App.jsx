@@ -8,6 +8,9 @@ import Navigation from '../components/layout/Navigation';
 import Footer from '../components/layout/Footer.jsx';
 
 class App extends Component {
+  componentWillMount() {
+    this.props.route.auth.refreshProfile();
+  }
   render() {
     const { auth } = this.props.route;
     let { children, app, actions } = this.props;

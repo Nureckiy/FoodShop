@@ -89,7 +89,10 @@ input[type="checkbox"]:checked + #adress-group .check-label {
 .label.label-info{
   margin: 0 3px;
 }
-
+.panel.noborder {
+  border: none;
+  box-shadow: none;
+}
 /****** links & type *********/
 a {
   color: #FBB448;
