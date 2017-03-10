@@ -22,9 +22,10 @@ class DeliveryDetailsForm extends Component {
     });
   }
   render() {
-    const { onBack, onSubmit } = this.props;
+    const { onBack, onSubmit, selected } = this.props;
     const { hideAddress } = this.state;
     const initial = this.getDefault();
+    const total = utils.calculateTotal(selected);
     return (
       <div className="row animate-box">
         <div className="row">
@@ -32,8 +33,9 @@ class DeliveryDetailsForm extends Component {
             <h2 className="cursive-font primary-color">Корзина</h2>
           </div>
         </div>
-        <ControlledForm onSubmit={onSubmit} initialValues={initial} className="row">
-          <FormGroup bsClass="col-md-4">
+        <div className="row">
+        <ControlledForm onSubmit={onSubmit} initialValues={initial} className="col-md-6">
+          <FormGroup>
             <FieldGroup
               id="name"
               type="text"
@@ -53,7 +55,7 @@ class DeliveryDetailsForm extends Component {
             <input type="checkbox" id="take_away" onChange={this.handleDeliveryClick} />
             <label htmlFor="take_away" className="check-label black" id="samLabel"><span></span>Самовывоз</label>
           </FormGroup>
-          <FormGroup className="col-md-12">
+          <FormGroup>
             {!hideAddress &&
               <FieldGroup
                 id="address"
@@ -69,6 +71,13 @@ class DeliveryDetailsForm extends Component {
             <input type="button" value="Отменить" className="btn btn-default" onClick={onBack} />
           </div>
         </ControlledForm>
+        <ul className="col-md-6">
+        { selected.map(item =>
+          <li key={item.Id}>{item.Name}</li>
+        )}
+        <b className="black">Итого: {total.toFixed(2)}</b>
+        </ul>
+      </div>
       </div>
     );
   }

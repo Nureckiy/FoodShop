@@ -26,6 +26,7 @@ class Menu extends Component {
         getPopularGoods(config.popularGoodsCount);
       }
     }
+
   }
   render() {
     const { goods, activeRequestStatus, selectedGoods } = this.props.model;
@@ -36,8 +37,9 @@ class Menu extends Component {
       <div>
         <Header
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
-          title="Оцените наше меню!"
-          subtitle="интернет&mdash;магазин вкусностей"
+          title={category ? '' : 'Оцените наше меню!'}
+          subtitle={category ? '' : 'интернет-магазин вкусностей'}
+          className={category ? 'cut' : ''}
         />
         <div className="container">
           <div className="row">

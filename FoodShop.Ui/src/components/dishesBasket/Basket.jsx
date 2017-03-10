@@ -54,6 +54,7 @@ class Basket extends Component {
             auth={auth}
             onSubmit={this.addOrder}
             onBack={this.goBack}
+            selected={selectedGoods}
           />
         );
       case 2:
