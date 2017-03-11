@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 
 class TabItem extends Component {
   render() {
-    const {children, onClick, active, tabName} = this.props;
+    const {children, active} = this.props;
     let {className} = this.props;
     if (active) {
       className += ' active';
     }
     return (
-      <li className={className} onClick={() => onClick(tabName)}>
+      <li className={className}>
         {children}
       </li>
     );

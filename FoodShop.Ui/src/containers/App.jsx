@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/AppActions';
 
-import Navigation from '../components/layout/Navigation';
+import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer.jsx';
 
 class App extends Component {
@@ -13,13 +13,13 @@ class App extends Component {
   }
   render() {
     const { auth } = this.props.route;
-    let { children, app, actions } = this.props;
+    let { children, app, actions, location: { pathname } } = this.props;
     if (children) {
       children = React.cloneElement(children, { auth, app, actions });
     }
     return (
       <div>
-        <Navigation auth={auth} />
+        <Navbar auth={auth} pathname={pathname} />
         {children}
         <Footer/>
       </div>

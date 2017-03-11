@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 import Auth0Lock from 'auth0-lock';
 import api from './service';
 import { isTokenExpired } from '../utils/jwtHelper.js';
+import history from '../store/History';
 
 export default class AuthService extends EventEmitter {
   constructor(clientId, domain) {
@@ -9,9 +10,9 @@ export default class AuthService extends EventEmitter {
     this.state = { clientId, domain };
     this.lock = new Auth0Lock(clientId, domain, {
       auth: {
-        redirectUrl: 'http://localhost:3000/#/order',
+        redirectUrl: 'http://localhost:3000/#/profile',
         responseType: 'token',
-        redirectAfterLogin: false
+        redirectAfterLogin: true,
       },
       rememberLastLogin: true,
       avatar: null,
@@ -35,7 +36,7 @@ export default class AuthService extends EventEmitter {
         console.error(error);
       } else {
         this.setProfile(profile);
-        window.location.reload();
+        history.replace('/#/profile');
       }
     });
   }
@@ -55,7 +56,7 @@ export default class AuthService extends EventEmitter {
 
   getProfile() {
     const profile = localStorage.getItem('profile');
-    return profile ? JSON.parse(localStorage.profile) : {};
+    return profile ? JSON.parse(localStorage.profile) : null;
   }
 
   setToken(idToken) {
@@ -73,15 +74,14 @@ export default class AuthService extends EventEmitter {
   }
 
   refreshProfile() {
-    if (!this.loggedIn() && (this.getToken() || Object.keys(this.getProfile()).length)) {
+    if (!this.loggedIn() && (this.getToken() || this.getProfile())) {
       this.logout();
     }
   }
 
   isAdmin() {
     const profile = this.getProfile();
-    const { roles } = profile;
-    return roles && roles.includes('admin');
+    return profile && profile.roles && profile.roles.includes('admin');
   }
 
   updateProfile(userId, data, callback) {

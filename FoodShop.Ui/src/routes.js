@@ -37,7 +37,7 @@ const routes = (
       <IndexRedirect to="/menu" />
       <Route path="/menu" component={MenuContainer} />
       <Route path="/menu/:category" component={MenuContainer} />
-      <Route path="/basket" component={BasketContainer} />
+      <Route path="/basket" component={BasketContainer} onEnter={requireAuth} />
       <Route path="/profile" component={UserProfileContainer} onEnter={requireAuth} />
       <Route path="/contacts" component={Contacts} />
       <Route path="/admin" component={Admin} onEnter={requireAdminRole} />
