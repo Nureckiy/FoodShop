@@ -9,3 +9,10 @@
 	border-bottom: 1px;
 	border-style: dotted;
 }
+.grey-remove {
+	color: #777;
+	font-size: 14px;
+}
+.room-list {
+	list-style: none;    
+}
