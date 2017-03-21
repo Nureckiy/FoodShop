@@ -55,6 +55,18 @@
   color: #9F9F9F;
 }
 
+.btn-icon {
+  border: none;
+  background-color: transparent;
+}
+
+.btn {
+  margin-right: 4px;
+  margin-bottom: 4px;
+  font-size: 16px;
+  padding: 8px 30px;
+}
+
 input[type="checkbox"] {
   box-shadow: none;
 }
@@ -231,6 +243,11 @@ body {
   color: #777;
   background: #fff;
 }
+
+.content {
+  padding: 100px 0;
+}
+
 .middle:before {
   content: '';
   display: inline-block;
@@ -313,4 +330,8 @@ body {
     padding: 10px 20px;
     margin: 0 2px;
   }
+}
+
+.collapsible {
+  transition: 2s;
 }

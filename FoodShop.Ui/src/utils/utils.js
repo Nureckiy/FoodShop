@@ -21,7 +21,7 @@ export function mergeGoods(selected, good) {
 }
 
 function includeGood(arr, good) {
-  let index = arr.findIndex(x => x.Id === good.Id);
+  let index = arr.findIndex(x => x.id === good.id);
   if(~index) {
     arr[index] = good;
   } else {
@@ -31,7 +31,7 @@ function includeGood(arr, good) {
 }
 
 function excludeGood(arr, good) {
-  let index = arr.findIndex(x => x.Id === good.Id);
+  let index = arr.findIndex(x => x.id === good.id);
   if (~index) {
     arr.splice(index, 1);
   }
@@ -49,7 +49,7 @@ export function calculateTotal(goods) {
 export function calculateGoodTotal(good) {
   let total = 0;
   good.selected.map((item) =>
-    total += item.Price * item.number
+    total += item.price * item.number
   );
   return total;
 }
@@ -67,7 +67,7 @@ export function renderNumberOptions(number) {
 
 export function changeConfiguration(goods, configuration) {
   goods.map(good => {
-    const index = good.selected.findIndex(x => x.Id === configuration.Id);
+    const index = good.selected.findIndex(x => x.id === configuration.id);
     if (~index) {
       if (configuration.number) {
         good.selected[index] = configuration;
@@ -81,7 +81,7 @@ export function changeConfiguration(goods, configuration) {
 
 export function findNumber(selected, id) {
   for (let i = 0; i < selected.length; i++) {
-    if (selected[i].Id === id)
+    if (selected[i].id === id)
       return selected[i].number;
   }
   return 0;
@@ -96,7 +96,7 @@ export function separateSelected(goods) {
 export function findSelectedConfigurations(selected, configurations) {
   let result = [];
   configurations.map((item) => {
-    let overlap = selected.find((meal) => meal.configurationId === item.Id);
+    let overlap = selected.find((meal) => meal.configurationId === item.id);
     if (overlap) {
       result.push(overlap);
     }
@@ -141,3 +141,20 @@ export function makeConfigurationsList(selected) {
   return res;
 }
 
+export function mergeSelectedRooms(selected, action) {
+  const index = selected.findIndex(x => x.id === action.room.id);
+  if (~index) {
+    selected[index] = action.room;
+  } else {
+    selected.push(action.room);
+  }
+  return selected;
+}
+
+export function removeRoomFromSelected(selected, action) {
+  const index = selected.findIndex(x => x.id === action.id);
+  if (index != -1) {
+    selected.splice(index, 1);
+  }
+  return selected;
+}

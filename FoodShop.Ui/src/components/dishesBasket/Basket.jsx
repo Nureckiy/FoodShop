@@ -71,7 +71,7 @@ class Basket extends Component {
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
           className="cut"
         />
-        <div className="container basket-section">
+        <div className="container content">
           { child }
         </div>
       </div>

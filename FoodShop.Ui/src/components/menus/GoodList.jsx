@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 
 import AddGoodModal from './AddGoodModal.jsx';
+import Tile from '../common/Tile.jsx';
 
 class GoodList extends Component {
   constructor() {
@@ -30,7 +31,7 @@ class GoodList extends Component {
   render() {
     const { selected, items } = this.props;
     const { showModal, currentGood } = this.state;
-    const model = selected.find(x => x.Id === currentGood.Id);
+    const model = selected.find(x => x.id === currentGood.id);
     return (
       <div className="row">
         <AddGoodModal
@@ -39,20 +40,8 @@ class GoodList extends Component {
           onSave={this.onSave}
           model={model ? model : currentGood}
         />
-        {items.map((item, key) =>
-          <div key={key} className="col-lg-4 col-md-4 col-sm-6" onClick={() => this.openModal(item)}>
-            <a className="card">
-              <figure>
-                <div className="overlay"><i className="glyphicon glyphicon-plus"/></div>
-                <img src={item.ImageUrl} alt="Image" className="img-responsive" />
-              </figure>
-              <div className="good-subtitle">
-                <h2>{item.Name}</h2>
-                <p>{item.Description}</p>
-                <p><span className="price cursive-font">$1</span></p>
-              </div>
-            </a>
-          </div>
+        {items.map(item =>
+          <Tile key={item.id} item={item} onClick={() => this.openModal(item)} />
         )}
       </div>
     );

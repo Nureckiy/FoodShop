@@ -3,18 +3,17 @@ import {routerReducer} from 'react-router-redux';
 
 import AppReducer from './AppReducer';
 import BasketReducer from './BasketReducer';
-import LandingPageReducer from './LandingReducer';
 import MenuReducer from './MenuReducer';
-import OrderReducer from './OrderReducer';
 import UserProfileReducer from './UserProfileReducer';
 import AdminReducer from './AdminReducer';
+import BookingReducer from './BookingReducer';
 
 export default combineReducers({
   AppReducer,
   BasketReducer,
-  LandingPageReducer,
   MenuReducer,
-  OrderReducer,
-  UserProfileReducer, AdminReducer,
+  UserProfileReducer,
+  AdminReducer,
+  BookingReducer,
   routing: routerReducer
 });

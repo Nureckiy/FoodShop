@@ -80,7 +80,7 @@ function mapChildren(children, callback) {
     if (Array.isArray(children)) {
       children.forEach((child, index) => callback(child, index));
     } else {
-      callback(children);
+      callback(children, 0);
     }
   }
 }

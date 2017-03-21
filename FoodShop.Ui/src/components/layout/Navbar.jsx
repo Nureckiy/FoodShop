@@ -16,7 +16,6 @@ class Navigation extends Component {
   render() {
     const { auth } = this.props;
     const profile = auth.getProfile();
-    console.log('render');
     return (
       <nav className="row">
           <div className="container">
@@ -30,6 +29,9 @@ class Navigation extends Component {
                     <a href="#/admin/">Админ</a>
                   </li>
                 }
+                <li className={this.renderClass('booking')}>
+                  <a href="#/booking/">Бронирование номеров</a>
+                </li>
                 <li className={this.renderClass('menu')}>
                   <NavDropdown title="Меню" noCaret id="menu-category" href="#/menu/">
                     {Object.keys(mainCategories).map(key =>

@@ -18,8 +18,8 @@ class EditSelectedList extends Component {
             {selected.map(good =>
               good.selected.map(item =>
                 <TotalGoodItem
-                  key={item.Id}
-                  title={good.Name}
+                  key={item.id}
+                  title={good.name}
                   item={item}
                   onChange={onChange}
                 />

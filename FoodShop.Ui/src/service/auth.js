@@ -12,7 +12,7 @@ export default class AuthService extends EventEmitter {
       auth: {
         redirectUrl: 'http://localhost:3000/#/profile',
         responseType: 'token',
-        redirectAfterLogin: true,
+        redirect: false,
       },
       rememberLastLogin: true,
       avatar: null,
@@ -36,7 +36,7 @@ export default class AuthService extends EventEmitter {
         console.error(error);
       } else {
         this.setProfile(profile);
-        history.replace('/#/profile');
+        history.replace('#/profile');
       }
     });
   }
@@ -70,6 +70,7 @@ export default class AuthService extends EventEmitter {
   logout() {
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
+    history.push('#');
     window.location.reload();
   }
 

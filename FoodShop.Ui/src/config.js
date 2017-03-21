@@ -1,7 +1,7 @@
 const config = {
-  apiPath: 'http://localhost:1098/api/',
+  apiPath: 'http://localhost:8080/api/',
   auth0: {
-    clientId: 'jA3mJoXVYSxJxlDbB4Oyi4VsDeSR0Jxd',
+    clientId: 'ORh8V4VtMHrvqod6rsxAx8RW9psns0v1',
     domain: 'nureckiy.eu.auth0.com'
   },
   popularGoodsCount: 6

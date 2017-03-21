@@ -73,7 +73,7 @@ class DeliveryDetailsForm extends Component {
         </ControlledForm>
         <ul className="col-md-6">
         { selected.map(item =>
-          <li key={item.Id}>{item.Name}</li>
+          <li key={item.id}>{item.name}</li>
         )}
         <b className="black">Итого: {total.toFixed(2)}</b>
         </ul>

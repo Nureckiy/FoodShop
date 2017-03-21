@@ -2,6 +2,7 @@ import { Route, IndexRedirect } from 'react-router';
 import React from 'react';
 
 import App from '../src/containers/App';
+import BookingContainer from './containers/BookingContainer';
 import BasketContainer from '../src/containers/BasketContainer.jsx';
 import MenuContainer from '../src/containers/MenuContainer.jsx';
 import UserProfileContainer from '../src/containers/UserProfileContainer.jsx';
@@ -15,7 +16,6 @@ const authService = new auth(config.auth0.clientId, config.auth0.domain);
 
 const requireAuth = (nextState, replace) => {
   if (!authService.loggedIn()) {
-    authService.logout();
     login(replace);
   }
 };
@@ -34,7 +34,9 @@ function login(replace) {
 const routes = (
   <div>
     <Route path="/" component={App} auth={authService}>
-      <IndexRedirect to="/menu" />
+      <IndexRedirect to="/booking" />
+      <Route path="/booking" component={BookingContainer} />
+      <Route path="/booking/:id" component={BookingContainer} />
       <Route path="/menu" component={MenuContainer} />
       <Route path="/menu/:category" component={MenuContainer} />
       <Route path="/basket" component={BasketContainer} onEnter={requireAuth} />

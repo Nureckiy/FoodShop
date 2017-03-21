@@ -41,7 +41,7 @@ class Menu extends Component {
           subtitle={category ? '' : 'интернет-магазин вкусностей'}
           className={category ? 'cut' : ''}
         />
-        <div className="container">
+        <div className="container content">
           <div className="row">
             <div className="col-md-8 col-md-offset-2 text-center title">
               <h2 className="cursive-font primary-color">{categoryName}</h2>

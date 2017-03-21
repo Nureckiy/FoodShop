@@ -66,7 +66,7 @@ class Profile extends Component {
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
           className="cut"
         />
-        <div className="container user-section">
+        <div className="container user-section content">
           <div className="row summary">
             <div className="col-sm-4">
               <img src={profile.picture} alt="user" className="img-circle img-responsive" />

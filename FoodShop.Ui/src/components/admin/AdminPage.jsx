@@ -23,7 +23,7 @@ class AdminPage extends Component {
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
           className="cut"
         />
-        <div className="container">
+        <div className="container content">
           <div className="row">
             <div className="well admin-section">
               <Form className="subscriptions-list">

@@ -14,9 +14,9 @@ class AddGoodModal extends Component {
     this.onSave = this.onSave.bind(this);
   }
   componentWillReceiveProps(props) {
-    const { model: { Id, selected } } = props;
-    const oldId = this.props.model.Id;
-    if (Id !== oldId) {
+    const { model: { id, selected } } = props;
+    const oldId = this.props.model.id;
+    if (id !== oldId) {
       this.setState({
         currentSelected: selected ? selected : []
       });
@@ -55,14 +55,14 @@ class AddGoodModal extends Component {
                 </tr>
               </thead>
               <tbody>
-              {model.Configurations && model.Configurations.map((item, key) =>
+              {model.configurations && model.configurations.map((item, key) =>
                   <tr key={key}>
-                    <th>{item.Price}</th>
-                    <th>{item.Weight}</th>
-                    <th>{item.Size}</th>
+                    <th>{item.price}</th>
+                    <th>{item.weight}</th>
+                    <th>{item.size}</th>
                     <th>
                       <RenderSelect
-                        defaultValue={utils.findNumber(currentSelected, item.Id)}
+                        defaultValue={utils.findNumber(currentSelected, item.id)}
                         onChange={v => this.handleSelect(v, item)}
                         options={values}
                       />

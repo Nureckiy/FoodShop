@@ -23,7 +23,7 @@ class Contacts extends Component {
           title="Добро пожаловать!"
           subtitle="интернет&mdash;магазин вкусностей"
         />
-        <div className="container contacts-form">
+        <div className="container content">
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">

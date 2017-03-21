@@ -27,11 +27,11 @@ class TotalGoodItem extends Component {
     onChange(item);
   }
   render() {
-    const { title, item: { Size, number, Price } } = this.props;
-    const total = number * Price;
+    const { title, item: { size, number, price } } = this.props;
+    const total = number * price;
     return (
       <li className="dotted">
-        <span className="col-sm-10 item"><span>{title} ({Size})</span><span className="sum">{total.toFixed(2)} $</span></span>
+        <span className="col-sm-10 item"><span>{title} ({size})</span><span className="sum">{total.toFixed(2)} $</span></span>
         <div className="col-sm-2 wrapper">
           <a className="btn-gray" onClick={this.increase}><span className="glyphicon glyphicon-plus"/></a>
           <input type="text" name="quantity" value={number} onChange={this.handleEnter}/>
