@@ -1,7 +1,5 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
-import Booking from './Booking.jsx';
 import Header from '../layout/Header.jsx';
 import Loader from '../common/Loader.jsx';
 import Tile from '../common/Tile.jsx';
@@ -12,20 +10,8 @@ class Rooms extends Component {
     const { getRoomCategories } = this.props;
     getRoomCategories();
   }
-  renderCategories() {
-    const { roomCategories } = this.props;
-    return roomCategories.map(item =>
-      <Tile
-        key={item.id}
-        item={item}
-        onClick={() => history.push(`/booking/${item.id}`)}
-        price={`От $${item.minPrice}`}
-      />
-    );
-  }
   render() {
-    const { activeRequestStatus } = this.props;
-    const tiles = this.renderCategories();
+    const { activeRequestStatus, roomCategories } = this.props;
     return (
       <div>
         <Header
@@ -47,7 +33,14 @@ class Rooms extends Component {
           <div className="row">
             {activeRequestStatus
             ? <Loader />
-            : tiles }
+            : roomCategories.map(item =>
+                <Tile
+                  key={item.id}
+                  item={item}
+                  onClick={() => history.push(`/booking/${item.id}`)}
+                  price={`От $${item.minPrice}`}
+                />
+            )}
           </div>
         </div>
       </div>

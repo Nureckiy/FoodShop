@@ -2,7 +2,8 @@ import * as types from '../constants/AppConstants';
 import * as utils from '../utils/utils';
 
 const initialState = {
-  selectedGoods: []
+  selectedGoods: [],
+  selectedRooms: []
 };
 
 export default function AppReducer(state = initialState, action) {
@@ -24,6 +25,18 @@ export default function AppReducer(state = initialState, action) {
       return {
         ...state,
         selectedGoods: utils.changeConfiguration(state.selectedGoods, action.configuration)
+      };
+
+    case types.ADD_ROOM_SUCCESS:
+      return {
+        ...state,
+        selectedRooms: utils.mergeSelectedRooms(state.selectedRooms, action)
+      };
+
+    case types.REMOVE_ROOM:
+      return {
+        ...state,
+        selectedRooms: utils.removeRoomFromSelected(state.selectedRooms, action)
       };
 
     default:

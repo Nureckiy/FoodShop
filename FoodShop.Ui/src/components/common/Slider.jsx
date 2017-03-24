@@ -1,4 +1,3 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
 class Slider extends Component {
@@ -15,9 +14,9 @@ class Slider extends Component {
       <div className="slider">
         {images && images.map((image, key) => [
           <input
+            id={key}
             type="radio"
             name="slide_switch"
-            id={key}
             checked={checked === key}
             onChange={() => this.setState({ checked: key })}
           />,

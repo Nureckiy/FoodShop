@@ -1,29 +1,12 @@
 import * as types from '../constants/BookingConstants';
 import service from '../service/service';
+import * as utils from '../utils/utils';
 
 export function setCurrentRoomCategory(category) {
   return (dispatch) => {
     dispatch({
       type: types.SET_CURRENT_ROOM_CATEGORY,
       category
-    });
-  };
-}
-
-export function addRoom(room) {
-  return (dispatch) => {
-    dispatch({
-      type: types.ADD_ROOM,
-      room
-    });
-  };
-}
-
-export function removeRoom(id) {
-  return (dispatch) => {
-    dispatch({
-      type: types.REMOVE_ROOM,
-      id
     });
   };
 }
@@ -82,15 +65,15 @@ export function getRoomCategory(id) {
 }
 
 
-export function getRooms(categoryId, dateRange) {
+export function getRooms(filter) {
   return (dispatch) => {
     dispatch({
       type: types.GET_ROOMS
     });
 
-    const filter = Object.assign({}, { categoryId }, dateRange);
+    const data = Object.assign({}, filter, utils.renderDateRange(filter));
 
-    service.getRooms(filter, success, fail);
+    service.getRooms(data, success, fail);
 
     function success(data, status) {
       dispatch({
@@ -109,3 +92,5 @@ export function getRooms(categoryId, dateRange) {
     }
   };
 }
+
+

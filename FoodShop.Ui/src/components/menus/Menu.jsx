@@ -9,25 +9,28 @@ import config from '../../config';
 
 class Menu extends Component {
   componentWillMount() {
-    const { category, actions: { getGoods, getPopularGoods } } = this.props;
+    this.updateContent();
+  }
+  componentWillReceiveProps(props) {
+    this.updateContent(props);
+  }
+  updateContent(newProps) {
+    let { category } = this.props;
+    if (newProps && newProps.category != category) {
+      category = newProps.category;
+    }
+    this.uploadDishes(category);
+  }
+
+  uploadDishes(category) {
+    const { getGoods, getPopularGoods } = this.props.actions;
     if (category) {
-      getGoods(category, true);
+      getGoods(category);
     } else {
       getPopularGoods(config.popularGoodsCount);
     }
   }
-  componentWillReceiveProps(props) {
-    const { category, actions: { getGoods, getPopularGoods } } = this.props;
-    const newCategory = props.category;
-    if (category !== newCategory) {
-      if (newCategory) {
-        getGoods(newCategory, true);
-      } else {
-        getPopularGoods(config.popularGoodsCount);
-      }
-    }
 
-  }
   render() {
     const { goods, activeRequestStatus, selectedGoods } = this.props.model;
     const { selectGoods } = this.props.actions;

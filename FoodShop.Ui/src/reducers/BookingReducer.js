@@ -1,11 +1,9 @@
 import * as types from '../constants/BookingConstants';
-import * as utils from '../utils/utils';
 
 const initialState = {
   roomCategories: [],
   currentRoomCategory: {},
   filteredRooms: [],
-  selectedRooms: []
 };
 
 export default function RoomsReducer(state = initialState, action) {
@@ -15,18 +13,6 @@ export default function RoomsReducer(state = initialState, action) {
       return {
         ...state,
         currentRoomCategory: action.category
-      };
-
-    case types.ADD_ROOM:
-      return {
-        ...state,
-        selectedRooms: utils.mergeSelectedRooms(state.selectedRooms, action)
-      };
-
-    case types.REMOVE_ROOM:
-      return {
-        ...state,
-        selectedRooms: utils.removeRoomFromSelected(state.selectedRooms, action)
       };
 
     case types.GET_ROOM_CATEGORIES:

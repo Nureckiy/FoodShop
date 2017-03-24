@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 
 import { ButtonToolbar, MenuItem, NavDropdown } from 'react-bootstrap';
 import mainCategories from '!json!../../sources/mainCategories.json';
-import TabItem from './NavTabItem.jsx';
 
 class Navigation extends Component {
   renderClass(tabName, className) {
@@ -19,10 +18,10 @@ class Navigation extends Component {
     return (
       <nav className="row">
           <div className="container">
-            <div className="col-sm-4 col-xs-12">
+            <div className="col-sm-4 hidden-xs">
               <div id="logo"><a href="#">FOODSHOP <em>.</em></a></div>
             </div>
-            <div className="col-xs-8">
+            <div className="col-sm-8">
               <ButtonToolbar className="pull-right">
                 {auth.isAdmin() &&
                   <li className={this.renderClass('admin')}>

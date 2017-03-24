@@ -1,17 +1,13 @@
 import * as types from '../constants/MenuConstants';
 import service from '../service/service';
 
-export function getGoods(data, byName) {
+export function getGoods(data) {
   return (dispatch) => {
     dispatch({
       type: types.GET_GOOD
     });
 
-    if (byName) {
-      service.getGoodsByCategoryName({ name: data }, success, fail);
-    } else {
-      service.getGoodsByCategoryId({ id: data }, success, fail);
-    }
+    service.getGoodsByCategoryName({ name: data }, success, fail);
 
     function success(data, status) {
       dispatch({

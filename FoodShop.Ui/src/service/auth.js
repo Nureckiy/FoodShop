@@ -10,10 +10,12 @@ export default class AuthService extends EventEmitter {
     this.state = { clientId, domain };
     this.lock = new Auth0Lock(clientId, domain, {
       auth: {
-        redirectUrl: 'http://localhost:3000/#/profile',
+        redirectUrl: 'http://localhost:3000/',
         responseType: 'token',
-        redirect: false,
+        redirect: false
       },
+      autoclose: true,
+      closable: false,
       rememberLastLogin: true,
       avatar: null,
       theme: {
@@ -36,7 +38,7 @@ export default class AuthService extends EventEmitter {
         console.error(error);
       } else {
         this.setProfile(profile);
-        history.replace('#/profile');
+        this.lock.hide();
       }
     });
   }

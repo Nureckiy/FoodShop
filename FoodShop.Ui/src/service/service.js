@@ -57,6 +57,9 @@ class service {
     return this.requestHelper.getWithAjax('category/getRoomCategoryById', data, success, failed);
   }
 
+  checkRoomAvailability(data, success, failed) {
+    return this.requestHelper.getWithAjax('booking/checkAvailability', data, success, failed);
+  }
 }
 
 export default new service();

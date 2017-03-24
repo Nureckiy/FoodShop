@@ -1,7 +1,7 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
-import RoomTile from './RoomTile.jsx';
+import RoomTile from '../common/RoomTile.jsx';
+import RoomTileControl from './RoomTileControl.jsx';
 import Header from '../layout/Header.jsx';
 import Loader from '../common/Loader.jsx';
 import Slider from '../common/Slider.jsx';
@@ -22,19 +22,14 @@ class Booking extends Component {
   }
   filter() {
     const { getRooms, id } = this.props;
-    const { startDate, endDate } = this.state;
-    const range = {};
-    if (startDate)
-      range.startDate = startDate.format('MM/DD/YYYY');
-    if (endDate)
-      range.endDate = endDate.format('MM/DD/YYYY');
-    getRooms(id, range);
+    const { arrivalDate, departureDate } = this.state;
+    getRooms({ categoryId: id, arrivalDate, departureDate });
   }
-  handleFilterChange(startDate, endDate) {
-    this.setState({ startDate, endDate });
+  handleFilterChange(arrivalDate, departureDate) {
+    this.setState({ arrivalDate, departureDate });
   }
   render() {
-    const { currentRoomCategory, filteredRooms, activeRequestStatus, addRoom, selectedRooms, removeRoom } = this.props;
+    const { currentRoomCategory, filteredRooms, activeRequestStatus, selectedRooms, removeRoom, addRoom } = this.props;
     return (
       <div>
         <Header
@@ -65,7 +60,11 @@ class Booking extends Component {
           <div className="collapsible">
             { activeRequestStatus
               ? <Loader />
-              : filteredRooms.map(room => <RoomTile key={room.id} {...room} onSubmit={addRoom} /> )
+              : filteredRooms.map(room =>
+                <RoomTile key={room.id} {...room} >
+                  <RoomTileControl room={room} onSubmit={addRoom}/>
+                </RoomTile>
+              )
             }
           </div>
           <div className="row">

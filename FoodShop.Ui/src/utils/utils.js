@@ -158,3 +158,14 @@ export function removeRoomFromSelected(selected, action) {
   }
   return selected;
 }
+
+export function renderDateRange({ arrivalDate, departureDate }) {
+  function renderDate(date) {
+    return date.format('MM/DD/YYYY');
+  }
+  let result = {};
+  if (arrivalDate) result.arrivalDate = renderDate(arrivalDate);
+  if (departureDate) result.departureDate = renderDate(departureDate);
+
+  return result;
+}

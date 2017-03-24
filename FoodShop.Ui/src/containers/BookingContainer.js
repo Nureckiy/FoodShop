@@ -9,10 +9,10 @@ import Booking from '../components/booking/Booking.jsx';
 
 class BookingContainer extends Component {
   render() {
-    const { view, actions, params: { id } } = this.props;
+    const { view, app, actions, params: { id } } = this.props;
     if (id) {
       return (
-        <Booking id={id} {...actions} {...view} />
+        <Booking id={id} {...app} {...actions} {...view} />
       );
     } else {
       return (
@@ -24,7 +24,8 @@ class BookingContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    view: state.BookingReducer
+    view: state.BookingReducer,
+    app: state.AppReducer
   };
 }
 

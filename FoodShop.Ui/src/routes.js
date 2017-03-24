@@ -3,6 +3,7 @@ import React from 'react';
 
 import App from '../src/containers/App';
 import BookingContainer from './containers/BookingContainer';
+import BookingOrderContainer from './containers/BookingOrderContainer';
 import BasketContainer from '../src/containers/BasketContainer.jsx';
 import MenuContainer from '../src/containers/MenuContainer.jsx';
 import UserProfileContainer from '../src/containers/UserProfileContainer.jsx';
@@ -20,14 +21,13 @@ const requireAuth = (nextState, replace) => {
   }
 };
 
-const requireAdminRole = (nextState, replace) => {
+const requireAdminRole = () => {
     if (!authService.loggedIn() || !authService.isAdmin()) {
-      login(replace);
+      login();
     }
 };
 
-function login(replace) {
-  replace({ pathname: '/' });
+function login() {
   authService.login();
 }
 
@@ -37,8 +37,9 @@ const routes = (
       <IndexRedirect to="/booking" />
       <Route path="/booking" component={BookingContainer} />
       <Route path="/booking/:id" component={BookingContainer} />
-      <Route path="/menu" component={MenuContainer} />
-      <Route path="/menu/:category" component={MenuContainer} />
+      <Route path="/order" component={BookingOrderContainer} onEnter={requireAuth} />
+      <Route path="/menu" component={MenuContainer} onEnter={requireAuth} />
+      <Route path="/menu/:category" component={MenuContainer} onEnter={requireAuth} />
       <Route path="/basket" component={BasketContainer} onEnter={requireAuth} />
       <Route path="/profile" component={UserProfileContainer} onEnter={requireAuth} />
       <Route path="/contacts" component={Contacts} />
