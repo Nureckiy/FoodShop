@@ -103,3 +103,37 @@ export function removeRoom(id) {
     });
   };
 }
+
+export function clearSelectedRooms() {
+  return (dispatch) => {
+    dispatch({
+      type: types.CLEAR_SELECTED_ROOMS
+    });
+  };
+}
+
+export function book(values) {
+  return (dispatch) => {
+    dispatch({
+      type: types.BOOK
+    });
+
+    return service.book(values, success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.BOOK_SUCCESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.BOOK_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}

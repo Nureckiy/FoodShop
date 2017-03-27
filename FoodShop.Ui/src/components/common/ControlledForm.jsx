@@ -60,7 +60,8 @@ class ControlledForm extends Component {
     }
     this.handleChildChange(event);
   }
-  renderSubmit() {
+  renderSubmit(e) {
+    e.preventDefault();
     const { onSubmit } = this.props;
     onSubmit(this.state);
   }

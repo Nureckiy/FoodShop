@@ -60,6 +60,10 @@ class service {
   checkRoomAvailability(data, success, failed) {
     return this.requestHelper.getWithAjax('booking/checkAvailability', data, success, failed);
   }
+
+  book(data, success, failed) {
+    return this.requestHelper.postWithAjax('booking/book', data, success, failed);
+  }
 }
 
 export default new service();

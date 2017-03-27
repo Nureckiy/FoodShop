@@ -169,3 +169,22 @@ export function renderDateRange({ arrivalDate, departureDate }) {
 
   return result;
 }
+
+export function calculateBookingTotal(rooms) {
+  const daysCount = ({ arrivalDate, departureDate }) => departureDate.diff(arrivalDate, 'days');
+  let sum = 0;
+  rooms.map(room =>
+    sum += room.price * daysCount(room)
+  );
+  return sum;
+}
+
+export function parseRoomBooking(rooms) {
+  return (rooms.map(room => {
+    return {
+      hotelRoomId: room.id,
+      arrivalDate: room.arrivalDate.format('MM/DD/YYYY'),
+      departureDate: room.departureDate.format('MM/DD/YYYY')
+    };
+  }));
+}

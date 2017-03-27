@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
-class FieldGroup extends Component {
+class Field extends Component {
   renderLabel() {
     const { label, id, type } = this.props;
     let { labelClass } = this.props;
@@ -40,4 +40,4 @@ class FieldGroup extends Component {
   }
 }
 
-export default FieldGroup;
+export default Field;

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Header from '../layout/Header.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
 import contactInfo from '!json!../../sources/contactInfo.json';
-import FieldGroup from '../common/FieldGroup.jsx';
+import Field from '../common/Field.jsx';
 import * as utils from '../../utils/utils';
 import { FormGroup } from 'react-bootstrap';
 
@@ -30,20 +30,20 @@ class Contacts extends Component {
                 <h3>Пишите нам</h3>
                 <ControlledForm initialValues={initial} onSubmit={sendFeedback}>
                   <FormGroup>
-                    <FieldGroup
+                    <Field
                       id="name"
                       type="text"
                       placeholder="Представтесь"
                       label="Имя"
                     />
-                    <FieldGroup
+                    <Field
                       id="email"
                       type="email"
                       placeholder="Ваш e-mail"
                       label="E-mail"
                       required
                     />
-                    <FieldGroup
+                    <Field
                       id="message"
                       componentClass="textarea"
                       placeholder="Введите сообщение"

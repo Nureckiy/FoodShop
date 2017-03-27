@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { FormGroup, Form } from 'react-bootstrap';
 import ControlledForm from '../common/ControlledForm.jsx';
-import FieldGroup from '../common/FieldGroup.jsx';
+import Field from '../common/Field.jsx';
 
 class SubscriptionManagement extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class SubscriptionManagement extends Component {
         <ControlledForm initialValues={initial} onSubmit={this.handleSubmit}>
           <FormGroup bsClass="col-md-8">
             {subscriptions.map(item =>
-              <FieldGroup
+              <Field
                 key={item.Id}
                 id={item.Id}
                 type="checkbox"

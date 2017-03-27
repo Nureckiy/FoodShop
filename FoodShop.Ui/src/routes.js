@@ -8,8 +8,9 @@ import BasketContainer from '../src/containers/BasketContainer.jsx';
 import MenuContainer from '../src/containers/MenuContainer.jsx';
 import UserProfileContainer from '../src/containers/UserProfileContainer.jsx';
 import Contacts from '../src/components/contacts/Contacts.jsx';
-import NotFound from './components/layout/NotFound.jsx';
 import Admin from './containers/AdminContainer';
+import NotFound from './components/layout/NotFound.jsx';
+import BookingSuccess from './components/booking/BookingSuccess.jsx';
 import auth from './service/auth';
 import config from './config';
 
@@ -45,6 +46,7 @@ const routes = (
       <Route path="/contacts" component={Contacts} />
       <Route path="/admin" component={Admin} onEnter={requireAdminRole} />
     </Route>
+    <Route path="/bookingSuccess" component={BookingSuccess} />
     <Route path="*" component={NotFound} />
   </div>
 );

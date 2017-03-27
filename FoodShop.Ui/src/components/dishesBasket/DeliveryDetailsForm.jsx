@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as utils from '../../utils/utils';
-import FieldGroup from '../common/FieldGroup.jsx';
+import Field from '../common/Field.jsx';
 import { FormGroup } from 'react-bootstrap';
 import ControlledForm from '../common/ControlledForm.jsx';
 
@@ -36,14 +36,14 @@ class DeliveryDetailsForm extends Component {
         <div className="row">
         <ControlledForm onSubmit={onSubmit} initialValues={initial} className="col-md-6">
           <FormGroup>
-            <FieldGroup
+            <Field
               id="name"
               type="text"
               placeholder="Введите имя"
               label="Ваше имя"
               required
             />
-            <FieldGroup
+            <Field
               id="phoneNumber"
               type="text"
               placeholder="Номер телефона"
@@ -57,7 +57,7 @@ class DeliveryDetailsForm extends Component {
           </FormGroup>
           <FormGroup>
             {!hideAddress &&
-              <FieldGroup
+              <Field
                 id="address"
                 type="text"
                 placeholder="Введите адрес"

@@ -53,8 +53,8 @@ class Navigation extends Component {
                     : <a onClick={auth.login}>Войти</a>
                   }
                 </li>
-                <li className={this.renderClass('basket', 'btn-cta')}>
-                  <a href="#/basket"><span>Корзина</span></a>
+                <li className={this.renderClass('order', 'btn-cta')}>
+                  <a href="#/order"><span>Бронь <i id="basket-icon" className="glyphicon glyphicon-bed" /></span></a>
                 </li>
               </ButtonToolbar>
             </div>

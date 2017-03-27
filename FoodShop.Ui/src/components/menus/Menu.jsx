@@ -9,19 +9,14 @@ import config from '../../config';
 
 class Menu extends Component {
   componentWillMount() {
-    this.updateContent();
+    this.uploadDishes(this.props.category);
   }
-  componentWillReceiveProps(props) {
-    this.updateContent(props);
-  }
-  updateContent(newProps) {
-    let { category } = this.props;
-    if (newProps && newProps.category != category) {
-      category = newProps.category;
+  componentWillUpdate(nextProps) {
+    const { category } = this.props;
+    if (category != nextProps.category) {
+      this.uploadDishes(nextProps.category);
     }
-    this.uploadDishes(category);
   }
-
   uploadDishes(category) {
     const { getGoods, getPopularGoods } = this.props.actions;
     if (category) {
@@ -30,7 +25,6 @@ class Menu extends Component {
       getPopularGoods(config.popularGoodsCount);
     }
   }
-
   render() {
     const { goods, activeRequestStatus, selectedGoods } = this.props.model;
     const { selectGoods } = this.props.actions;

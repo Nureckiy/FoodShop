@@ -57,16 +57,15 @@ class Booking extends Component {
               </div>
             </div>
           </div>
-          <div className="collapsible">
             { activeRequestStatus
               ? <Loader />
               : filteredRooms.map(room =>
-                <RoomTile key={room.id} {...room} >
-                  <RoomTileControl room={room} onSubmit={addRoom}/>
-                </RoomTile>
+                <div key={room.id} className="row sample">
+                  <RoomTile {...room} className="col-md-9 col-sm-12" />
+                  <RoomTileControl room={room} onSubmit={addRoom} className="col-md-3 col-sm-4 date-form"/>
+                </div>
               )
             }
-          </div>
           <div className="row">
             <BookingTotal selected={selectedRooms} onRemove={removeRoom} />
           </div>

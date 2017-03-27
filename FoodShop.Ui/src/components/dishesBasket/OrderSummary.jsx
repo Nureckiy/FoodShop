@@ -7,7 +7,7 @@ class OrderSummary extends Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-8 col-md-offset-2 text-center gtco-heading">
+          <div className="col-md-8 col-md-offset-2 text-center">
             <h2 className="cursive-font primary-color">Спасибо!</h2>
             <p>Ваш заказ оформлен. В ближайшие 15 минут вам перезвонят для подтверждения заказа.</p>
           </div>

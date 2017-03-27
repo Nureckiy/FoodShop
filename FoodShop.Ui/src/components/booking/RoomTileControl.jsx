@@ -24,8 +24,9 @@ class RoomTileControl extends Component {
   }
   render() {
     const { error } = this.state;
+    const { className } = this.props;
     return (
-      <Form className="col-md-3 col-sm-4 date-form" onSubmit={this.handleSubmit}>
+      <Form className={className} onSubmit={this.handleSubmit}>
         <input type="submit" value="Добавить" className="btn btn-success col-sm-12" />
         <DateRangePicker onChange={this.handleDateChange} />
         <Panel className="col-sm-12 error-message" collapsible expanded={!!error}>

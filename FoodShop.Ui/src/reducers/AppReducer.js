@@ -39,6 +39,18 @@ export default function AppReducer(state = initialState, action) {
         selectedRooms: utils.removeRoomFromSelected(state.selectedRooms, action)
       };
 
+    case types.CLEAR_SELECTED_ROOMS:
+      return {
+        ...state,
+        selectedRooms: []
+      };
+
+    case types.BOOK_SUCCESS:
+      return {
+        ...state,
+        selectedRooms: []
+      };
+
     default:
       return state;
   }

@@ -39,11 +39,13 @@ export default class AuthService extends EventEmitter {
       } else {
         this.setProfile(profile);
         this.lock.hide();
+        history.goBack();
       }
     });
   }
 
   login() {
+    history.push('#');
     this.lock.show();
   }
 

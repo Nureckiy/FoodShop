@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 
 import { FormGroup } from 'react-bootstrap';
-import FieldGroup from '../common/FieldGroup.jsx';
+import Field from '../common/Field.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
 import * as utils from '../../utils/utils';
 
@@ -30,13 +30,14 @@ class EditProfile extends Component {
         <h3>Настройки профиля</h3>
         <ControlledForm onSubmit={this.handleSubmit} initialValues={initial}>
           <FormGroup>
-            <FieldGroup
+            <Field
               id="phoneNumber"
               type="text"
               label="Телефон"
               placeholder="Введите номер в формате: 80291234567"
+              pattern="8[0-9]{10}"
             />
-            <FieldGroup
+            <Field
               type="text"
               id="address"
               label="Адрес"
