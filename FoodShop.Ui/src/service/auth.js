@@ -89,12 +89,11 @@ export default class AuthService extends EventEmitter {
     return profile && profile.roles && profile.roles.includes('admin');
   }
 
-  updateProfile(userId, data, callback) {
+  updateProfile(userId, data) {
     const { domain } = this.state;
     api.updateUser({ userId, domain, data })
       .then(newProfile => {
         this.setProfile(newProfile);
-        callback && callback(newProfile);
       });
   }
 }

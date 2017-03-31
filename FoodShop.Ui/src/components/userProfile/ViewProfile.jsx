@@ -1,51 +1,38 @@
 /*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
-import { Panel } from 'react-bootstrap';
-
-import OrderItem from './OrderItem.jsx';
 
 class ViewProfile extends Component {
-  renderOrders() {
-    const { orders } = this.props;
-    let closed = [];
-    let open = [];
-    orders.map(order => {
-      if (order.Closed) {
-        closed.push(order);
-      } else {
-        open.push(order);
-      }
-    });
-    return (
-      <div>
-        <h4>Текущие заказы</h4>
-        <ul>
-          { open.map(order => <OrderItem key={order.Id} order={order}/>) }
-        </ul>
-        <h4>Завершенные заказы</h4>
-        <ul>
-          { closed.map(order => <OrderItem key={order.Id} order={order}/>) }
-        </ul>
-      </div>
-    );
-  }
-  render() {
-    const { profile, userSubscriptions } = this.props;
-    const ordersTable = this.renderOrders();
-    return (
-      <div className="view-profile">
-        <ul>
-          <li><h3>{profile.name}</h3></li>
-          <li><strong>E-mail:</strong> {profile.email}</li>
-          <li><strong>Адрес:</strong> {profile.user_metadata && profile.user_metadata.address}</li>
-          <li><strong>Телефон:</strong> {profile.user_metadata && profile.user_metadata.phoneNumber}</li>
-          <li><strong>Подписки:</strong> {userSubscriptions.map(subscription =>
-            <label key={subscription.Id} className="label label-info">{subscription.Name}</label>
-          )}</li>
-          <li><strong>Заказы:</strong></li>
-          <li>{ ordersTable }</li>
-        </ul>
 
+  render() {
+    const { login, email, name, surname, patronymic, phoneNumber, address } = this.props;
+    return (
+      <div className="row">
+        <div className="col-xs-2 text-center">
+          <figure>
+            <img src="http://res.cloudinary.com/dum4mjc9q/image/upload/v1463302387/gbkqeupmt3mb9kfuorgr.jpg" alt="user" className="img-circle img-responsive" />
+          </figure>
+        </div>
+        <div className="col-xs-10">
+          <ul>
+            <li className=""><h2 className="black">{surname} {name} {patronymic}</h2></li>
+            <li>
+              <div className="col-sm-2"><p>Логин:</p></div>
+              <div className="col-sm-10"><p><strong>{login}</strong></p></div>
+            </li>
+            <li>
+              <div className="col-sm-2"><p>Email:</p></div>
+              <div className="col-sm-10"><p><strong>{email}</strong></p></div>
+            </li>
+            <li>
+              <div className="col-sm-2"><p>Номер телефона:</p></div>
+              <div className="col-sm-10"><p><strong>{phoneNumber}</strong></p></div>
+            </li>
+            <li>
+              <div className="col-sm-2"><p>Адрес:</p></div>
+              <div className="col-sm-10"><p><strong>{address}</strong></p></div>
+            </li>
+          </ul>
+        </div>
       </div>
     );
   }

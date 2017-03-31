@@ -3,7 +3,7 @@ import dateformat from 'dateformat';
 
 class BookingTotal extends Component {
   renderDate({ arrivalDate, departureDate }) {
-    let format = (date) => dateformat(date, 'dddd, mmmm dS');
+    let format = (date) => dateformat(date, 'dd.mm');
     return `${format(arrivalDate)} - ${format(departureDate)}`;
   }
   countTotal(room) {
@@ -19,10 +19,11 @@ class BookingTotal extends Component {
         <ul className="col-md-8 date-form room-list">
           {selected.map(room =>
             <li key={room.id}>
-              <strong className="black"><i>{room.category.name} ({this.renderDate(room)})</i></strong> <span className="cursive-font">${this.countTotal(room)}</span>
+              <p><span className="glyphicon glyphicon-calendar" />{this.renderDate(room)} { room.category.name} (${this.countTotal(room)})
               <button type="button" className="btn-icon" onClick={() => onRemove(room.id)}>
                 <span className="glyphicon glyphicon-remove grey-remove"/>
               </button>
+              </p>
             </li>
           )}
         </ul>

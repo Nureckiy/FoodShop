@@ -34,6 +34,9 @@
   border: 2px solid rgba(0,0,0,0.1);
   padding: 20px 15px;
   font-size: 16px;
+  box-shadow: none;
+  background: transparent;
+  margin-bottom: 15px;
 }
 
 .control-label {
@@ -115,6 +118,16 @@ input[type="checkbox"]:checked + #adress-group .check-label {
   border: none;
   box-shadow: none;
 }
+
+.tab-content {
+  margin-top: 30px;
+  .active * {
+    color: #777;
+  }
+  .active button {
+    color: #fff;
+  }
+}
 /****** links & type *********/
 a {
   color: #FBB448;
@@ -144,7 +157,7 @@ ul li {
 }
 
 .active * {
-  color: #FBB448 !important;
+  color: #FBB448;
 }
 
 .DateRangePicker, .DateRangePickerInput {

@@ -35,7 +35,7 @@ class ControlledForm extends Component {
   }
   renderChild(child, key) {
     let newProps = { key };
-    if (child.type === FormGroup || child.props.className.includes('form-group')) {
+    if (child.type === FormGroup || child.props.className && child.props.className.includes('form-group')) {
       newProps.children = this.transformFormGroupChildren(child);
     }
     return React.cloneElement(child, newProps);
