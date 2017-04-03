@@ -1,71 +1,39 @@
-export function mergeSelected(selected, newItem) {
-  const index = selected.findIndex((item) => item.configurationId === newItem.configurationId);
-  if (~index) {
-    selected[index] = newItem;
+export function mergeSelectedConfigurations(selected, newItem) {
+  const index = selected.findIndex((item) => item.id === newItem.id);
+  if (parseInt(newItem.number)) {
+    return joinElementToArray(selected, newItem, index);
   } else {
-    selected.push(newItem);
+    return excludeFromArray(selected, index);
   }
-  return selected;
 }
 
 export function mergeGoods(selected, good) {
-  let goodSelected = good.selected;
-  if (Array.isArray(goodSelected)) {
-    goodSelected = goodSelected.filter(x => x.number != 0);
-  }
-  if (goodSelected && goodSelected.length) {
-    return includeGood(selected, good);
+  const selectedConfigurations = good.selected.filter(x => x.number !== 0);
+  const index = selected.findIndex(x => x.id === good.id);
+  if (selectedConfigurations && selectedConfigurations.length) {
+    return joinElementToArray(selected, good, index);
   } else {
-    return excludeGood(selected, good);
+    return excludeFromArray(selected, index);
   }
 }
 
-function includeGood(arr, good) {
-  let index = arr.findIndex(x => x.id === good.id);
-  if(~index) {
-    arr[index] = good;
-  } else {
-    arr.push(good);
-  }
-  return arr;
-}
-
-function excludeGood(arr, good) {
-  let index = arr.findIndex(x => x.id === good.id);
-  if (~index) {
-    arr.splice(index, 1);
-  }
-  return arr;
-}
-
-export function calculateTotal(goods) {
+export function calculateGoodTotal(goods) {
   let total = 0;
   goods.map(good =>
-    total += calculateGoodTotal(good)
+    total += calculateTotal(good.selected)
   );
   return total;
 }
 
-export function calculateGoodTotal(good) {
+export function calculateTotal(array) {
   let total = 0;
-  good.selected.map((item) =>
+  array.map((item) =>
     total += item.price * item.number
   );
   return total;
 }
 
-export function renderNumberOptions(number) {
-  let options = [];
-  for(let i = 0; i < number; i++) {
-    options.push({
-      value: i,
-      text: i
-    });
-  }
-  return options;
-}
-
-export function changeConfiguration(goods, configuration) {
+export function changeConfigurationsNumber(goods, configuration) {
   goods.map(good => {
     const index = good.selected.findIndex(x => x.id === configuration.id);
     if (~index) {
@@ -80,32 +48,14 @@ export function changeConfiguration(goods, configuration) {
 }
 
 export function findNumber(selected, id) {
-  for (let i = 0; i < selected.length; i++) {
-    if (selected[i].id === id)
-      return selected[i].number;
-  }
-  return 0;
+  const current = selected.find(item => item.id === id);
+  return current ? current.number : 0;
 }
 
-export function separateSelected(goods) {
-  let configs = [];
-  goods.map((good) => configs = configs.concat(good.selected));
-  return configs;
-}
-
-export function findSelectedConfigurations(selected, configurations) {
-  let result = [];
-  configurations.map((item) => {
-    let overlap = selected.find((meal) => meal.configurationId === item.id);
-    if (overlap) {
-      result.push(overlap);
-    }
-  });
-  return result;
-}
 export function getProfile() {
   return JSON.parse(localStorage.getItem('profile'));
 }
+
 export function getProfileItem(itemName) {
   const profile = getProfile();
   if (profile) {
@@ -119,63 +69,31 @@ export function getProfileItemFromMetadata(itemName) {
     return profile.user_metadata[itemName];
 }
 
-export function mergeSubstitutions(selected, id) {
-  const index = selected.indexOf(id);
-  if (~index) {
-    selected.splice(index, 1);
-  } else {
-    selected.push(id);
-  }
-  return selected;
-}
-
-export function makeConfigurationsList(selected) {
-  let res = {};
-
-  selected.forEach(item =>
-    item.Configurations.forEach(configuration =>
-      res[configuration.Id] = configuration.number
-    )
-  );
-
-  return res;
-}
-
-export function mergeSelectedRooms(selected, action) {
-  const index = selected.findIndex(x => x.id === action.room.id);
-  if (~index) {
-    selected[index] = action.room;
-  } else {
-    selected.push(action.room);
-  }
-  return selected;
+export function mergeSelectedRooms(selected, room) {
+  const index = selected.findIndex(x => x.id === room.id);
+  return joinElementToArray(selected, room, index);
 }
 
 export function removeRoomFromSelected(selected, action) {
   const index = selected.findIndex(x => x.id === action.id);
-  if (index != -1) {
-    selected.splice(index, 1);
-  }
-  return selected;
+  return excludeFromArray(selected, index);
 }
 
 export function renderDateRange({ arrivalDate, departureDate }) {
-  function renderDate(date) {
-    return date.format('MM/DD/YYYY');
-  }
   let result = {};
-  if (arrivalDate) result.arrivalDate = renderDate(arrivalDate);
-  if (departureDate) result.departureDate = renderDate(departureDate);
-
+  if (arrivalDate) {
+    result.arrivalDate = renderDate(arrivalDate);
+  }
+  if (departureDate) {
+    result.departureDate = renderDate(departureDate);
+  }
   return result;
 }
 
 export function calculateBookingTotal(rooms) {
   const daysCount = ({ arrivalDate, departureDate }) => departureDate.diff(arrivalDate, 'days');
   let sum = 0;
-  rooms.map(room =>
-    sum += room.price * daysCount(room)
-  );
+  rooms.map(room => sum += room.price * daysCount(room));
   return sum;
 }
 
@@ -183,8 +101,49 @@ export function parseRoomBooking(rooms) {
   return (rooms.map(room => {
     return {
       hotelRoomId: room.id,
-      arrivalDate: room.arrivalDate.format('MM/DD/YYYY'),
-      departureDate: room.departureDate.format('MM/DD/YYYY')
+      arrivalDate: renderDate(room.arrivalDate),
+      departureDate: renderDate(room.departureDate)
     };
   }));
+}
+
+export function renderNumberOptions(number) {
+  let options = [];
+  for(let i = 0; i < number; i++) {
+    options.push({
+      value: i,
+      text: i
+    });
+  }
+  return options;
+}
+
+export function makeConfigurationsList(selected) {
+  let res = {};
+  selected.forEach(item =>
+    item.selected.forEach(configuration =>
+      res[configuration.id] = configuration.number
+    )
+  );
+  return res;
+}
+
+function joinElementToArray(arr, el, index) {
+  if (~index) {
+    arr[index] = el;
+  } else {
+    arr.push(el);
+  }
+  return arr;
+}
+
+function excludeFromArray(arr, index) {
+  if (~index) {
+    arr.splice(index, 1);
+  }
+  return arr;
+}
+
+function renderDate(date) {
+  return date.format('MM/DD/YYYY');
 }

@@ -33,7 +33,7 @@ class AddGoodModal extends Component {
     const { currentSelected } = this.state;
     good.number = value;
     this.setState({
-      currentSelected: utils.mergeSelected(currentSelected, good)
+      currentSelected: utils.mergeSelectedConfigurations(currentSelected, good)
     });
   }
   render() {

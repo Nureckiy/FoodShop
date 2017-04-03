@@ -5,7 +5,7 @@ import * as utils from '../../utils/utils';
 class EditSelectedList extends Component {
   render() {
     const { selected, clearAll, onChange, onSubmit } = this.props;
-    const total = utils.calculateTotal(selected);
+    const total = utils.calculateGoodTotal(selected);
     return (
       <div className="row good-list">
         <div className="row">

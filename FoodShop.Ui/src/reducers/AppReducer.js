@@ -24,13 +24,13 @@ export default function AppReducer(state = initialState, action) {
     case types.CHANGE_MEAL_CONFIGURATION:
       return {
         ...state,
-        selectedGoods: utils.changeConfiguration(state.selectedGoods, action.configuration)
+        selectedGoods: utils.changeConfigurationsNumber(state.selectedGoods, action.configuration)
       };
 
     case types.ADD_ROOM_SUCCESS:
       return {
         ...state,
-        selectedRooms: utils.mergeSelectedRooms(state.selectedRooms, action)
+        selectedRooms: utils.mergeSelectedRooms(state.selectedRooms, action.room)
       };
 
     case types.REMOVE_ROOM:
