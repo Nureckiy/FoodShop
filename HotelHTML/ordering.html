@@ -32,6 +32,7 @@
 
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/basket.css">
 	<link rel="stylesheet" href="css/orange_btn_style.css">
 	<link rel="stylesheet" href="css/slider.css">
 	<link rel="stylesheet" href="css/reservation.css">
@@ -56,13 +57,13 @@
 			
 			<div class="row">
 				<div class="col-sm-4 col-xs-12">
-					<div id="gtco-logo"><a href="menu.html">Hohotel <em>.</em></a></div>
+					<div id="gtco-logo"><a href="index.html">Hohotel <em>.</em></a></div>
 				</div>
 				<div class="col-xs-8 text-right menu-1">
 					<ul>
-						<li class="active"><a href="index.html">Бронирование номеров</a></li>
+						<li><a href="index.html">Бронирование номеров</a></li>
 						<li class="has-dropdown">
-							<a href="menu.html">Меню</a>
+							<a href="menu.html">Ресторан</a>
 							<ul class="dropdown">
 								<li><a href="#">1</a></li>
 								<li><a href="#">2</a></li>
@@ -71,8 +72,7 @@
 						</li>
 						<li><a href="contacts.html">Контакты</a></li>
 						<li><a href="user.html">Войти</a></li>
-						<li><a href="admin.html">Админка</a></li>
-						<li class="btn-cta"><a href="ordering.html"><span>Бронь <i id="basket-icon" class="glyphicon glyphicon-bed" aria-hidden="true"></i></span></a></li>
+						<li class="btn-cta active"><a href="ordering.html"><span>Бронь <i id="basket-icon" class="glyphicon glyphicon-bed" aria-hidden="true"></i></span></a></li>
 					</ul>	
 				</div>
 			</div>
@@ -171,12 +171,12 @@
 						<input type="text" id="middle_name" class="form-control" placeholder="Иванович" required>
 					</div>
 					<div class="col-md-5 col-md-offset-2 form-group">	
+						<label for="login">Логин</label>
+						<input type="text" id="login" class="form-control" placeholder="aggeyr">
 						<label for="tel">Номер телефона</label>
 						<input type="text" id="tel" class="form-control" placeholder="80259239940" required>
 						<label for="tel">Email</label>
 						<input type="email" id="email" class="form-control" placeholder="info@hohotel.by" required>
-						<label for="tel">Серия паспорта</label>
-						<input type="text" id="passport" class="form-control" placeholder="BM1234567" required>
 					</div>
 					<div class="row col-md-3 col-md-offset-5 date-form">
 						<input type="submit" value="Забронировать" class="btn btn-primary">
@@ -193,9 +193,9 @@
 			<div class="row row text-center">
 				<div class="col-md-8 col-md-offset-2 gtco-heading">
 					<h2 class="cursive-font primary-color">Спасибо!</h2>
-					<p>Ваша бронь оформлена. В ближайшие 15 минут вам перезвонят для подтверждения заказа.</p>
+					<p>Ваша бронь оформлена. В ближайшие 15 минут вам перезвонят для подтверждения брони.</p>
 				</div>
-				<img src="images/thank.png" />
+				<img src="images/bron.jpg" />
 				<div class="row date-form">
 					<a href="menu.html" class="btn btn-warning">На главную</a>
 				</div>
