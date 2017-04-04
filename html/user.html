@@ -45,15 +45,6 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
-  <style>
-    .panel {
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 0;
-    }
-    ul, li {
-      list-style: none;
-    }
-  </style>
 	</head>
 	<body>
 		
@@ -67,12 +58,13 @@
 			
 			<div class="row">
 				<div class="col-sm-4 col-xs-12">
-					<div id="gtco-logo"><a href="menu.html">FoodShop <em>.</em></a></div>
+					<div id="gtco-logo"><a href="index.html">Hohotel <em>.</em></a></div>
 				</div>
 				<div class="col-xs-8 text-right menu-1">
 					<ul>
+						<li><a href="index.html">Бронирование номеров</a></li>
 						<li class="has-dropdown">
-							<a href="menu.html">Меню</a>
+							<a href="menu.html">Ресторан</a>
 							<ul class="dropdown">
 								<li><a href="#">1</a></li>
 								<li><a href="#">2</a></li>
@@ -81,7 +73,7 @@
 						</li>
 						<li><a href="contacts.html">Контакты</a></li>
 						<li class="active"><a href="user.html">Войти</a></li>
-						<li class="btn-cta"><a href="basket.html"><span>Корзина <i id="basket-icon" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i></span></a></li>
+						<li class="btn-cta"><a href="ordering.html"><span>Бронь <i id="basket-icon" class="glyphicon glyphicon-bed" aria-hidden="true"></i></span></a></li>
 					</ul>	
 				</div>
 			</div>
@@ -89,242 +81,199 @@
 		</div>
 	</nav>
 	
-	<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(images/fon1.jpeg)" data-stellar-background-ratio="0.5">
+	<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url(images/fon1.jpeg);height:82px;" data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
 	</header>
 
 	<!-- Страница пользователя -->
 
-
-  <div class="gtco-section">
-    <div class="gtco-container">
-      <div class="row">
-        <div class="col-md-3 panel">
-          <ul>
-            <li>
-              <figure>
-                <img src="images/superUser.jpg" alt="user" class="img-circle img-responsive">
-              </figure>
-            </li>
-            <li>
-              <ul>
-                <li>Профиль</li>
-                <li>Подписки</li>
-                <li>Заказы</li>
-                <li>Выйти</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <div class="col-md-9" style="background-color: blue">asasasas</div>
-      </div>
-    </div>
-  </div>
-
-
 	<div class="gtco-section">
 		<div class="gtco-container">
-			<div class="row animate-box">
-				<div class="well profile">
-					<div class="col-sm-12">
-						<div class="col-xs-12 col-sm-8">
-							<h2>Рабатуев Аггей</h2>
-							<p><strong>Логин: </strong> aggeyr </p>
-							<p><strong>Email: </strong> aggeyr@mail.ru </p>
-							<p><strong>Адрес: </strong> Дом 2 </p>
-							<p><strong>Подписки: </strong>
-								<span class="label label-info">Фреши</span>
-								<span class="label label-info">Напитки</span>
-								<span class="label label-info">Горячие блюда</span>
-								<span class="label label-info">Холодные блюда</span>
-							</p>
-
-							<ul id="menu">
-							 <li><span><strong>Текущие заказы </strong><i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></span>
-							    <ul>
-							     <li>подпункт 1</li>
-							     <li>подпункт 2</li>
-							     <li>подпункт 3</li>
-							    </ul>
-							 </li>
-							 <li><span><strong>Прошлые заказы </strong><i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></span>
-							    <ul>
-							        <li>подпункт 1</li>
-							        <li>подпункт 2</li>
-							        <li>подпункт 3</li>
-							        <li>подпункт 4</li>
-							    </ul>
-							 </li>
-							</ul>
-
-						</div>
-						<div class="col-xs-12 col-sm-4 text-center">
-							<figure>
-								<img src="images/superUser.jpg" alt="user" class="img-circle img-responsive">
-							</figure>
-						</div>
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="active">
+					<a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Профиль пользователя</a>
+				</li>
+				<li role="presentation">
+					<a href="#profile_setup" role="tab" id="profile_setup-tab" data-toggle="tab" aria-controls="profile_setup"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Настройки профиля</a>
+				</li>
+				<li role="presentation">
+					<a href="#booking" role="tab" id="booking-tab" data-toggle="tab" aria-controls="booking"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Забронированные номера</a>
+				</li>
+				<li role="presentation" style="float:right;">
+					<a href="#" role="tab"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Выйти</a>
+				</li>
+			</ul>
+			<br>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane fade in active" id="profile" aria-labelledby="profile-tab">
+					<div class="col-xs-2 text-center">
+						<figure>
+							<img src="images/superUser.jpg" alt="user" class="img-circle img-responsive">
+						</figure>
 					</div>
-					<div class="col-xs-12 text-center">
-						<div class="col-xs-12 col-sm-3 emphasis">
-							<div class="btn-group dropup btn-block">
-								<button type="button" class="btn btn-primary"><span class="fa fa-gear"></span> Опции</button>
-								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-									<span class="caret"></span>
-									<span class="sr-only">Toggle Dropdown</span>
-								</button>
-								<ul class="dropdown-menu text-right" role="menu">
-									<li><a href="#"><span class="fa fa-list pull-right"></span> Редактировать профиль </a></li>
-									<li><a href="#"><span class="fa fa-user pull-right"></span> Изменить аватар </a></li>
-									<li class="divider"></li>
-									<li><a href="#"><span class="fa fa-cutlery pull-right"></span> Управление подписками </a></li>
-									<li class="divider"></li>
-									<li><a href="#"><span class="fa fa-window-close pull-right"></span> Выход </a></li>
-								</ul>
-							</div>
-						</div>
+					<div class="col-xs-10" style="padding-bottom: 7em;">
+						<h2>Рабатуев Аггей Геннадьевич</h2>
+						<section class="row col-xs-12">
+							<p class="col-xs-2 col-md-1">Логин:</p>
+							<p class="col-xs-10 col-md-11"><strong>aggeyr</strong></p>
+						</section>
+
+						<section class="row col-xs-12">
+							<p class="col-xs-2 col-md-1">Email:</p>
+							<p class="col-xs-10 col-md-11"><strong></strong></p>
+						</section>
+
+						<section class="row col-xs-12">
+							<p class="col-xs-2 col-md-1">Номер:</p>
+							<p class="col-xs-10 col-md-11"><strong>80259239940</strong></p>
+						</section>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Настройка профиля  -->
-
-	<div class="gtco-section">
-		<div class="gtco-container">
-			<div class="row animate-box">
-				<div class="well profile col-sm-12">
+				<div role="tabpanel" class="tab-pane fade" id="profile_setup" aria-labelledby="profile_setup-tab">
 					<h3>Настройки профиля</h3>
 					<form action="#">
-						<div class="row form-group">
-							<div class="col-md-12">
-								<label for="name">Имя</label>
-								<input type="text" id="name" class="form-control" placeholder="Рабатуев Аггей">
+							<div class="col-md-6 form-group">
+								<div class="row form-group">
+									<label for="surname">Фамилия</label>
+									<input type="text" id="surname" class="form-control" placeholder="Рабатуев">
+								</div>
+		
+								<div class="row form-group">
+									<label for="name">Имя</label>
+									<input type="text" id="name" class="form-control" placeholder="Аггей">
+								</div>
+		
+								<div class="row form-group">
+									<label for="middle_name">Отчество</label>
+									<input type="text" id="middle_name" class="form-control" placeholder="Геннадьевич">
+								</div>
 							</div>
-						</div>
 
-						<div class="row form-group">
-							<div class="col-md-12">
-								<label for="login">Логин</label>
-								<input type="text" id="login" class="form-control" placeholder="aggeyr">
+							<div class="col-md-5 col-md-offset-1 form-group">
+								<div class="row form-group">
+									<label for="login">Логин</label>
+									<input type="text" id="login" class="form-control" placeholder="aggeyr">
+								</div>
+
+								<div class="row form-group">
+									<label for="email">Email</label>
+									<input type="email" id="email" class="form-control" placeholder="aggeyr@mail.ru">
+								</div>
+		
+								<div class="row form-group">
+									<label for="phone">Номер телефона</label>
+									<input type="text" id="phone" class="form-control" placeholder="80259239940">
+								</div>
+							</div>	
+							<div class="text-center form-group">
+								<input type="submit" value="Сохранить" class="btn btn-warning">
+								<input type="submit" value="Очистить" class="btn btn-defult">
 							</div>
-						</div>
-
-						<div class="row form-group">
-							<div class="col-md-12">
-								<label for="email">Email</label>
-								<input type="email" id="email" class="form-control" placeholder="aggeyr@mail.ru">
-							</div>
-						</div>
-
-						<div class="row form-group">
-							<div class="col-md-12">
-								<label for="adress">Адрес</label>
-								<input type="text" id="adress" class="form-control" placeholder="Дом 2">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<input type="submit" value="Сохранить" class="btn btn-warning">
-							<input type="submit" value="Отмена" class="btn btn-defult">
-						</div>
-
 					</form>	
+				</div>
+				<div role="tabpanel" class="tab-pane fade" id="booking" aria-labelledby="booking-tab">
+					<div class="panel panel-default">
+  						<div class="panel-heading">Бронь № <b>4562</b> от <b>26.03</b></div>
+
+  						<table class="table user-booking">
+  							<thead>
+  							  <tr>
+  							    <th>№ апартамента</th>
+  							    <th>Название</th>
+  							    <th>Комнаты</th>
+  							    <th>Вместимость</th>
+  							    <th>Гостей</th>
+  							    <th>Дата въезда</th>
+  							    <th>Дата отбытия</th>
+  							    <th>Цена, $</th>
+  							  </tr>
+  							</thead>
+  							<tbody>
+  							  <tr>
+  							    <td>12</td>
+  							    <td>Одноместный</td>
+  							    <td>1</td>
+  							    <td>1</td>
+  							    <td>1</td>
+  							    <td>26.03</td>
+  							    <td>07.04</td>
+  							    <td>110</td>
+  							  </tr>
+  							  <tr>
+  							    <td>22</td>
+  							    <td>Двуместный</td>
+  							    <td>1</td>
+  							    <td>2</td>
+  							    <td>1</td>
+  							    <td>26.03</td>
+  							    <td>07.04</td>
+  							    <td>160</td>
+  							  </tr>
+  							  <tr>
+  							    <td>41</td>
+  							    <td>Трёхместный</td>
+  							    <td>2</td>
+  							    <td>3</td>
+  							    <td>3</td>
+  							    <td>26.03</td>
+  							    <td>07.04</td>
+  							    <td>200</td>
+  							  </tr>
+  							</tbody>
+						</table>
+
+  						<div class="panel-body text-right">
+  						  Суммарная стоимость: <span class="cursive-font">$470</span>
+  						</div>
+					</div>
+					<div class="panel panel-default">
+  						<div class="panel-heading">Бронь № <b>4664</b> от <b>28.03</b></div>
+
+  						<table class="table user-booking">
+  							<thead>
+  							  <tr>
+  							    <th>№ апартамента</th>
+  							    <th>Название</th>
+  							    <th>Комнаты</th>
+  							    <th>Вместимость</th>
+  							    <th>Гостей</th>
+  							    <th>Дата въезда</th>
+  							    <th>Дата отбытия</th>
+  							    <th>Цена, $</th>
+  							  </tr>
+  							</thead>
+  							<tbody>
+  							  <tr>
+  							    <td>37</td>
+  							    <td><a href="reservation.html">Одноместный</a></td>
+  							    <td>1</td>
+  							    <td>1</td>
+  							    <td>1</td>
+  							    <td>28.03</td>
+  							    <td>09.04</td>
+  							    <td>110</td>
+  							  </tr>
+  							  <tr>
+  							    <td>5</td>
+  							    <td><a href="reservation.html">Трёхместный</a></td>
+  							    <td>2</td>
+  							    <td>3</td>
+  							    <td>2</td>
+  							    <td>28.03</td>
+  							    <td>09.04</td>
+  							    <td>200</td>
+  							  </tr>
+  							</tbody>
+						</table>
+
+  						<div class="panel-body text-right">
+  						  Суммарная стоимость: <span class="cursive-font">$330</span>
+  						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<!-- Загрузка аватарки  -->
-	<!-- Взял с: https://github.com/danielm/uploader/blob/master/README.md  -->
-
-	<div class="gtco-section">
-		<div class="gtco-container">
-			<div class="row">
-				<div class="well profile col-sm-12">
-          			<div id="drag-and-drop-zone" class="uploader col-md-6">
-          			  <div>Drag &amp; Drop Images Here</div>
-          			  <div class="or">-or-</div>
-          			  <div class="browser">
-          			    <label>
-          			      <span>Click to open the file Browser</span>
-          			      <input type="file" name="files[]" multiple="multiple" title='Click to add Files'>
-          			    </label>
-          			  </div>
-          			</div>
-          			<!-- /D&D Zone -->
-					<div class="col-md-12" style="text-align:center;">
-						<input type="submit" value="Вернуться" class="btn btn-success">
-					</div>
-        		</div>
-        		<!-- / Left column -->
-      		</div>
-
-			<div class="row">
-				<div class="well profile col-sm-12">
-          			<!-- Debug box -->
-          			<div class="panel panel-default col-md-6">
-          			  <div class="panel-heading">
-          			    <h3 class="panel-title">Debug</h3>
-          			  </div>
-          			  <div class="panel-body demo-panel-debug">
-          			    <ul id="demo-debug">
-          			    </ul>
-          			  </div>
-          			</div>
-          			<!-- /Debug box -->
-          		
-        			<div class="col-md-6">
-        			  <div class="panel panel-default">
-        			    <div class="panel-heading">
-        			      <h3 class="panel-title">Uploads</h3>
-        			    </div>
-        			    <div class="panel-body demo-panel-files" id='demo-files'>
-        			      <span class="demo-note">No Files have been selected/droped yet...</span>
-        			    </div>
-        			  </div>
-        			</div>
-        			<!-- / Right column -->
-      			</div>
-      		</div>
-    	</div>
-    </div>
-
-	<!-- Управление подписками  -->
-
-	<div class="gtco-section">
-		<div class="gtco-container">
-			<div class="row animate-box">
-				<div class="well profile-2 col-sm-12">
-
-					<form class="form-inline">
-						<div class="col-md-8">
-							<input type="checkbox" id="c1" />
-							<label for="c1" class="check-label"><span></span>Холодные блюда</label>
-
-							<input type="checkbox" id="c2" checked />
-							<label for="c2" class="check-label"><span></span>Горячие блюда</label>
-
-							<input type="checkbox" id="c3" checked />
-							<label for="c3" class="check-label"><span></span>Напитки</label>
-
-							<input type="checkbox" id="c4" checked />
-							<label for="c4" class="check-label"><span></span>Фреши</label>
-
-							<input type="checkbox" id="c5" />
-							<label for="c5" class="check-label"><span></span>Вегетарианские блюда</label>
-						</div>
-
-						<div class="col-md-4 subscribe">
-							<input type="submit" value="Подписаться" class="btn btn-warning">
-							<input type="submit" value="Отмена" class="btn btn-defult">
-						</div>
-					</form>
-
-      			</div>				
-      		</div>
-    	</div>
-    </div>
 
 	<footer id="gtco-footer" role="contentinfo" style="background-image: url(images/fon2.jpg)" data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
@@ -336,13 +285,13 @@
 						<h3>Мы на связи</h3>
 						<ul class="gtco-quick-contact">
 							<li><a href="#"><i class="icon-phone"></i> +375 25 9239940</a></li>
-							<li><a href="#"><i class="icon-mail2"></i> info@foodshop.by</a></li>
+							<li><a href="#"><i class="icon-mail2"></i> info@hohotel.by</a></li>
 						</ul>
 					</div>
 				</div>
 
 				<div class="col-md-12 text-center copyright">
-					<p><small class="block">&copy; 2017 FoodShop. Все права в кормане.</small> 
+					<p><small class="block">&copy; 2017 Hohotel. Все права в кармане.</small> 
 						<small class="block">Команда разработчиков: Рабатуев А.Г., Осецкая А.В., Веремейчик И.Г.</small></p>
 				</div>
 
@@ -383,71 +332,6 @@
 
 	<!-- Main -->
 	<script src="js/main.js"></script>
-
-<!-- Скрипты для развёртывания списка заказов -->
-	<script type="text/javascript">
-		$(document).ready(function() {
-		$("#menu ul").hide();
-		$("#menu li span").click(function() {
-		    $("#menu ul:visible").slideUp("normal");
-		    if (($(this).next().is("ul")) && (!$(this).next().is(":visible"))) {
-		        $(this).next().slideDown("normal");
-		    }
-		});
-		});
-	</script>
-
-<!-- Скрипты для загрузки аватарки -->
-    <script type="text/javascript" src="js/demo.min.js"></script>
-    <script type="text/javascript" src="js/dmuploader.min.js"></script>
-
-    <script type="text/javascript">
-      $('#drag-and-drop-zone').dmUploader({
-        url: 'upload.php',
-        dataType: 'json',
-        allowedTypes: 'image/*',
-        /*extFilter: 'jpg;png;gif',*/
-        onInit: function(){
-          $.danidemo.addLog('#demo-debug', 'default', 'Plugin initialized correctly');
-        },
-        onBeforeUpload: function(id){
-          $.danidemo.addLog('#demo-debug', 'default', 'Starting the upload of #' + id);
-          $.danidemo.updateFileStatus(id, 'default', 'Uploading...');
-        },
-        onNewFile: function(id, file){
-          $.danidemo.addFile('#demo-files', id, file);
-        },
-        onComplete: function(){
-          $.danidemo.addLog('#demo-debug', 'default', 'All pending tranfers completed');
-        },
-        onUploadProgress: function(id, percent){
-          var percentStr = percent + '%';
-          $.danidemo.updateFileProgress(id, percentStr);
-        },
-        onUploadSuccess: function(id, data){
-          $.danidemo.addLog('#demo-debug', 'success', 'Upload of file #' + id + ' completed');
-          $.danidemo.addLog('#demo-debug', 'info', 'Server Response for file #' + id + ': ' + JSON.stringify(data));
-          $.danidemo.updateFileStatus(id, 'success', 'Upload Complete');
-          $.danidemo.updateFileProgress(id, '100%');
-        },
-        onUploadError: function(id, message){
-          $.danidemo.updateFileStatus(id, 'error', message);
-          $.danidemo.addLog('#demo-debug', 'error', 'Failed to Upload file #' + id + ': ' + message);
-        },
-        onFileTypeError: function(file){
-          $.danidemo.addLog('#demo-debug', 'error', 'File \'' + file.name + '\' cannot be added: must be an image');
-        },
-        onFileSizeError: function(file){
-          $.danidemo.addLog('#demo-debug', 'error', 'File \'' + file.name + '\' cannot be added: size excess limit');
-        },
-        /*onFileExtError: function(file){
-          $.danidemo.addLog('#demo-debug', 'error', 'File \'' + file.name + '\' has a Not Allowed Extension');
-        },*/
-        onFallbackMode: function(message){
-          $.danidemo.addLog('#demo-debug', 'info', 'Browser not supported(do something else here!): ' + message);
-        }
-      });
-    </script>
 
 	</body>
 </html>
