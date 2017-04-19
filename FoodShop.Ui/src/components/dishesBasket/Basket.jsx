@@ -36,7 +36,7 @@ class Basket extends Component {
     const { auth, selectedGoods, clearSelected, changeConfiguration } = this.props;
     const { step } = this.state;
     if (!selectedGoods.length && step !== 2) {
-      return 'Корзина пуста';
+      return <h2 className="cursive-font primary-color text-center">Корзина пуста</h2>;
     }
     switch(step) {
       case 0:

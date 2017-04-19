@@ -24,12 +24,7 @@ class RenderSelect extends Component {
         onChange={this.handleChange}
       >
         {options.map((item) => (
-          <option
-            key={item.value}
-            value={item.value}
-          >
-            {item.text}
-          </option>
+          <option key={item.value} value={item.value}>{item.text}</option>
         ))}
       </select>
     );

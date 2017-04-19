@@ -285,6 +285,11 @@ body {
 .middle {
   height: 100%;
 }
+
+.title {
+  margin-bottom: 20px;
+}
+
 .intro-text-small {
   font-size: 14px;
   text-transform: uppercase;
@@ -301,12 +306,13 @@ body {
 }
 
 .dropdown-menu {
-  transition: all 0.3s;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -ms-transition: all 0.3s;
-  -o-transition: all 0.3s;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
 
+  margin-top: 15px;
   display: block;
   max-height: 0;
   opacity: 0;
@@ -329,6 +335,17 @@ body {
   &:hover span {
     color: #FBB448;
     background-color: #fff;
+  }
+}
+
+.btn-tra {
+  border: 2px solid rgba(180, 180, 180, 0.5);
+  border-radius: 4px;
+  padding: 8px 40px;
+  transition: 0.2s;
+
+  &:hover {
+    background: rgba(180, 180, 180, 0.1);
   }
 }
 

@@ -43,6 +43,7 @@ class Menu extends Component {
             <div className="col-md-8 col-md-offset-2 text-center title">
               <h2 className="cursive-font primary-color">{categoryName}</h2>
               <p>Приготовлением вкусностей занимаются профессиональные повара и используются только самые свежие продукты.</p>
+              <a href="#/basket/" className="btn-tra">Корзина <i id="basket-icon" className="glyphicon glyphicon-shopping-cart" /></a>
             </div>
           </div>
           { activeRequestStatus

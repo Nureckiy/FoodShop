@@ -18,10 +18,10 @@ class Navigation extends Component {
     return (
       <nav className="row">
           <div className="container">
-            <div className="col-sm-4 hidden-xs">
+            <div className="col-sm-3 hidden-xs">
               <div id="logo"><a href="#">FOODSHOP <em>.</em></a></div>
             </div>
-            <div className="col-sm-8">
+            <div className="col-sm-9">
               <ButtonToolbar className="pull-right">
                 {auth.isAdmin() &&
                   <li className={this.renderClass('admin')}>
@@ -29,10 +29,10 @@ class Navigation extends Component {
                   </li>
                 }
                 <li className={this.renderClass('booking')}>
-                  <a href="#/booking/">Бронирование номеров</a>
+                  <a href="#/booking/">Номера</a>
                 </li>
                 <li className={this.renderClass('menu')}>
-                  <NavDropdown title="Меню" noCaret id="menu-category" href="#/menu/">
+                  <NavDropdown title="Ресторан" noCaret id="menu-category" href="#/menu/">
                     {Object.keys(mainCategories).map(key =>
                       <MenuItem
                         key={key}
@@ -50,7 +50,7 @@ class Navigation extends Component {
                 <li className={this.renderClass('profile')}>
                   {profile
                     ? <a href="#/profile/">{ profile.name }</a>
-                    : <a onClick={auth.login}>Войти</a>
+                    : <a href="#/login">Войти</a>
                   }
                 </li>
                 <li className={this.renderClass('order', 'btn-cta')}>

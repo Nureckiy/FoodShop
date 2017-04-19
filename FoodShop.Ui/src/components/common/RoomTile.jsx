@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 class RoomTile extends Component {
   render() {
-    const { guestsNumber, imageUrl, price, description, children, className } = this.props;
+    const { guestsNumber, imageUrl, price, description, className, category } = this.props;
     return (
       <div className={className}>
         <div className="col-md-3 col-sm-4 date-form">
@@ -12,6 +12,7 @@ class RoomTile extends Component {
         </div>
         <div className="col-md-3 col-sm-8 date-form">
           <p>
+            <h4 className="cursive-font">{ category.name }</h4><br />
             <b>Количество мест:</b> { guestsNumber }<br />
             <b>Цена:</b><span className="cursive-font">${price}</span>
           </p>
