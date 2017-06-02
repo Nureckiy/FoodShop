@@ -1,0 +1,31 @@
+.navbar {
+  position: absolute;
+  width: 100%;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  a {
+    color: rgba(255, 255, 255, 0.7);
+    padding: 30px 10px;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+  a.active, em {
+    color: #FBB448;
+  }
+  ul, li {
+    display: inline;
+  }
+  .btn-toolbar {
+    display: flex;
+    margin-top: 7px;
+  }
+}
+#logo {
+  font-size: 20px;
+  font-weight: bold;
+  a {
+    color: #fff;
+  }
+}

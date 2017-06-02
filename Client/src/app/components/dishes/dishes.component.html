@@ -1,0 +1,16 @@
+<app-header [big]="true" [title]="title" [subtitle]="subtitle"></app-header>
+<div class="container content">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 text-center title">
+      <h2 class="cursive-font primary-color">{{category}}</h2>
+      <p>Приготовлением вкусностей занимаются профессиональные повара и используются только самые свежие продукты.</p>
+    </div>
+  </div>
+  <div class="row">
+    <menu-tile *ngFor="let dish of (dishState | async).dishes" (click)="addDishModal.open(dish)" [item]="dish"></menu-tile>
+  </div>
+</div>
+<menu-add-dish-modal
+        #addDishModal
+        (onSave)="updateSelected($event)"
+></menu-add-dish-modal>

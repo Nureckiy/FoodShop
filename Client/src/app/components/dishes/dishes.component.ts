@@ -1,0 +1,52 @@
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { State } from '../../reducers/index';
+import { Observable } from 'rxjs';
+import * as dishActions from '../../actions/dish.action';
+import { ActivatedRoute } from '@angular/router';
+import { Dish } from './dish.model';
+
+@Component({
+  selector: 'menu-dishes',
+  templateUrl: './dishes.component.html',
+  styleUrls: [ './dishes.component.scss' ]
+})
+export class DishesComponent implements OnInit {
+  dishState: Observable<any>;
+  appState: Observable<any>;
+  title = 'Оцените наше меню!';
+  subtitle = 'интернет-магазин вкусностей';
+  category: string;
+  // categoryName = 'Суши';
+
+  constructor(
+    private store: Store<State>,
+    private route: ActivatedRoute
+  ) {
+    this.dishState = store.select('dishes');
+  }
+
+  ngOnInit(): void {
+    this.route.params
+      .subscribe(params => {
+        this.category = params['category'];
+      });
+    if (this.category) {
+      this.getDishesByCategoryName(this.category);
+    } else {
+      this.getPopularDishes(10);
+    }
+  }
+
+  getPopularDishes(count: number) {
+    this.store.dispatch(new dishActions.GetPopularAction(count));
+  }
+
+  getDishesByCategoryName(category: string) {
+    this.store.dispatch(new dishActions.GetDishesByCategoryName(category));
+  }
+
+  updateSelected(res: Dish): void {
+    this.store.dispatch(new dishActions.UpdateSelectedDishes(res));
+  }
+}

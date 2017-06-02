@@ -1,0 +1,34 @@
+<modal #selectCategoryModal>
+  <modal-header [show-close]="true">
+    <h4 class="primary-color">Добавить в корзину</h4>
+  </modal-header>
+  <modal-body>
+    <table>
+      <thead>
+        <tr>
+          <th>Цена</th>
+          <th>Вес</th>
+          <th>Размер</th>
+          <th>Количество</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="item">
+        <tr *ngFor="let configuration of item.configurations">
+          <th>{{configuration.price}}</th>
+          <th>{{configuration.weight}}</th>
+          <th>{{configuration.size}}</th>
+          <th>
+            <input
+                    [(ngModel)]="configuration.selectedCount"
+                    type="number"
+                    min="0"/>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="selectCategoryModal.dismiss()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="save()">Ok</button>
+  </modal-footer>
+</modal>
