@@ -5,11 +5,11 @@
     </div>
     <nav class="col-sm-9">
       <ul class="pull-right">
-        <li><a href="/menu" [class.active]="isActive('/menu')">Меню</a> </li>
-        <li><a href="/contacts" [class.active]="isActive('/contacts')">Контакты</a> </li>
-        <li><a href="/login" [class.active]="isActive('/login')">Войти</a> </li>
+        <li><a routerLink="/menu" [class.active]="isActive('/menu')">Меню</a> </li>
+        <li><a routerLink="/contacts" [class.active]="isActive('/contacts')">Контакты</a> </li>
+        <li><a routerLink="/login" [class.active]="isActive('/login')">Войти</a> </li>
         <li class="fs-btn" [class.active]="isActive('/basket')">
-          <a href="/basket" (click)="deb()"><span>Корзина</span></a>
+          <a routerLink="/basket"><span>Корзина</span></a>
         </li>
       </ul>
     </nav>

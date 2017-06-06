@@ -1,0 +1,16 @@
+<app-header></app-header>
+<div class="row good-list content">
+  <div class="col-md-8 col-md-offset-2 text-center">
+    <h2 class="cursive-font primary-color">Корзина</h2>
+  </div>
+  <form class="col-xs-12">
+    <ul>
+      <menu-basket-total-dish-item-component
+              *ngFor="let dish of (dishState | async).selectedDishes"
+              [item]="dish"
+              (onChange)="updateSelected($event)"
+      >
+      </menu-basket-total-dish-item-component>
+    </ul>
+  </form>
+</div>

@@ -6,7 +6,7 @@
       <p>Приготовлением вкусностей занимаются профессиональные повара и используются только самые свежие продукты.</p>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="!(dishState | async).activeRequestStatus; else loading;">
     <menu-tile *ngFor="let dish of (dishState | async).dishes" (click)="addDishModal.open(dish)" [item]="dish"></menu-tile>
   </div>
 </div>
@@ -14,3 +14,4 @@
         #addDishModal
         (onSave)="updateSelected($event)"
 ></menu-add-dish-modal>
+<ng-template #loading><app-loader></app-loader></ng-template>

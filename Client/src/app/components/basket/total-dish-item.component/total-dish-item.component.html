@@ -1,0 +1,19 @@
+<li *ngFor="let configuration of dish.configurations" class="dotted">
+  <span class="col-sm-10 item">
+    <span>{{dish.name}} ({{configuration.size}})</span>
+    <span class="sum">10.45$</span>
+  </span>
+  <div class="col-sm-2 wrapper">
+    <a class="btn-gray"><span class="glyphicon glyphicon-plus" (click)="increase(configuration)"></span></a>
+    <input
+            #selectedCount
+            type="number"
+            name="quantity"
+            min="0"
+            [(ngModel)]="configuration.numberOfSelected"
+            (ngModelChange)="updateConfiguration(configuration)"
+    />
+    <a class="btn-gray"><span class="glyphicon glyphicon-minus" (click)="decrease(configuration)"></span></a>
+    <a class="btn-gray"><span class="glyphicon glyphicon-remove-circle" (click)="delete(configuration)"></span></a>
+  </div>
+</li>

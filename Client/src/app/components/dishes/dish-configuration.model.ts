@@ -3,5 +3,5 @@ export class DishConfiguration {
   size: string;
   weight: number;
   price: number;
-  selectedCount: number = 0;
+  numberOfSelected: number = 0;
 }

@@ -13,11 +13,9 @@ import { Dish } from './dish.model';
 })
 export class DishesComponent implements OnInit {
   dishState: Observable<any>;
-  appState: Observable<any>;
   title = 'Оцените наше меню!';
   subtitle = 'интернет-магазин вкусностей';
   category: string;
-  // categoryName = 'Суши';
 
   constructor(
     private store: Store<State>,
@@ -28,11 +26,13 @@ export class DishesComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params
-      .subscribe(params => {
-        this.category = params['category'];
-      });
-    if (this.category) {
-      this.getDishesByCategoryName(this.category);
+      .select<string>('category')
+      .subscribe(category => this.uploadDishes(category));
+  }
+
+  uploadDishes(category: string): void {
+    if (category) {
+      this.getDishesByCategoryName(category);
     } else {
       this.getPopularDishes(10);
     }

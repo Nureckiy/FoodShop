@@ -14,12 +14,12 @@
       </thead>
       <tbody *ngIf="item">
         <tr *ngFor="let configuration of item.configurations">
-          <th>{{configuration.price}}</th>
+          <th>${{configuration.price}}</th>
           <th>{{configuration.weight}}</th>
           <th>{{configuration.size}}</th>
           <th>
             <input
-                    [(ngModel)]="configuration.selectedCount"
+                    [(ngModel)]="configuration.numberOfSelected"
                     type="number"
                     min="0"/>
           </th>

@@ -8,7 +8,7 @@ export type State = {
   dishes: Dish[];
   selectedDishes: Dish[],
   activeRequestStatus: boolean;
-  requestError: Error
+  requestError: Error;
 };
 
 const initialState: State = {
@@ -20,16 +20,29 @@ const initialState: State = {
 
 export default function (state = initialState, action: Action): State {
   switch (action.type) {
+    case ActionTypes.GET_POPULAR:
+    case ActionTypes.GET_BY_CATEGORY_NAME:
+      return {
+        ...state,
+        activeRequestStatus: true
+      };
     case ActionTypes.GET_POPULAR_SUCCESS:
     case ActionTypes.GET_BY_CATEGORY_NAME_SUCCESS:
       return {
         ...state,
-        dishes: utils.mergeNewWithSelectedDishes(action.payload, state.selectedDishes)
+        dishes: action.payload,
+        activeRequestStatus: false
+      };
+    case ActionTypes.GET_POPULAR_FAIL:
+    case ActionTypes.GET_BY_CATEGORY_NAME_FAIL:
+      return {
+        ...state,
+        requestError: action.payload,
+        activeRequestStatus: false
       };
     case ActionTypes.UPDATE_SELECTED_DISHES:
       return {
         ...state,
-        dishes: utils.mergeDishesWithSelected(Object.assign([], state.dishes), action.payload),
         selectedDishes: utils.mergeSelectedDishes(Object.assign([], state.selectedDishes), action.payload)
       };
     default: return state;

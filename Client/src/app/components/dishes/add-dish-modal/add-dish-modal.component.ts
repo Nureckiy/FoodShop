@@ -8,7 +8,7 @@ import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
   styleUrls: [ './add-dish-modal.component.scss' ]
 })
 export class AddDishModal {
-  @Output() onSave: EventEmitter<any> = new EventEmitter();
+  @Output() onSave: EventEmitter<Dish> = new EventEmitter();
   @ViewChild('selectCategoryModal')
   modal: ModalComponent;
 

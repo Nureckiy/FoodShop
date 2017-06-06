@@ -1,0 +1,45 @@
+footer {
+  background: rgba(0, 0, 0, 0.8);
+  position: relative;
+  padding: 100px 0;
+}
+
+footer .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../../src/assets/images/fon2.jpg");
+  background-size: cover;
+  z-index: -1;
+}
+
+.top-info {
+  text-align: center;
+}
+
+.top-info h3 {
+  color: #fff;
+  font-weight: bold;
+  font-size: 15px;
+  margin: 15px 0;
+}
+.top-info li {
+  display: inline-block;
+  padding: 0 20px;
+}
+
+.copyright {
+  margin: 50px 0;
+  padding: 50px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: #666666;
+  font-size: 20px;
+}
+
+.copyright span {
+  display: block;
+  font-size: 15px;
+}
