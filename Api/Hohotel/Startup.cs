@@ -1,4 +1,5 @@
 ﻿using Hohotel.Models;
+using Hohotel.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,8 +29,17 @@ namespace Hohotel
             // Add framework services.
             services.AddDbContext<HohotelContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("HohotelContext")));
             services.AddMvc();
+            services.AddCors(options => options.AddPolicy("AllowAll", p =>
+            {
+                p.AllowAnyOrigin();
+                p.AllowAnyMethod();
+                p.AllowAnyHeader();
+            }));
 
             // Add application services.
+            //            services.AddTransient<IBookingService>();
+            services.AddTransient<IRoomService, RoomService>();
+            services.AddTransient<IRoomCategoryService, RoomCategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +48,7 @@ namespace Hohotel
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseCors("AllowAll");
             app.UseMvc();
         }
     }

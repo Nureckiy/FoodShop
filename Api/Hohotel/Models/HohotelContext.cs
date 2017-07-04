@@ -11,8 +11,8 @@ namespace Hohotel.Models
         }
 
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<HotelRoom> HotelRooms { get; set; }
-        public DbSet<HotelRoomCategory> RoomCategories { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<RoomCategory> RoomCategories { get; set; }
         public DbSet<Dish> Dishes{ get; set; }
         public DbSet<DishPortion> DishPortions { get; set; }
         public DbSet<Order> Orders { get; set; }

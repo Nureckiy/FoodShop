@@ -1,8 +1,10 @@
-﻿DELETE FROM Dishes;
-DELETE FROM DishPortions;
+﻿DELETE FROM DishPortions;
+DELETE FROM Dishes;
+DELETE FROM RoomCategories;
+DELETE FROM Rooms;
 GO
 
-SET IDENTITY_INSERT Dishes ON
+SET IDENTITY_INSERT Dishes ON;
 
 INSERT INTO Dishes (Id, Category, Name, Description, ImageUrl)
 VALUES 
@@ -17,7 +19,8 @@ VALUES
 (9, 4, N'Соевый соус', N'Соевый соус', 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1486980976/1437731751_80620068_ajmr0h.jpg'),
 (10, 4, N'Имбирь', N'маринованный имбирь', 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1486981007/1447942936_85626851_sm2lhm.jpg'),
 (11, 4, N'Палочки для еды', N'Палочки', 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1486983672/shutterstock_119657713-727x522_xrhwwm.jpg'); 
-GO 
+
+SET IDENTITY_INSERT Dishes OFF;
 
 INSERT INTO DishPortions(Size, Price, ParentId)
 VALUES
@@ -32,4 +35,25 @@ VALUES
 (N'40 мл', 1, 9),
 (N'20 г', 1, 10),
 (N'2 шт', 0, 11);
-GO
+
+SET IDENTITY_INSERT RoomCategories ON;
+
+INSERT INTO RoomCategories(Id, GuestsNumber, Name, Description, CoverUrl)
+VALUES
+(1, 1, N'Одноместный', N'1-местный 1-комнатный номер. Ширина кровати - 120 см. Есть один номер, специально адаптированный для людей с ограниченными физическими возможностями.', 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/room1_u15zyx.jpg'),
+(2, 2, N'Двухместный', N'2-местный 1-комнатный номер с двумя раздельными кроватями (ширина 90 см).', 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/room2_oubfch.jpg'),
+(3, 3, N'Двухкомнатный', N'Элегантно декорированный, с оригинальным дизайном интерьера,просторный 2-местный 2-комнатный номер. Ширина кровати - 180 см.', 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/room3_j0bhfv.jpg'),
+(4, 3, N'Семейный', N'3-местный 2-комнатный номер. Ширина кровати - 180 см. Небольшая уютная гостиная и ванная комната с угловой ванной.', 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/room4_utybt7.jpg'),
+(5, 2, N'VIP', N'2-местный 2-комнатный номер повышенной комфортности. Ширина кровати - 180 см. Изысканный современный интерьер, великолепная гостиная с удобной мягкой мебелью и рабочей зоной, просторная ванная комната с угловой ванной.', 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388909/room5_henff9.jpg'),
+(6, 1, N'Гамак на балконе', N'Наш отель располагает чудесным видом из гамака. Будете ли Вы читать, загорать, спать или мечтать в гамаке, незабываемый вид несомненно позволит хорошенько расслабиться на отдыхе.', 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/room6_o2owvy.jpg');
+
+SET IDENTITY_INSERT RoomCategories OFF;
+
+INSERT INTO Rooms(Price, Address, CategoryId, ImageUrl)
+VALUES
+(20, '421', 1, 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489651461/tropicana-rooms_zcsflc.jpg'),
+(30, '113', 1, 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/room1_u15zyx.jpg'),
+(38, '90', 1, 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489651481/hotel-room_xyemto.jpg'),
+(40, '114', 1, 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489651477/bradford_hotel_rooms_ffx76o.jpg'),
+(60, '315', 3, 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489652245/deluxe1500x930_cn82tw.jpg'),
+(65, '544', 3, 'http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/room3_j0bhfv.jpg');

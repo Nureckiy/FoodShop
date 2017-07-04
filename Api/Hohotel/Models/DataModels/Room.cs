@@ -1,9 +1,12 @@
-﻿namespace Hohotel.Models.DataModels
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Hohotel.Models.DataModels
 {
-    public class HotelRoom
+    public class Room
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public HotelRoomCategory Category { get; set; }
+        public RoomCategory Category { get; set; }
         public string Address { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; }
