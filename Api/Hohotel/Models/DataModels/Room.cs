@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hohotel.Models.DataModels
 {
@@ -11,5 +12,6 @@ namespace Hohotel.Models.DataModels
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
+        public virtual IList<RoomBooking> RoomBookings { get; set; }
     }
 }

@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Hohotel.Models.DataModels;
+
+namespace Hohotel.Tests.Factories.Models
+{
+    public static class RoomCategoryFactory
+    {
+        public static RoomCategory RoomCategory(this ITestDataFactory factory,
+            int id = 0,
+            string name = null,
+            int guestsNumber = 0,
+            string description = null,
+            string coverUrl = null)
+        {
+            var model = new RoomCategory()
+            {
+                Id = id,
+                Name = name,
+                GuestsNumber = guestsNumber,
+                Description = description,
+                CoverUrl = coverUrl
+            };
+            return model;
+        }
+
+        public static IList<RoomCategory> RoomCategories(this ITestDataFactory factory, int count)
+        {
+            return Enumerable.Range(0, count).Select(e => factory.RoomCategory()).ToList();
+        }
+    }
+}

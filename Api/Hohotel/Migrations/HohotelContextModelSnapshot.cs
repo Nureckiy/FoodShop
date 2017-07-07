@@ -118,8 +118,6 @@ namespace Hohotel.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<int?>("BookingId");
-
                     b.Property<int?>("CategoryId");
 
                     b.Property<string>("Description");
@@ -130,11 +128,22 @@ namespace Hohotel.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookingId");
-
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("Hohotel.Models.DataModels.RoomBooking", b =>
+                {
+                    b.Property<int>("RoomId");
+
+                    b.Property<int>("BookingId");
+
+                    b.HasKey("RoomId", "BookingId");
+
+                    b.HasIndex("BookingId");
+
+                    b.ToTable("RoomBooking");
                 });
 
             modelBuilder.Entity("Hohotel.Models.DataModels.RoomCategory", b =>
@@ -168,13 +177,22 @@ namespace Hohotel.Migrations
 
             modelBuilder.Entity("Hohotel.Models.DataModels.Room", b =>
                 {
-                    b.HasOne("Hohotel.Models.DataModels.Booking")
-                        .WithMany("Rooms")
-                        .HasForeignKey("BookingId");
-
                     b.HasOne("Hohotel.Models.DataModels.RoomCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("Hohotel.Models.DataModels.RoomBooking", b =>
+                {
+                    b.HasOne("Hohotel.Models.DataModels.Booking", "Booking")
+                        .WithMany("RoomBookings")
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Hohotel.Models.DataModels.Room", "Room")
+                        .WithMany("RoomBookings")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

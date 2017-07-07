@@ -45,21 +45,6 @@ namespace Hohotel.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoomCategories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CoverUrl = table.Column<string>(nullable: true),
-                    GuestsNumber = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoomCategories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -81,33 +66,19 @@ namespace Hohotel.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HotelRooms",
+                name: "RoomCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Address = table.Column<string>(nullable: true),
-                    BookingId = table.Column<int>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: true),
+                    CoverUrl = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    ImageUrl = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false)
+                    GuestsNumber = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HotelRooms", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_HotelRooms_Bookings_BookingId",
-                        column: x => x.BookingId,
-                        principalTable: "Bookings",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_HotelRooms_RoomCategories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "RoomCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_RoomCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,6 +110,53 @@ namespace Hohotel.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Rooms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Address = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rooms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rooms_RoomCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "RoomCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoomBooking",
+                columns: table => new
+                {
+                    RoomId = table.Column<int>(nullable: false),
+                    BookingId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoomBooking", x => new { x.RoomId, x.BookingId });
+                    table.ForeignKey(
+                        name: "FK_RoomBooking_Bookings_BookingId",
+                        column: x => x.BookingId,
+                        principalTable: "Bookings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RoomBooking_Rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DishPortions_OrderId",
                 table: "DishPortions",
@@ -150,14 +168,14 @@ namespace Hohotel.Migrations
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HotelRooms_BookingId",
-                table: "HotelRooms",
-                column: "BookingId");
+                name: "IX_Rooms_CategoryId",
+                table: "Rooms",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HotelRooms_CategoryId",
-                table: "HotelRooms",
-                column: "CategoryId");
+                name: "IX_RoomBooking_BookingId",
+                table: "RoomBooking",
+                column: "BookingId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -166,7 +184,7 @@ namespace Hohotel.Migrations
                 name: "DishPortions");
 
             migrationBuilder.DropTable(
-                name: "HotelRooms");
+                name: "RoomBooking");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -176,6 +194,9 @@ namespace Hohotel.Migrations
 
             migrationBuilder.DropTable(
                 name: "Bookings");
+
+            migrationBuilder.DropTable(
+                name: "Rooms");
 
             migrationBuilder.DropTable(
                 name: "RoomCategories");

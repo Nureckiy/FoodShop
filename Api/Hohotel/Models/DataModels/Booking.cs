@@ -15,7 +15,7 @@ namespace Hohotel.Models.DataModels
         public string UserId { get; set; }
         public string UserName { get; set; }
         public string Phone { get; set; }
-        public virtual IEnumerable<Room> Rooms { get; set; }
+        public virtual IList<RoomBooking> RoomBookings { get; set; }
         public OrderStatus Status { get; set; }
     }
 }

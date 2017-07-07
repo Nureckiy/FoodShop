@@ -9,7 +9,7 @@ using Hohotel.Enums;
 namespace Hohotel.Migrations
 {
     [DbContext(typeof(HohotelContext))]
-    [Migration("20170629115647_Initial")]
+    [Migration("20170707150009_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,48 +84,6 @@ namespace Hohotel.Migrations
                     b.ToTable("DishPortions");
                 });
 
-            modelBuilder.Entity("Hohotel.Models.DataModels.HotelRoom", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Address");
-
-                    b.Property<int?>("BookingId");
-
-                    b.Property<int?>("CategoryId");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("ImageUrl");
-
-                    b.Property<decimal>("Price");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookingId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("HotelRooms");
-                });
-
-            modelBuilder.Entity("Hohotel.Models.DataModels.HotelRoomCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CoverUrl");
-
-                    b.Property<int>("GuestsNumber");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoomCategories");
-                });
-
             modelBuilder.Entity("Hohotel.Models.DataModels.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -154,6 +112,59 @@ namespace Hohotel.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("Hohotel.Models.DataModels.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<int?>("CategoryId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<decimal>("Price");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("Hohotel.Models.DataModels.RoomBooking", b =>
+                {
+                    b.Property<int>("RoomId");
+
+                    b.Property<int>("BookingId");
+
+                    b.HasKey("RoomId", "BookingId");
+
+                    b.HasIndex("BookingId");
+
+                    b.ToTable("RoomBooking");
+                });
+
+            modelBuilder.Entity("Hohotel.Models.DataModels.RoomCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CoverUrl");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("GuestsNumber");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoomCategories");
+                });
+
             modelBuilder.Entity("Hohotel.Models.DataModels.DishPortion", b =>
                 {
                     b.HasOne("Hohotel.Models.DataModels.Order")
@@ -165,15 +176,24 @@ namespace Hohotel.Migrations
                         .HasForeignKey("ParentId");
                 });
 
-            modelBuilder.Entity("Hohotel.Models.DataModels.HotelRoom", b =>
+            modelBuilder.Entity("Hohotel.Models.DataModels.Room", b =>
                 {
-                    b.HasOne("Hohotel.Models.DataModels.Booking")
-                        .WithMany("Rooms")
-                        .HasForeignKey("BookingId");
-
-                    b.HasOne("Hohotel.Models.DataModels.HotelRoomCategory", "Category")
+                    b.HasOne("Hohotel.Models.DataModels.RoomCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("Hohotel.Models.DataModels.RoomBooking", b =>
+                {
+                    b.HasOne("Hohotel.Models.DataModels.Booking", "Booking")
+                        .WithMany("RoomBookings")
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Hohotel.Models.DataModels.Room", "Room")
+                        .WithMany("RoomBookings")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }
