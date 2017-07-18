@@ -29,55 +29,58 @@ class AddGoodModal extends Component {
     model.selected = currentSelected;
     onSave(model);
   }
-  handleSelect(value, good) {
+  handleSelect(value, dish) {
     const { currentSelected } = this.state;
-    good.number = value;
+    dish.number = value;
     this.setState({
-      currentSelected: utils.mergeSelectedConfigurations(currentSelected, good)
+      currentSelected: utils.mergeSelectedConfigurations(currentSelected, dish)
     });
   }
   render() {
-    const { show, onHide, model } = this.props;
+    const { show, onHide, model: { dishPortions } } = this.props;
     const { currentSelected } = this.state;
     const values = utils.renderNumberOptions(10);
     return (
       <Modal show={show} onHide={onHide}>
-        <Modal.Header>
+        <Modal.Header className="no-border">
           <Modal.Title>Добавить в корзину</Modal.Title>
-          <Modal.Body>
-            <Table responsive>
-              <thead>
-                <tr>
-                  <th>Цена</th>
-                  <th>Вес</th>
-                  <th>Размер</th>
-                  <th>Количество</th>
+        </Modal.Header>
+        <Modal.Body>
+          <Table responsive className="options-table">
+            <thead>
+              <tr>
+                <th>Цена</th>
+                <th>Вес</th>
+                <th>Размер</th>
+                <th>Количество</th>
+              </tr>
+            </thead>
+            <tbody>
+            {dishPortions && dishPortions.map((item, key) =>
+                <tr key={key}>
+                  <th>${item.price}</th>
+                  <th>{item.weight}</th>
+                  <th>{item.size}</th>
+                  <th>
+                    <RenderSelect
+                      defaultValue={utils.findNumber(currentSelected, item.id)}
+                      onChange={v => this.handleSelect(v, item)}
+                      options={values}
+                    />
+                  </th>
                 </tr>
-              </thead>
-              <tbody>
-              {model.configurations && model.configurations.map((item, key) =>
-                  <tr key={key}>
-                    <th>{item.price}</th>
-                    <th>{item.weight}</th>
-                    <th>{item.size}</th>
-                    <th>
-                      <RenderSelect
-                        defaultValue={utils.findNumber(currentSelected, item.id)}
-                        onChange={v => this.handleSelect(v, item)}
-                        options={values}
-                      />
-                    </th>
-                  </tr>
-              )}
-              </tbody>
-            </Table>
-          </Modal.Body>
-          <Modal.Footer>
+            )}
+            </tbody>
+          </Table>
+        </Modal.Body>
+        <Modal.Footer className="no-border">
+          <div className="buttons pull-right">
             <Button onClick={onHide}>Отмена</Button>
             <Button onClick={this.onSave}>Добавить</Button>
-          </Modal.Footer>
-        </Modal.Header>
+          </div>
+        </Modal.Footer>
       </Modal>
+
     );
   }
 }

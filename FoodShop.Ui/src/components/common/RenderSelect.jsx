@@ -19,7 +19,7 @@ class RenderSelect extends Component {
     const { value } = this.state;
     return(
       <select
-        className="select_price"
+        className="select-price"
         value={value}
         onChange={this.handleChange}
       >

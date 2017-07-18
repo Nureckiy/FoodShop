@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../actions/BasketActions';
-import * as appActions from '../actions/AppActions';
+import * as actions from '../actions/MenuActions';
 
 import Basket from '../components/dishesBasket/Basket.jsx';
 
@@ -17,14 +16,14 @@ class BasketContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    view: state.BasketReducer
+    view: state.MenuReducer
   };
 }
 
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Object.assign(actions, appActions), dispatch),
+    actions: bindActionCreators(actions, dispatch),
   };
 }
 

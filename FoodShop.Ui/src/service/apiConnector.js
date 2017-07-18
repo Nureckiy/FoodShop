@@ -32,12 +32,11 @@ var RequestHelper = function() {
     );
   };
 
-  this.getWithAjax = (url, entity, success, failed) => {
+  this.getWithAjax = (url, success, failed) => {
     return makeRequest({
         url: this.host + url,
         type: 'GET',
-        dataType: 'json',
-        data: entity
+        dataType: 'json'
       },
       success,
       failed

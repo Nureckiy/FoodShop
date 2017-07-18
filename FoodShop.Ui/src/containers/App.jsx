@@ -2,8 +2,8 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../actions/AppActions';
 
+import * as actions from '../actions/AppActions';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer.jsx';
 

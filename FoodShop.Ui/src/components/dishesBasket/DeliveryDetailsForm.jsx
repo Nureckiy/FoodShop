@@ -10,11 +10,9 @@ class DeliveryDetailsForm extends Component {
     this.state = {};
     this.handleDeliveryClick = this.handleDeliveryClick.bind(this);
   }
-  getDefault() {
-    const name = utils.getProfileItem('name');
-    const phoneNumber = utils.getProfileItemFromMetadata('phoneNumber');
-    const address = utils.getProfileItemFromMetadata('address');
-    return { name, phoneNumber, address };
+  getInitialValues() {
+    const { name, email, user_metadata: { surname, address, phone } } = utils.getProfile();
+    return { userName: name, email, surname, address, phone };
   }
   handleDeliveryClick(event) {
     this.setState({
@@ -24,8 +22,8 @@ class DeliveryDetailsForm extends Component {
   render() {
     const { onBack, onSubmit, selected } = this.props;
     const { hideAddress } = this.state;
-    const initial = this.getDefault();
-    const total = utils.calculateGoodTotal(selected);
+    const initial = this.getInitialValues();
+    const total = utils.calculateDishTotal(selected);
     return (
       <div className="row animate-box">
         <div className="row">
@@ -37,14 +35,14 @@ class DeliveryDetailsForm extends Component {
         <ControlledForm onSubmit={onSubmit} initialValues={initial} className="col-md-6">
           <FormGroup>
             <Field
-              id="name"
+              id="userName"
               type="text"
               placeholder="Введите имя"
               label="Ваше имя"
               required
             />
             <Field
-              id="phoneNumber"
+              id="phone"
               type="text"
               placeholder="Номер телефона"
               label="Телефон"
@@ -66,7 +64,7 @@ class DeliveryDetailsForm extends Component {
               />
             }
           </FormGroup>
-          <div className="col-md-12 buttons">
+          <div className="col-md-12 buttons text-center">
             <input type="submit" value="Заказать" className="btn btn-warning" />
             <input type="button" value="Отменить" className="btn btn-default" onClick={onBack} />
           </div>

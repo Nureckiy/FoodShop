@@ -1,17 +1,18 @@
 import * as types from '../constants/MenuConstants';
 import service from '../service/service';
+import * as utils from '../utils/utils';
 
-export function getGoods(data) {
+export function getDishes(data) {
   return (dispatch) => {
     dispatch({
-      type: types.GET_GOOD
+      type: types.GET_DISH
     });
 
-    service.getGoodsByCategoryName({ name: data }, success, fail);
+    service.getDishesByCategoryName({ name: data }, success, fail);
 
     function success(data, status) {
       dispatch({
-        type: types.GET_GOOD_SUCCESS,
+        type: types.GET_DISH_SUCCESS,
         data,
         status
       });
@@ -19,7 +20,7 @@ export function getGoods(data) {
 
     function fail(data, status) {
       dispatch({
-        type: types.GET_GOOD_FAIL,
+        type: types.GET_DISH_FAIL,
         data,
         status
       });
@@ -27,17 +28,17 @@ export function getGoods(data) {
   };
 }
 
-export function getPopularGoods(count) {
+export function getPopularDishes(count) {
   return (dispatch) => {
     dispatch({
-      type: types.GET_GOOD
+      type: types.GET_DISH
     });
 
-    service.getPopularGoods({ count }, success, fail);
+    service.getPopularDishes(count, success, fail);
 
     function success(data, status) {
       dispatch({
-        type: types.GET_GOOD_SUCCESS,
+        type: types.GET_DISH_SUCCESS,
         data,
         status
       });
@@ -45,7 +46,81 @@ export function getPopularGoods(count) {
 
     function fail(data, status) {
       dispatch({
-        type: types.GET_GOOD_FAIL,
+        type: types.GET_DISH_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}
+
+export function selectDish(good) {
+  return {
+    type: types.SELECT_DISH,
+    good
+  };
+}
+
+export function clearSelected() {
+  return {
+    type: types.CLEAR_SELECTED_DISHES,
+  };
+}
+
+export function changeConfiguration(configuration) {
+  return {
+    type: types.CHANGE_DISH_PORTION,
+    configuration
+  };
+}
+
+export function updateTotal(goods) {
+  return (dispatch) => {
+    dispatch({
+      type: types.UPDATE_TOTAL
+    });
+
+    service.getTotal(goods, success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.UPDATE_TOTAL_SUCCESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.UPDATE_TOTAL_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}
+
+export function addOrder(selected, deliveryDetails) {
+  return (dispatch) => {
+    dispatch({
+      type: types.ADD_ORDER
+    });
+
+    const portions = utils.makePortionsList(selected);
+
+    service.addOrder({ portions, ...deliveryDetails }, success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.ADD_ORDER_SUCCSESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.ADD_ORDER_FAIL,
         data,
         status
       });

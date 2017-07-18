@@ -27,7 +27,7 @@ class OrderItem extends Component {
             <ul>
               <li><strong>Самовывоз:</strong> {order.TakeAway ? 'Да' : 'Нет'}</li>
               {!order.TakeAway && <li><strong>Адрес:</strong> {order.Address}</li>}
-              <li><strong>Телефон:</strong> {order.PhoneNumber}</li>
+              <li><strong>Телефон:</strong> {order.phone}</li>
               <li><strong>Заказ:</strong></li>
               <li>
                 {Configurations.map(item => (

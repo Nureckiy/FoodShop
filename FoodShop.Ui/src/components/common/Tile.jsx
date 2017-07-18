@@ -1,13 +1,9 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
 class Tile extends Component {
   render() {
-    const { item : { name, description, imageUrl, imageUrls }, onClick, price } = this.props;
-    let image = imageUrl;
-    if (imageUrls && imageUrls.length) {
-      image = imageUrls[0];
-    }
+    const { item : { name, description, imageUrl, coverUrl }, onClick, price } = this.props;
+    let image = imageUrl ? imageUrl : coverUrl;
     return (
       <div className="col-lg-4 col-md-4 col-sm-6" onClick={onClick}>
         <a className="card">

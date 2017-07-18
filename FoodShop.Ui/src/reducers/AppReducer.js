@@ -1,54 +1,52 @@
-import * as types from '../constants/AppConstants';
-import * as utils from '../utils/utils';
+import * as menuTypes from '../constants/MenuConstants';
+import * as bookingTypes from '../constants/BookingConstants';
 
 const initialState = {
-  selectedGoods: [],
-  selectedRooms: []
+  orderActiveRequestStatus: true,
+  isSuccessOrder: false
 };
 
 export default function AppReducer(state = initialState, action) {
   switch (action.type) {
 
-    case types.SELECT_MEAL:
+    case menuTypes.ADD_ORDER:
       return {
         ...state,
-        selectedGoods: utils.mergeGoods(state.selectedGoods, action.good)
+        orderActiveRequestStatus: true
       };
 
-    case types.CLEAR_SELECTED_MEALS:
+    case menuTypes.ADD_ORDER_SUCCSESS:
       return {
         ...state,
-        selectedGoods: []
+        orderActiveRequestStatus: false,
+        isSuccessOrder: true
       };
 
-    case types.CHANGE_MEAL_CONFIGURATION:
+    case menuTypes.ADD_ORDER_FAIL:
       return {
         ...state,
-        selectedGoods: utils.changeConfigurationsNumber(state.selectedGoods, action.configuration)
+        orderActiveRequestStatus: false,
+        isSuccessOrder: false
       };
 
-    case types.ADD_ROOM_SUCCESS:
+    case bookingTypes.BOOK:
       return {
         ...state,
-        selectedRooms: utils.mergeSelectedRooms(state.selectedRooms, action.room)
+        orderActiveRequestStatus: true
       };
 
-    case types.REMOVE_ROOM:
+    case bookingTypes.BOOK_SUCCESS:
       return {
         ...state,
-        selectedRooms: utils.removeRoomFromSelected(state.selectedRooms, action)
+        orderActiveRequestStatus: false,
+        isSuccessOrder: true
       };
 
-    case types.CLEAR_SELECTED_ROOMS:
+    case bookingTypes.BOOK_FAIL:
       return {
         ...state,
-        selectedRooms: []
-      };
-
-    case types.BOOK_SUCCESS:
-      return {
-        ...state,
-        selectedRooms: []
+        orderActiveRequestStatus: false,
+        isSuccessOrder: false
       };
 
     default:

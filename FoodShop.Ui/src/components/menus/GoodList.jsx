@@ -9,7 +9,7 @@ class GoodList extends Component {
     super();
     this.state = {
       showModal: false,
-      currentGood: {}
+      currentDish: {}
     };
     this.closeModal = this.closeModal.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -17,8 +17,11 @@ class GoodList extends Component {
   openModal(item) {
     this.setState({
       showModal: true,
-      currentGood: item
+      currentDish: item
     });
+
+
+
   }
   closeModal() {
     this.setState({ showModal: false });
@@ -30,15 +33,15 @@ class GoodList extends Component {
   }
   render() {
     const { selected, items } = this.props;
-    const { showModal, currentGood } = this.state;
-    const model = selected.find(x => x.id === currentGood.id);
+    const { showModal, currentDish } = this.state;
+    const model = selected.find(x => x.id === currentDish.id);
     return (
       <div className="row">
         <AddGoodModal
           show={showModal}
           onHide={this.closeModal}
           onSave={this.onSave}
-          model={model ? model : currentGood}
+          model={model ? model : currentDish}
         />
         {items.map(item =>
           <Tile key={item.id} item={item} onClick={() => this.openModal(item)} />

@@ -7,20 +7,20 @@ export function mergeSelectedConfigurations(selected, newItem) {
   }
 }
 
-export function mergeGoods(selected, good) {
-  const selectedConfigurations = good.selected.filter(x => x.number !== 0);
-  const index = selected.findIndex(x => x.id === good.id);
+export function mergeDishes(selected, dish) {
+  const selectedConfigurations = dish.selected.filter(x => x.number !== 0);
+  const index = selected.findIndex(x => x.id === dish.id);
   if (selectedConfigurations && selectedConfigurations.length) {
-    return joinElementToArray(selected, good, index);
+    return joinElementToArray(selected, dish, index);
   } else {
     return excludeFromArray(selected, index);
   }
 }
 
-export function calculateGoodTotal(goods) {
+export function calculateDishTotal(dishes) {
   let total = 0;
-  goods.map(good =>
-    total += calculateTotal(good.selected)
+  dishes.map(dish =>
+    total += calculateTotal(dish.selected)
   );
   return total;
 }
@@ -33,18 +33,18 @@ export function calculateTotal(array) {
   return total;
 }
 
-export function changeConfigurationsNumber(goods, configuration) {
-  goods.map(good => {
-    const index = good.selected.findIndex(x => x.id === configuration.id);
+export function changeConfigurationsNumber(dishes, configuration) {
+  dishes.map(dish => {
+    const index = dish.selected.findIndex(x => x.id === configuration.id);
     if (~index) {
       if (configuration.number) {
-        good.selected[index] = configuration;
+        dish.selected[index] = configuration;
       } else {
-        good.selected.splice(index, 1);
+        dish.selected.splice(index, 1);
       }
     }
   });
-  return goods;
+  return dishes;
 }
 
 export function findNumber(selected, id) {
@@ -69,23 +69,23 @@ export function getProfileItemFromMetadata(itemName) {
     return profile.user_metadata[itemName];
 }
 
-export function mergeSelectedRooms(selected, room) {
-  const index = selected.findIndex(x => x.id === room.id);
-  return joinElementToArray(selected, room, index);
+export function mergeElementToArray(array, element) {
+  const index = array.findIndex(x => x.id === element.id);
+  return joinElementToArray(array, element, index);
 }
 
-export function removeRoomFromSelected(selected, action) {
-  const index = selected.findIndex(x => x.id === action.id);
-  return excludeFromArray(selected, index);
+export function removeElementFromArrayById(array, id) {
+  const index = array.findIndex(x => x.id === id);
+  return excludeFromArray(array, index);
 }
 
 export function renderDateRange({ arrivalDate, departureDate }) {
   let result = {};
   if (arrivalDate) {
-    result.arrivalDate = renderDate(arrivalDate);
+    result.startDate = renderDate(arrivalDate);
   }
   if (departureDate) {
-    result.departureDate = renderDate(departureDate);
+    result.endDate = renderDate(departureDate);
   }
   return result;
 }
@@ -100,9 +100,9 @@ export function calculateBookingTotal(rooms) {
 export function parseRoomBooking(rooms) {
   return (rooms.map(room => {
     return {
-      hotelRoomId: room.id,
-      arrivalDate: renderDate(room.arrivalDate),
-      departureDate: renderDate(room.departureDate)
+      roomId: room.id,
+      startDate: renderDate(room.arrivalDate),
+      endDate: renderDate(room.departureDate)
     };
   }));
 }
@@ -118,15 +118,36 @@ export function renderNumberOptions(number) {
   return options;
 }
 
-export function makeConfigurationsList(selected) {
-  let res = {};
+export function makePortionsList(selected) {
+  let res = [];
   selected.forEach(item =>
-    item.selected.forEach(configuration =>
-      res[configuration.id] = configuration.number
-    )
-  );
+    item.selected.forEach(portion =>
+      res.push({
+        dishPortionId: portion.id,
+        count: portion.number
+      })
+    ));
   return res;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function joinElementToArray(arr, el, index) {
   if (~index) {

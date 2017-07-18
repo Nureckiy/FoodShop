@@ -1,3 +1,5 @@
+/*eslint no-unused-vars: "off"*/
+
 import React, { Component } from 'react';
 
 import RoomTile from '../common/RoomTile.jsx';
@@ -39,7 +41,7 @@ class Booking extends Component {
         <div className="container content">
           <div className="row">
             <div className="col-md-8 col-md-offset-2">
-              <Slider images={currentRoomCategory.imageUrls} />
+              <Slider images={currentRoomCategory.images} />
             </div>
           </div>
           <div className="row">
@@ -53,7 +55,7 @@ class Booking extends Component {
                 <DateRangePicker className="col-md-7 date-form" onChange={this.handleFilterChange}/>
               </div>
               <div className="col-md-5 date-form">
-                <button type="button" className="btn btn-primary" onClick={this.filter}>Найти номер</button>
+                <button type="button" className="btn btn-orange" onClick={this.filter}>Найти номер</button>
               </div>
             </div>
           </div>

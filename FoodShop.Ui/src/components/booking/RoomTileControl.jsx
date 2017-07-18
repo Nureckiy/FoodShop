@@ -14,23 +14,19 @@ class RoomTileControl extends Component {
     e.preventDefault();
     const { onSubmit, room } = this.props;
     const { arrivalDate, departureDate } = this.state;
-    const that = this;
-    onSubmit(Object.assign({ arrivalDate, departureDate }, room))
-      .then(() => that.setState({ error: null }))
-      .catch(error => that.setState({ error: error.message }));
+    onSubmit(Object.assign(room, { arrivalDate, departureDate }));
   }
   handleDateChange(arrivalDate, departureDate){
     this.setState({ arrivalDate, departureDate });
   }
   render() {
-    const { error } = this.state;
-    const { className } = this.props;
+    const { className, room: { error } } = this.props;
     return (
       <Form className={className} onSubmit={this.handleSubmit}>
         <input type="submit" value="Добавить" className="btn btn-success col-sm-12" />
         <DateRangePicker onChange={this.handleDateChange} />
         <Panel className="col-sm-12 error-message" collapsible expanded={!!error}>
-          {error && <p>{ error }</p>}
+          {error && <p>{ error.message }</p>}
         </Panel>
       </Form>
     );

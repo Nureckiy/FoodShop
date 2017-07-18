@@ -1,6 +1,6 @@
 /*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
-import { FormGroup, Alert, Button } from 'react-bootstrap';
+import { FormGroup, Alert, Button, Fade } from 'react-bootstrap';
 
 import ControlledForm from '../common/ControlledForm.jsx';
 import Field from '../common/Field.jsx';
@@ -10,26 +10,33 @@ import history from '../../store/History';
 class BookingDetailsForm extends Component {
   constructor() {
     super();
-    this.state = {};
     this.handleSubmit = this.handleSubmit.bind(this);
     this.hideAlert = this.hideAlert.bind(this);
+    this.state = { error: false };
   }
+
   hideAlert() {
     this.setState({ error: false });
   }
+
   handleSubmit(details) {
     const { book, selectedRooms } = this.props;
-    const that = this;
-    book(Object.assign(
-      { rooms: utils.parseRoomBooking(selectedRooms) },
-      details,
-    ))
-      .success(() => history.push('/bookingSuccess'))
-      .fail(() => that.setState({ error: true }));
+    if(selectedRooms.length) {
+      book(Object.assign(
+        { roomBookings: utils.parseRoomBooking(selectedRooms) },
+        details,
+      ));
+      history.push('summary/booking');
+    } else {
+      this.setState({
+        error: 'Выберите хотя-бы один номер'
+      });
+    }
   }
+
   getInitialValues() {
-    const { name, surname, patronymic, email, phoneNumber } = utils.getProfile();
-    return { name, surname, patronymic, email, phoneNumber };
+    const { name, email, user_metadata: { surname, patronymic, phone } } = utils.getProfile();
+    return { name, email, surname, patronymic, phone };
   }
   render() {
     const { error } = this.state;
@@ -68,7 +75,7 @@ class BookingDetailsForm extends Component {
             required
           />
           <Field
-            id="phoneNumber"
+            id="phone"
             type="text"
             label="Телефон"
             placeholder="Введите номер в формате: 80291234567"
@@ -77,15 +84,17 @@ class BookingDetailsForm extends Component {
           />
         </FormGroup>
         <div className="col-sm-12 date-form">
-          <button type="submit" className="btn btn-primary col-md-3 col-md-offset-5">Забронировать</button>
+          <button type="submit" className="btn btn-orange col-md-3 col-md-offset-5">Забронировать</button>
         </div>
         <div className="date-form col-sm-12">
-          {error &&
-          <Alert bsStyle="danger">
-            <p>При отправке запроса произошла ошибка, попробуйте повторить попытку позже</p>
-            <Button type="button" onClick={this.hideAlert}>Скрыть</Button>
-          </Alert>
-          }
+          <Fade in={!!error}>
+            <Alert bsStyle="danger">
+              <button type="button" className="close" aria-label="Close" onClick={this.hideAlert}>
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <p>{ error }</p>
+            </Alert>
+          </Fade>
         </div>
       </ControlledForm>
     );

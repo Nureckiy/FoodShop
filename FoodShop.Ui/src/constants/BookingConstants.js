@@ -11,3 +11,16 @@ export const GET_ROOMS_FAIL = 'GET_ROOMS_FAIL';
 export const GET_ROOMS_CATEGORY_BY_ID = 'GET_ROOMS_CATEGORY_BY_ID';
 export const GET_ROOMS_CATEGORY_BY_ID_SUCCESS = 'GET_ROOMS_CATEGORY_BY_ID_SUCCESS';
 export const GET_ROOMS_CATEGORY_BY_ID_FAIL = 'GET_ROOMS_CATEGORY_BY_ID_FAIL';
+
+// add hotel rooms
+export const ADD_ROOM = 'ADD_ROOM';
+export const ADD_ROOM_SUCCESS = 'ADD_ROOM_SUCCESS';
+export const ADD_ROOM_FAIL = 'ADD_ROOM_FAIL';
+
+export const REMOVE_ROOM = 'REMOVE_ROOM';
+
+export const CLEAR_SELECTED_ROOMS = 'CLEAR_SELECTED_ROOMS';
+
+export const BOOK = 'BOOK';
+export const BOOK_SUCCESS = 'BOOK_SUCCESS';
+export const BOOK_FAIL = 'BOOK_FAIL';

@@ -5,7 +5,7 @@ import * as utils from '../../utils/utils';
 class EditSelectedList extends Component {
   render() {
     const { selected, clearAll, onChange, onSubmit } = this.props;
-    const total = utils.calculateGoodTotal(selected);
+    const total = utils.calculateDishTotal(selected);
     return (
       <div className="row good-list">
         <div className="row">
@@ -30,7 +30,7 @@ class EditSelectedList extends Component {
               </span>
             </li>
           </ul>
-          <div className="col-sm-12 buttons">
+          <div className="col-sm-12 buttons text-center">
             <input type="button" value="Заказать" className="btn btn-warning" onClick={onSubmit}/>
             <input type="button" value="Очистить" className="btn btn-defult" onClick={clearAll}/>
           </div>

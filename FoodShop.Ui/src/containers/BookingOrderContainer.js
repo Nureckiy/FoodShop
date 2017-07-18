@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as appActions from '../actions/AppActions';
+import * as actions from '../actions/BookingActions';
 
 import BookingOrder from '../components/bookingOrder/BookingOrder.jsx';
 
 class BookingContainer extends Component {
   render() {
-    const { app, actions } = this.props;
+    const { view, actions } = this.props;
     return (
-      <BookingOrder {...app} {...actions} />
+      <BookingOrder {...view} {...actions} />
     );
   }
 }
 
 function mapStateToProps(state) {
   return {
-    app: state.AppReducer
+    view: state.BookingReducer
   };
 }
 
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(appActions, dispatch),
+    actions: bindActionCreators(actions, dispatch),
   };
 }
 

@@ -1,4 +1,3 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
 import Header from '../layout/Header.jsx';

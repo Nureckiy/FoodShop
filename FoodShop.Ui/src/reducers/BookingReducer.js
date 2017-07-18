@@ -1,9 +1,11 @@
 import * as types from '../constants/BookingConstants';
+import * as utils from '../utils/utils';
 
 const initialState = {
   roomCategories: [],
   currentRoomCategory: {},
   filteredRooms: [],
+  selectedRooms: []
 };
 
 export default function RoomsReducer(state = initialState, action) {
@@ -61,7 +63,43 @@ export default function RoomsReducer(state = initialState, action) {
         activeRequestStatus: false
       };
 
+    case types.ADD_ROOM_SUCCESS:
+      return {
+        ...state,
+        selectedRooms: utils.mergeElementToArray(state.selectedRooms, removeProperty(action.room, 'error'))
+      };
+
+    case types.ADD_ROOM_FAIL:
+      return {
+        ...state,
+        filteredRooms: utils.mergeElementToArray(state.filteredRooms, { ...action.room, error: action.error }),
+        selectedRooms: utils.removeElementFromArrayById(state.selectedRooms, action.room.id)
+      };
+
+    case types.REMOVE_ROOM:
+      return {
+        ...state,
+        selectedRooms: utils.removeElementFromArrayById(state.selectedRooms, action.id)
+      };
+
+    case types.CLEAR_SELECTED_ROOMS:
+      return {
+        ...state,
+        selectedRooms: []
+      };
+
+    case types.BOOK_SUCCESS:
+      return {
+        ...state,
+        selectedRooms: []
+      };
+
     default:
       return state;
   }
+}
+
+function removeProperty(item, propertyName) {
+  delete item[propertyName];
+  return item;
 }

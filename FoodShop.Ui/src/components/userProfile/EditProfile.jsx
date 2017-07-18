@@ -14,7 +14,7 @@ class EditProfile extends Component {
     const { initial } = this.props;
     return (
       <ControlledForm initialValues={initial} onSubmit={this.handleSubmit.bind(this)}>
-        <h3 className="black">Настройки профиля</h3>
+        <h3 style={{color: 'black'}} className="black">Настройки профиля</h3>
         <FormGroup className="col-md-6">
           <Field
             id="name"
@@ -37,7 +37,7 @@ class EditProfile extends Component {
         </FormGroup>
         <FormGroup className="col-md-6">
           <Field
-            id="phoneNumber"
+            id="phone"
             type="text"
             label="Номер телефона"
             pattern="8[0-9]{10}"
@@ -57,7 +57,7 @@ class EditProfile extends Component {
           />
         </FormGroup>
         <div className="col-md-12">
-          <button type="submit" className="btn btn-primary pull-left">Сохранить</button>
+          <button type="submit" className="btn btn-orange pull-left">Сохранить</button>
         </div>
       </ControlledForm>
     );

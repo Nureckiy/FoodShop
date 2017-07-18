@@ -17,3 +17,20 @@ figure {
     max-width: 100%;
   }
 }
+
+.options-table {
+  th {
+    padding: 15px;
+    font-weight: 500;
+    border-bottom: 0;
+  }
+  tr {
+    border-top: 1px solid rgba(0, 0, 0, 0.2)
+  }
+  thead tr th {
+    border-bottom: none;
+  }
+}
+.select-price {
+  padding: 0 15px;
+}

@@ -54,7 +54,7 @@ class Contacts extends Component {
                     />
                   </FormGroup>
                   <div className="form-group">
-                    <input type="submit" value="Отправить" className="btn btn-primary"/>
+                    <input type="submit" value="Отправить" className="btn btn-orange"/>
                   </div>
                 </ControlledForm>
               </div>

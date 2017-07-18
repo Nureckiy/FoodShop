@@ -13,21 +13,21 @@ class Menu extends Component {
   }
   componentWillUpdate(nextProps) {
     const { category } = this.props;
-    if (category != nextProps.category) {
+    if (category !== nextProps.category) {
       this.uploadDishes(nextProps.category);
     }
   }
   uploadDishes(category) {
-    const { getGoods, getPopularGoods } = this.props.actions;
+    const { getDishes, getPopularDishes } = this.props.actions;
     if (category) {
-      getGoods(category);
+      getDishes(category);
     } else {
-      getPopularGoods(config.popularGoodsCount);
+      getPopularDishes(config.popularGoodsCount);
     }
   }
   render() {
-    const { goods, activeRequestStatus, selectedGoods } = this.props.model;
-    const { selectGoods } = this.props.actions;
+    const { dishes, activeRequestStatus, selectedDishes } = this.props.model;
+    const { selectDish } = this.props.actions;
     const { category } = this.props;
     const categoryName = category && mainCategories[category] ? mainCategories[category] : 'Популярные блюда';
     return (
@@ -42,13 +42,16 @@ class Menu extends Component {
           <div className="row">
             <div className="col-md-8 col-md-offset-2 text-center title">
               <h2 className="cursive-font primary-color">{categoryName}</h2>
-              <p>Приготовлением вкусностей занимаются профессиональные повара и используются только самые свежие продукты.</p>
-              <a href="#/basket/" className="btn-tra">Корзина <i id="basket-icon" className="glyphicon glyphicon-shopping-cart" /></a>
+              <p>Приготовлением вкусностей занимаются профессиональные повара и используются только самые свежие
+                продукты.</p>
+              <a href="#/basket/" className="btn-tra">
+                Корзина <i id="basket-icon" className="glyphicon glyphicon-shopping-cart"/>
+              </a>
             </div>
           </div>
           { activeRequestStatus
             ? <Loader />
-            : <GoodList selected={selectedGoods} items={goods} onSelect={selectGoods} />
+            : <GoodList selected={selectedDishes} items={dishes} onSelect={selectDish}/>
           }
         </div>
       </div>

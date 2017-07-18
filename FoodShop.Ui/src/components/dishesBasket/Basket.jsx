@@ -1,67 +1,50 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
 import Header from '../layout/Header.jsx';
 import EditSelectedList from './EditSelectedList.jsx';
 import DeliveryDetailsForm from './DeliveryDetailsForm.jsx';
-import OrserSummary from './OrderSummary.jsx';
+import history from '../../store/History';
 
 class Basket extends Component {
   constructor() {
     super();
     this.state = {
-      step: 0
+      isFirstStep: true
     };
     this.goToNext = this.goToNext.bind(this);
     this.goBack = this.goBack.bind(this);
     this.addOrder = this.addOrder.bind(this);
   }
   goToNext() {
-    let { step } = this.state;
-    step++;
-    this.setState({ step });
+    this.setState({ isFirstStep: false });
   }
   goBack() {
-    let { step } = this.state;
-    step--;
-    this.setState({ step });
+    this.setState({ isFirstStep: true });
   }
   addOrder(details) {
-    const { addOrder, selectedGoods, clearSelected } = this.props;
-    addOrder(selectedGoods, details);
-    clearSelected();
-    this.setState({ step: 2 });
+    const { addOrder, selectedDishes } = this.props;
+    addOrder(selectedDishes, details);
+    history.push('summary/dishOrder');
   }
   renderChild() {
-    const { auth, selectedGoods, clearSelected, changeConfiguration } = this.props;
-    const { step } = this.state;
-    if (!selectedGoods.length && step !== 2) {
+    const { auth, selectedDishes, clearSelected, changeConfiguration } = this.props;
+    const { isFirstStep } = this.state;
+    if (!selectedDishes.length) {
       return <h2 className="cursive-font primary-color text-center">Корзина пуста</h2>;
     }
-    switch(step) {
-      case 0:
-        return (
-          <EditSelectedList
-            selected={selectedGoods}
-            onChange={changeConfiguration}
-            clearAll={clearSelected}
-            onSubmit={this.goToNext}
-          />
-        );
-      case 1:
-        return(
-          <DeliveryDetailsForm
-            auth={auth}
-            onSubmit={this.addOrder}
-            onBack={this.goBack}
-            selected={selectedGoods}
-          />
-        );
-      case 2:
-        return (
-          <OrserSummary />
-        );
-    }
+    return isFirstStep
+      ? <EditSelectedList
+        selected={selectedDishes}
+        onChange={changeConfiguration}
+        clearAll={clearSelected}
+        onSubmit={this.goToNext}
+      />
+      : <DeliveryDetailsForm
+        auth={auth}
+        onSubmit={this.addOrder}
+        onBack={this.goBack}
+        selected={selectedDishes}
+      />;
   }
   render() {
     const child = this.renderChild();
@@ -72,7 +55,7 @@ class Basket extends Component {
           className="cut"
         />
         <div className="container content">
-          { child }
+          { child  }
         </div>
       </div>
     );

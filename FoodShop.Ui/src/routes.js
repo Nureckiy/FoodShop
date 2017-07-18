@@ -10,8 +10,8 @@ import UserProfileContainer from '../src/containers/UserProfileContainer.jsx';
 import Contacts from '../src/components/contacts/Contacts.jsx';
 import Admin from './containers/AdminContainer';
 import NotFound from './components/layout/NotFound.jsx';
-import BookingSuccess from './components/booking/BookingSuccess.jsx';
 import Login from './components/layout/Login.jsx';
+import OrderSummary from './components/common/OrderSummary.jsx';
 import auth from './service/auth';
 import config from './config';
 
@@ -46,7 +46,7 @@ const routes = (
       <Route path="/profile" component={UserProfileContainer} onEnter={requireAuth} />
       <Route path="/contacts" component={Contacts} />
       <Route path="/admin" component={Admin} onEnter={requireAdminRole} />
-      <Route path="/bookingSuccess" component={BookingSuccess} />
+      <Route path="/summary/:orderType" component={OrderSummary} />
     </Route>
     <Route path="/login" component={Login} auth={authService} />
     <Route path="*" component={NotFound} />

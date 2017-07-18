@@ -1,6 +1,7 @@
 import * as types from '../constants/BookingConstants';
 import service from '../service/service';
 import * as utils from '../utils/utils';
+import Promise from 'es6-promise';
 
 export function setCurrentRoomCategory(category) {
   return (dispatch) => {
@@ -37,14 +38,13 @@ export function getRoomCategories() {
   };
 }
 
-
 export function getRoomCategory(id) {
   return (dispatch) => {
     dispatch({
       type: types.GET_ROOMS_CATEGORY_BY_ID
     });
 
-    service.getRoomCategoryById({ id }, success, fail);
+    service.getRoomCategoryById(id, success, fail);
 
     function success(data, status) {
       dispatch({
@@ -93,4 +93,88 @@ export function getRooms(filter) {
   };
 }
 
+export function addRoom(room) {
+  return(dispatch) => {
+    dispatch({
+      type: types.ADD_ROOM,
+      room
+    });
+    return new Promise((resolve, reject) => {
+      if (!room.arrivalDate || !room.departureDate) {
+        fail(room);
+        reject(new Error('Введен некорректный временной промежуток'));
+      } else {
+        service.checkRoomAvailability(Object.assign({
+          roomId: room.id,
+          ...utils.renderDateRange(room)
+        }), success, fail);
+      }
+    });
 
+    function success(data, status) {
+      if (data) {
+        dispatch({
+          type: types.ADD_ROOM_SUCCESS,
+          room,
+          data,
+          status
+        });
+      } else {
+        fail({ message: 'номер недоступен в выбранный промежуток'}, status);
+      }
+    }
+
+    function fail(error, status) {
+      dispatch({
+        type: types.ADD_ROOM_FAIL,
+        error,
+        room,
+        status
+      });
+    }
+
+  };
+}
+
+export function removeRoom(id) {
+  return (dispatch) => {
+    dispatch({
+      type: types.REMOVE_ROOM,
+      id
+    });
+  };
+}
+
+export function clearSelectedRooms() {
+  return (dispatch) => {
+    dispatch({
+      type: types.CLEAR_SELECTED_ROOMS
+    });
+  };
+}
+
+export function book(values) {
+  return (dispatch) => {
+    dispatch({
+      type: types.BOOK
+    });
+
+    return service.book(values, success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.BOOK_SUCCESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.BOOK_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}

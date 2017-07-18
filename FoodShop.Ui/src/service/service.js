@@ -1,17 +1,51 @@
 import { RequestHelper } from './apiConnector';
 
 class service {
+
   constructor() {
     this.requestHelper = new RequestHelper();
   }
 
-  getPopularGoods = (data, success, failed) => {
-    return this.requestHelper.getWithAjax('good/getPopular', data, success, failed);
+  getRoomCategories(success, failed) {
+      return this.requestHelper.getWithAjax('roomCategory', success, failed);
+  }
+
+  getRoomCategoryById(data, success, failed) {
+    return this.requestHelper.getWithAjax(`roomCategory/${data}`, success, failed);
+  }
+
+  getRooms(data, success, failed) {
+    return this.requestHelper.postWithAjax('room/', data, success, failed);
+  }
+
+  checkRoomAvailability(data, success, failed) {
+    return this.requestHelper.postWithAjax('room/checkAvailability', data, success, failed);
+  }
+
+  book(data, success, failed) {
+    return this.requestHelper.postWithAjax('room/book', data, success, failed);
+  }
+
+  getPopularDishes = (data, success, failed) => {
+    return this.requestHelper.getWithAjax(`dish/popular/${data}`, success, failed);
   };
 
-  getGoodsByCategoryName = (data, success, failed) => {
-    return this.requestHelper.getWithAjax('good/getByCategoryName', data, success, failed);
+  getDishesByCategoryName = (data, success, failed) => {
+    return this.requestHelper.getWithAjax(`dish/${data}`, success, failed);
   };
+
+  addOrder(data, success, failed) {
+    return this.requestHelper.postWithAjax('order', data, success, failed);
+  }
+
+
+
+
+
+
+
+
+
 
   sendFeedback(data, success, failed) {
     return this.requestHelper.postWithAjax('feedback/addFeedback', data, success, failed);
@@ -37,33 +71,20 @@ class service {
     return this.requestHelper.getWithAjax('order/getOrders', '', success, failed);
   }
 
-  addOrder(data, success, failed) {
-    return this.requestHelper.postWithAjax('order/addOrder', data, success, failed);
-  }
+
 
   updateUser(data, success, fail) {
     return this.requestHelper.patchToExternal(`https://${data.domain}/api/v2/users/${data.userId}`, data.data, success, fail);
   }
 
-  getRoomCategories(success, failed) {
-    return this.requestHelper.getWithAjax('category/getRoomCategories', '', success, failed);
-  }
 
-  getRooms(data, success, failed) {
-    return this.requestHelper.getWithAjax('rooms/filterRooms', data, success, failed);
-  }
 
-  getRoomCategoryById(data, success, failed) {
-    return this.requestHelper.getWithAjax('category/getRoomCategoryById', data, success, failed);
-  }
 
-  checkRoomAvailability(data, success, failed) {
-    return this.requestHelper.getWithAjax('booking/checkAvailability', data, success, failed);
-  }
 
-  book(data, success, failed) {
-    return this.requestHelper.postWithAjax('booking/book', data, success, failed);
-  }
+
+
+
+
 }
 
 export default new service();

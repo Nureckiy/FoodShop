@@ -31,19 +31,17 @@ class Navigation extends Component {
                 <li className={this.renderClass('booking')}>
                   <a href="#/booking/">Номера</a>
                 </li>
-                <li className={this.renderClass('menu')}>
-                  <NavDropdown title="Ресторан" noCaret id="menu-category" href="#/menu/">
-                    {Object.keys(mainCategories).map(key =>
-                      <MenuItem
-                        key={key}
-                        eventKey={key}
-                        href={`#/menu/${key}`}
-                      >
-                        {mainCategories[key]}
-                      </MenuItem>
-                    )}
-                  </NavDropdown>
-                </li>
+                <NavDropdown className={this.renderClass('menu')} title="Ресторан" noCaret id="menu-category" href="#/menu/">
+                  {Object.keys(mainCategories).map(key =>
+                    <MenuItem
+                      key={key}
+                      eventKey={key}
+                      href={`#/menu/${key}`}
+                    >
+                      {mainCategories[key]}
+                    </MenuItem>
+                  )}
+                </NavDropdown>
                 <li className={this.renderClass('contacts')}>
                   <a href="#/contacts/">Контакты</a>
                 </li>

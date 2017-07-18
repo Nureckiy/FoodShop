@@ -7,11 +7,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
-var env = process.env.NODE_ENV ? process.env.NODE_ENV : "dev";
+var env = process.env.NODE_ENV ? process.env.NODE_ENV : 'dev';
 
 module.exports = function makeWebpackConfig() {
   let config = {
-    entry: env=="deploy"? [
+    entry: env=='deploy'? [
       './src/index'
     ] : [
       'webpack-hot-middleware/client',
@@ -43,50 +43,51 @@ module.exports = function makeWebpackConfig() {
       preLoaders: [
         {
           test: /\.(js|jsx)$/,
-          loaders: env == "deploy" ? ['babel-loader'] : ['babel-loader', 'eslint'],
+          loaders: env == 'deploy' ? ['babel-loader'] : ['babel-loader', 'eslint'],
           include: [
-            path.resolve(__dirname, "src")
+            path.resolve(__dirname, 'src')
           ]
         }
       ],
       loaders: [
         {
-          loaders: env == "deploy" ? ['babel-loader'] : ['react-hot', 'babel-loader'],
+          loaders: env == 'deploy' ? ['babel-loader'] : ['react-hot', 'babel-loader'],
           include: [
-            path.resolve(__dirname, "src")
+            path.resolve(__dirname, 'src')
           ],
           test: /\.(js|jsx)$/,
-          plugins: env == "deploy" ? [] : ['transform-runtime']
-        },
-        {
-          test: /\.scss$/,
-          loader: ExtractTextPlugin.extract("style", env != "deploy" ? "css!sass" : "css?minimize!sass")
+          plugins: env == 'deploy' ? [] : ['transform-runtime']
         },
         {
           test: /\.css/,
-          loader: ExtractTextPlugin.extract("style", env != "deploy" ? "css" : "css?minimize")
-        }
-        , {
+          loader: ExtractTextPlugin.extract('style', env != 'deploy' ? 'css' : 'css?minimize')
+        },
+        {
+          test: /\.scss$/,
+          loader: ExtractTextPlugin.extract('style', env != 'deploy' ? 'css!sass' : 'css?minimize!sass')
+        },
+        {
           test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
           loader: 'file'
         }
       ],
       sassLoader: {
-        includePaths: [path.resolve(__dirname, "./src/public/styles")]
+        includePaths: [
+          path.resolve(__dirname, 'src/sources/styles')
+        ],
       },
       postcss: [
         autoprefixer({
           browsers: ['last 2 version']
         })
       ]
-
     },
     postcss: function() {
       return [autoprefixer, precss];
     }
   };
 
-  if (env == "deploy") {
+  if (env == 'deploy') {
     config.plugins.push(
       new webpack.optimize.UglifyJsPlugin({ minimize: true })
     );

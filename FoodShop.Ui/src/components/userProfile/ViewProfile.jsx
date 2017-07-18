@@ -1,10 +1,8 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
 class ViewProfile extends Component {
-
   render() {
-    const { login, email, name, surname, patronymic, phoneNumber, address } = this.props;
+    const { login, email, name, surname, patronymic, phone, address } = this.props;
     return (
       <div className="row">
         <div className="col-xs-2 text-center">
@@ -14,7 +12,7 @@ class ViewProfile extends Component {
         </div>
         <div className="col-xs-10">
           <ul>
-            <li className=""><h2 className="black">{surname} {name} {patronymic}</h2></li>
+            <li className=""><h2 style={{color: 'black'}}>{surname} {name} {patronymic}</h2></li>
             <li>
               <div className="col-sm-2"><p>Логин:</p></div>
               <div className="col-sm-10"><p><strong>{login}</strong></p></div>
@@ -25,7 +23,7 @@ class ViewProfile extends Component {
             </li>
             <li>
               <div className="col-sm-2"><p>Номер телефона:</p></div>
-              <div className="col-sm-10"><p><strong>{phoneNumber}</strong></p></div>
+              <div className="col-sm-10"><p><strong>{phone}</strong></p></div>
             </li>
             <li>
               <div className="col-sm-2"><p>Адрес:</p></div>
@@ -37,5 +35,8 @@ class ViewProfile extends Component {
     );
   }
 }
+
+
+
 
 export default ViewProfile;
