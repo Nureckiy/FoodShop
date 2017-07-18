@@ -12,13 +12,15 @@ namespace Hohotel.Tests.Factories.Models
         public static Booking Booking(this ITestDataFactory factory,
             int id = 0,
             decimal total = 0,
-            DateTime? startDate = null,
-            DateTime? endDate = null,
             string userId = null,
-            string userName = null,
+            string email = null,
+            string name = null,
+            string surname = null,
+            string patronymic = null,
             string phone = null,
             IList<RoomBooking> roomBookings = null,
-            OrderStatus orderStatus = OrderStatus.NotStarted
+            OrderStatus orderStatus = OrderStatus.NotStarted,
+            DateTime? registrationTime = null
             )
         {
             var model = new Booking()
@@ -26,18 +28,17 @@ namespace Hohotel.Tests.Factories.Models
                 Id = id,
                 Total = total,
                 UserId = userId,
-                UserName = userName,
+                Email = email,
+                Name = name,
+                Surname = surname,
+                Patronymic = patronymic,
                 Phone = phone,
                 RoomBookings = roomBookings ?? new List<RoomBooking>(),
                 Status = orderStatus
             };
-            if (startDate != null)
+            if (registrationTime != null)
             {
-                model.StartDate = startDate.Value;
-            }
-            if (endDate != null)
-            {
-                model.EndDate = endDate.Value;
+                model.RegistrationTime = registrationTime.Value;
             }
             return model;
         }

@@ -13,14 +13,18 @@ namespace Hohotel.Tests.Factories.Models
             int roomId = 0,
             Room room = null,
             int bookingId = 0,
-            Booking booking = null)
+            Booking booking = null,
+            DateTime? startDate = null,
+            DateTime? endDate = null)
         {
             var model = new RoomBooking()
             {
                 RoomId = roomId,
-                Room = room ?? TestData.Create.Room(roomId),
+                Room = room,
                 BookingId = bookingId,
-                Booking = booking ?? TestData.Create.Booking(bookingId)
+                Booking = booking,
+                StartDate = startDate,
+                EndDate = endDate
             };
             return model;
         }
@@ -31,3 +35,4 @@ namespace Hohotel.Tests.Factories.Models
         }
     }
 }
+

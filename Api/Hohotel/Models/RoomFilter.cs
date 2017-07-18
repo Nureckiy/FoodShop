@@ -12,10 +12,10 @@ namespace Hohotel.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{MM/dd/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? ArrivalDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{MM/dd/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? DepartureDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

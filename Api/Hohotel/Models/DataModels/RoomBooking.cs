@@ -12,5 +12,8 @@ namespace Hohotel.Models.DataModels
 
         public int BookingId { get; set; }
         public Booking Booking { get; set; }
+
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

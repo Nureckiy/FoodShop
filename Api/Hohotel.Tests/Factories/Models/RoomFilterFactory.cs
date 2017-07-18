@@ -17,8 +17,8 @@ namespace Hohotel.Tests.Factories.Models
             return new RoomFilter()
             {
                 CategoryId = categoryId,
-                ArrivalDate = arrivalDate,
-                DepartureDate = departureDate
+                StartDate = arrivalDate,
+                EndDate = departureDate
             };
         }
 

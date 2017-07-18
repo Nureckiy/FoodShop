@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hohotel.Models.DataModels
 {
@@ -10,5 +11,6 @@ namespace Hohotel.Models.DataModels
         public string Size { get; set; }
         public double? Weight { get; set; }
         public decimal Price { get; set; }
+        public virtual IList<DishPortionOrder> DishPortionOrders { get; set; }
     }
 }

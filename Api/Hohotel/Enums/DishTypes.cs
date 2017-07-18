@@ -1,4 +1,7 @@
-﻿namespace Hohotel.Enums
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace Hohotel.Enums
 {
     public enum DishTypes
     {

@@ -21,23 +21,26 @@ namespace Hohotel.Controllers
             _service = service;
         }
 
-        // POST api/values
+        // POST api/room/checkAvailability
+        [HttpPost("CheckAvailability")]
+        public bool CheckAvailability([FromBody]RoomBooking roomBooking)
+        {
+            return _service.IsAvailable(roomBooking);
+        }
+
+        // POST api/room
         [HttpPost]
         public IList<Room> Post([FromBody]RoomFilter filter)
         {
             return _service.Filter(filter);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        // POST api/room/books
+        //TODO Add UserId
+        [HttpPost("Book")]
+        public void Book([FromBody]Booking booking)
         {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            _service.Book(booking, "userId");
         }
     }
 }

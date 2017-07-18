@@ -10,5 +10,9 @@ namespace Hohotel.Services
     public interface IRoomService
     {
         IList<Room> Filter(RoomFilter filter);
+
+        bool IsAvailable(RoomBooking roomBooking);
+
+        Booking Book(Booking booking, string userId);
     }
 }

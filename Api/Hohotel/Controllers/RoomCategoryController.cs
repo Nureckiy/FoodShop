@@ -19,14 +19,14 @@ namespace Hohotel.Controllers
             _service = service;
         }
 
-        // GET: api/values
+        // GET: api/roomCategory
         [HttpGet]
         public IEnumerable<PreviewCategory> Get()
         {
             return _service.GetRoomCategories();
         }
 
-        // GET api/values/5
+        // GET api/roomCategory/5
         [HttpGet("{id}")]
         public FullRoomCategory Get(int id)
         {

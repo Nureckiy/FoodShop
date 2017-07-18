@@ -1,4 +1,5 @@
-﻿using Hohotel.Models;
+﻿using AutoMapper;
+using Hohotel.Models;
 using Hohotel.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Hohotel
 {
@@ -28,7 +30,12 @@ namespace Hohotel
         {
             // Add framework services.
             services.AddDbContext<HohotelContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("HohotelContext")));
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
+            services.AddAutoMapper();
             services.AddCors(options => options.AddPolicy("AllowAll", p =>
             {
                 p.AllowAnyOrigin();
@@ -40,6 +47,8 @@ namespace Hohotel
             //            services.AddTransient<IBookingService>();
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IRoomCategoryService, RoomCategoryService>();
+            services.AddTransient<IDishService, DishService>();
+            services.AddTransient<IOrderService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
