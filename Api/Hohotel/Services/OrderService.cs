@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 
@@ -21,7 +22,37 @@ namespace Hohotel.Services
 
         public Order PlaceOrder(OrderInfo orderInfo, string userId)
         {
-            return null;
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new ArgumentException();
+            }
+            var order = _mapper.Map<OrderInfo, Order>(orderInfo);
+            LoadOrders(order.DishPortionOrders);
+            order.Total = CountTotal(order.DishPortionOrders);
+            order.UserId = userId;
+            order.Status = OrderStatus.Opened;
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+            return order;
+        }
+
+        private void LoadOrders(IList<DishPortionOrder> orders)
+        {
+            foreach (var portionOrder in orders)
+            {
+                portionOrder.DishPortion =_context.DishPortions
+                    .Single(portion => portion.Id == portionOrder.DishPortionId);
+            }
+        }
+
+        public decimal CountTotal(IList<DishPortionOrder> portionOrders)
+        {
+            return portionOrders.Sum(order => CountTotal(order));
+        }
+
+        public decimal CountTotal(DishPortionOrder portionOrder)
+        {
+            return portionOrder.Count * portionOrder.DishPortion.Price;
         }
     }
 }

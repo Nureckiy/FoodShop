@@ -169,15 +169,15 @@ namespace Hohotel.Tests
             var room = TestData.Create.Room(1, price: 30);
             var roomBooking = TestData.Create.RoomBooking(1, startDate: new DateTime(2017, 3, 2), endDate: new DateTime(2017, 3, 14));
             var booking = TestData.Create.Booking(roomBookings: new List<RoomBooking>() { roomBooking });
-            var bookingsMock = DbSetMock.Create(new Booking[0]);
+            var bookingsMock = DbSetMock.Create(new Booking());
 
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(room).Object);
             _context.Setup(c => c.Bookings).Returns(bookingsMock.Object);
             
             _service.Book(booking, "userId");
 
-            bookingsMock.Verify(m => m.Add(It.IsAny<Booking>()), Times.Once());
-            _context.Verify(m => m.SaveChanges(), Times.Once());
+            bookingsMock.Verify(m => m.Add(It.IsAny<Booking>()), Times.Once);
+            _context.Verify(m => m.SaveChanges(), Times.Once);
             Assert.Equal(room, booking.RoomBookings[0].Room);
             Assert.Equal("userId", booking.UserId);
         }

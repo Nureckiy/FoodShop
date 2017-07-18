@@ -9,9 +9,10 @@ using Hohotel.Enums;
 namespace Hohotel.Migrations
 {
     [DbContext(typeof(HohotelContext))]
-    partial class HohotelContextModelSnapshot : ModelSnapshot
+    [Migration("20170718143731_ChangeOrderTable")]
+    partial class ChangeOrderTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")

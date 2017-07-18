@@ -9,6 +9,7 @@ namespace Hohotel.Tests.Factories.Models
     public static class DishPortionOrderFactory
     {
         public static DishPortionOrder DishPortionOrder(this ITestDataFactory factory,
+            int count = 0,
             int dishPortionId = 0,
             DishPortion dishPortion = null,
             int orderId = 0,
@@ -16,6 +17,7 @@ namespace Hohotel.Tests.Factories.Models
         {
             var model = new DishPortionOrder()
             {
+                Count = count,
                 DishPortionId = dishPortionId,
                 DishPortion = dishPortion,
                 OrderId = orderId,
@@ -24,9 +26,9 @@ namespace Hohotel.Tests.Factories.Models
             return model;
         }
 
-        public static IList<DishPortionOrder> DishPortionOrders(this ITestDataFactory factory, int count)
+        public static IList<DishPortionOrder> DishPortionOrders(this ITestDataFactory factory, int count, int number = 0, int portionId = 0)
         {
-            return Enumerable.Range(0, count).Select(index => DishPortionOrder(factory, index)).ToList();
+            return Enumerable.Range(0, count).Select(index => DishPortionOrder(factory, number, portionId)).ToList();
         }
     }
 }

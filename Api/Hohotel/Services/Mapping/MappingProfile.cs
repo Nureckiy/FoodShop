@@ -12,8 +12,8 @@ namespace Hohotel.Services.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<Order, OrderInfo>();
-            CreateMap<OrderInfo, Order>();
+            CreateMap<OrderInfo, Order>()
+                .ForMember(o => o.DishPortionOrders, i => i.MapFrom(o => o.Portions));
         }
     }
 }
