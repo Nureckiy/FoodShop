@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hohotel.Controllers;
 using Hohotel.Models;
 using Hohotel.Services;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace Hohotel
@@ -44,7 +46,6 @@ namespace Hohotel
             }));
 
             // Add application services.
-            //            services.AddTransient<IBookingService>();
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IRoomCategoryService, RoomCategoryService>();
             services.AddTransient<IDishService, DishService>();
@@ -56,6 +57,18 @@ namespace Hohotel
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            var options = new JwtBearerOptions
+            {
+                Audience = Configuration["auth0:clientId"],
+                Authority = $"https://{Configuration["auth0:domain"]}/",
+                TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = "name"
+                }
+            };
+
+            app.UseJwtBearerAuthentication(options);
 
             app.UseCors("AllowAll");
             app.UseMvc();

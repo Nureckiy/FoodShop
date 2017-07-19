@@ -23,7 +23,7 @@ namespace Hohotel.Controllers
         [HttpPost]
         public void Post([FromBody]OrderInfo order)
         {
-            _service.PlaceOrder(order, "userId");
+            _service.PlaceOrder(order, User.Identity.Name);
         }
     }
 }

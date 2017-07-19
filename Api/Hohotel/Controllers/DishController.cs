@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hohotel.Models.DataModels;
 using Hohotel.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hohotel.Controllers
@@ -19,6 +20,7 @@ namespace Hohotel.Controllers
         }
 
         // GET: api/dish/getPopular/5
+        [Authorize]
         [HttpGet("popular/{count}")]
         public IList<Dish> Popular(int count)
         {
@@ -26,6 +28,7 @@ namespace Hohotel.Controllers
         }
 
         // GET api/dish/pizza
+        [Authorize]
         [HttpGet("{category}")]
         public IList<Dish> Get(string category)
         {
