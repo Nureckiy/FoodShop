@@ -5,7 +5,8 @@ const initialState = {
   dishes: [],
   selectedDishes: [],
   activeRequestStatus: false,
-  requestError: false
+  requestError: false,
+  availableAddresses: []
 };
 
 export default function MenuReducer(state = initialState, action) {
@@ -61,8 +62,13 @@ export default function MenuReducer(state = initialState, action) {
         selectedDishes: []
       };
 
+    case types.GET_AVAILABLE_ADDRESSES_SUCCESS:
+      return {
+        ...state,
+        availableAddresses: action.data
+      };
+
     default:
       return state;
   }
 }
-

@@ -13,6 +13,11 @@ export const ADD_ORDER = 'ADD_ORDER';
 export const ADD_ORDER_SUCCSESS = 'ADD_ORDER_SUCCSESS';
 export const ADD_ORDER_FAIL = 'ADD_ORDER_FAIL';
 
+// Get available addresses for order
+export const GET_AVAILABLE_ADDRESSES = 'GET_AVAILABLE_ADDRESSES';
+export const GET_AVAILABLE_ADDRESSES_SUCCESS = 'GET_AVAILABLE_ADDRESSES_SUCCESS';
+export const GET_AVAILABLE_ADDRESSES_FAIL = 'GET_AVAILABLE_ADDRESSES_FAIL';
+
 // Select dish item
 export const SELECT_DISH = 'SELECT_DISH';
 

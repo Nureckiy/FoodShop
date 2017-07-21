@@ -30,7 +30,10 @@ figure {
   thead tr th {
     border-bottom: none;
   }
+  select {
+    border-width: 1px;
+  }
 }
-.select-price {
+.select-number {
   padding: 0 15px;
 }

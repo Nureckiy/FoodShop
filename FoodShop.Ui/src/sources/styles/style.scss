@@ -39,6 +39,11 @@
   margin-bottom: 15px;
 }
 
+.control-label.required:after {
+  content:"*";
+  color:red;
+}
+
 .control-label {
   font-weight: normal;
 }
@@ -141,7 +146,7 @@ ul li {
 
 .btn-orange {
   background: #FBB448;
-  border: 2px solid #FBB448;
+  border: 1px solid #FBB448;
   transition: 0.2s;
     color: #fff;
 
@@ -363,11 +368,9 @@ body {
   color: #000;
 }
 
-.buttons {
-  input, button {
-    padding: 10px 20px;
-    margin: 0 2px;
-  }
+.buttons input, .buttons button {
+  padding: 10px 20px;
+  margin: 0 2px;
 }
 
 .collapsible {
@@ -389,4 +392,8 @@ body {
 }
 .no-border {
   border: none;
+}
+
+.top-indent {
+  margin-top: 20px;
 }

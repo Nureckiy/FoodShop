@@ -29,9 +29,9 @@ class AddGoodModal extends Component {
     model.selected = currentSelected;
     onSave(model);
   }
-  handleSelect(value, dish) {
+  handleSelect(event, dish) {
     const { currentSelected } = this.state;
-    dish.number = value;
+    dish.number = event.target.value;
     this.setState({
       currentSelected: utils.mergeSelectedConfigurations(currentSelected, dish)
     });
@@ -64,8 +64,9 @@ class AddGoodModal extends Component {
                   <th>
                     <RenderSelect
                       defaultValue={utils.findNumber(currentSelected, item.id)}
-                      onChange={v => this.handleSelect(v, item)}
+                      onChange={e => this.handleSelect(e, item)}
                       options={values}
+                      controlClass="select-number"
                     />
                   </th>
                 </tr>

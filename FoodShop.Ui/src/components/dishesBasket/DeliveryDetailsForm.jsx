@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import * as utils from '../../utils/utils';
-import Field from '../common/Field.jsx';
 import { FormGroup } from 'react-bootstrap';
+
+import Field from '../common/Field.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
+import RenderSelect from '../common/RenderSelect';
+import * as utils from '../../utils/utils';
 
 class DeliveryDetailsForm extends Component {
   constructor() {
@@ -10,9 +12,13 @@ class DeliveryDetailsForm extends Component {
     this.state = {};
     this.handleDeliveryClick = this.handleDeliveryClick.bind(this);
   }
+  componentWillMount() {
+    const { getAvailableAddresses } = this.props;
+    getAvailableAddresses();
+  }
   getInitialValues() {
-    const { name, email, user_metadata: { surname, address, phone } } = utils.getProfile();
-    return { userName: name, email, surname, address, phone };
+    const { surname, phone, name, email } = utils.getProfile().user_metadata;
+    return { userName: name, email, surname, phone };
   }
   handleDeliveryClick(event) {
     this.setState({
@@ -20,7 +26,7 @@ class DeliveryDetailsForm extends Component {
     });
   }
   render() {
-    const { onBack, onSubmit, selected } = this.props;
+    const { onBack, onSubmit, selected, availableAddresses } = this.props;
     const { hideAddress } = this.state;
     const initial = this.getInitialValues();
     const total = utils.calculateDishTotal(selected);
@@ -49,27 +55,32 @@ class DeliveryDetailsForm extends Component {
               pattern="8[0-9]{10}"
               required
             />
-            <h3 className="adress-header">Способ доставки</h3>
+            <Field
+              id="email"
+              type="email"
+              placeholder="Email"
+              label="Email"
+            />
             <input type="checkbox" id="take_away" onChange={this.handleDeliveryClick} />
-            <label htmlFor="take_away" className="check-label black" id="samLabel"><span></span>Самовывоз</label>
+            <label htmlFor="take_away" className="check-label black" id="samLabel"><span></span>Заберу сам</label>
           </FormGroup>
           <FormGroup>
             {!hideAddress &&
-              <Field
+              <RenderSelect
                 id="address"
-                type="text"
-                placeholder="Введите адрес"
-                label="Адрес доставки"
+                controlClass="select-number"
+                label="Доставить в номер"
+                options={utils.renderOptions(availableAddresses)}
                 required
               />
             }
           </FormGroup>
-          <div className="col-md-12 buttons text-center">
-            <input type="submit" value="Заказать" className="btn btn-warning" />
-            <input type="button" value="Отменить" className="btn btn-default" onClick={onBack} />
+          <div className="col-sm-12 buttons text-center">
+            <button className="btn btn-orange">Заказать</button>
+            <button type="button" onClick={onBack} className="btn btn-default">Назад</button>
           </div>
         </ControlledForm>
-        <ul className="col-md-6">
+        <ul className="col-md-6 total-list hidden-sm hidden-xs">
         { selected.map(item =>
           <li key={item.id}>{item.name}</li>
         )}

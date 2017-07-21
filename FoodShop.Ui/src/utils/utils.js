@@ -118,6 +118,12 @@ export function renderNumberOptions(number) {
   return options;
 }
 
+export function renderOptions(items) {
+  return items.map(item => {
+    return { value: item, text: item };
+  });
+}
+
 export function makePortionsList(selected) {
   let res = [];
   selected.forEach(item =>

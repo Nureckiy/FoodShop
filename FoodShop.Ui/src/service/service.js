@@ -38,7 +38,9 @@ class service {
     return this.requestHelper.postWithAjax('order', data, success, failed);
   }
 
-
+  getAvailableAddresses(success, failed) {
+    return this.requestHelper.getWithAjax('room/active', success, failed);
+  }
 
 
 

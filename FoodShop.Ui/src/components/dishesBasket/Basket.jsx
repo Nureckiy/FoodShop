@@ -27,7 +27,7 @@ class Basket extends Component {
     history.push('summary/dishOrder');
   }
   renderChild() {
-    const { auth, selectedDishes, clearSelected, changeConfiguration } = this.props;
+    const { auth, selectedDishes, clearSelected, changeConfiguration, getAvailableAddresses, availableAddresses } = this.props;
     const { isFirstStep } = this.state;
     if (!selectedDishes.length) {
       return <h2 className="cursive-font primary-color text-center">Корзина пуста</h2>;
@@ -44,6 +44,8 @@ class Basket extends Component {
         onSubmit={this.addOrder}
         onBack={this.goBack}
         selected={selectedDishes}
+        getAvailableAddresses={getAvailableAddresses}
+        availableAddresses={availableAddresses}
       />;
   }
   render() {

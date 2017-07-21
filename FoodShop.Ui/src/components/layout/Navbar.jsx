@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { ButtonToolbar, MenuItem, NavDropdown } from 'react-bootstrap';
 import mainCategories from '!json!../../sources/mainCategories.json';
 
-class Navigation extends Component {
+class Navbar extends Component {
   renderClass(tabName, className) {
     const { pathname } = this.props;
     if (!className) {
@@ -62,4 +62,4 @@ class Navigation extends Component {
   }
 }
 
-export default Navigation;
+export default Navbar;

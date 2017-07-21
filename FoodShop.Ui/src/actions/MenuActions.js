@@ -127,3 +127,29 @@ export function addOrder(selected, deliveryDetails) {
     }
   };
 }
+
+export function getAvailableAddresses() {
+  return (dispatch) => {
+    dispatch({
+      type: types.GET_AVAILABLE_ADDRESSES
+    });
+
+    service.getAvailableAddresses(success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.GET_AVAILABLE_ADDRESSES_SUCCESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.GET_AVAILABLE_ADDRESSES_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}
