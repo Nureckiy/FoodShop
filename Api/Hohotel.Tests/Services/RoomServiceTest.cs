@@ -210,6 +210,26 @@ namespace Hohotel.Tests
             Assert.Equal(expected, _service.CountTotal(roomBookings.ToList()));
         }
 
+        [Fact]
+        public void GetActive()
+        {
+            var now = DateTime.Now;
+            var yesterday = now.AddDays(-1);
+            var tomorrow = now.AddDays(1);
+            var rooms = TestData.Create.Rooms(3);
+            var booking = TestData.Create.Booking(userId: "userid", orderStatus: OrderStatus.Opened);
+            var matchedRoomBoking = TestData.Create.RoomBooking(startDate: yesterday, endDate: tomorrow, booking: booking);
+            rooms[0].RoomBookings = new List<RoomBooking>{matchedRoomBoking};
+            rooms[0].Address = "room1 address";
+            
+            _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(rooms.ToArray()).Object);
+
+            var result = _service.GetActive("userid");
+
+            Assert.Single(result);
+            Assert.Equal("room1 address", result[0]);
+        }
+
         private RoomTestModel ComposeTestModel(DateTime bookingStartDate, DateTime bookingEndDate, RoomCategory category = null)
         {
             var roomBookings = new List<RoomBooking>()

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Hohotel.Enums;
 using Hohotel.Models;
@@ -22,10 +20,6 @@ namespace Hohotel.Services
 
         public Order PlaceOrder(OrderInfo orderInfo, string userId)
         {
-            if (string.IsNullOrEmpty(userId))
-            {
-                throw new ArgumentException();
-            }
             var order = _mapper.Map<OrderInfo, Order>(orderInfo);
             LoadOrders(order.DishPortionOrders);
             order.Total = CountTotal(order.DishPortionOrders);
@@ -38,11 +32,8 @@ namespace Hohotel.Services
 
         private void LoadOrders(IList<DishPortionOrder> orders)
         {
-            foreach (var portionOrder in orders)
-            {
-                portionOrder.DishPortion =_context.DishPortions
-                    .Single(portion => portion.Id == portionOrder.DishPortionId);
-            }
+            orders.ToList().ForEach(order => order.DishPortion = _context.DishPortions
+                .Single(dishPortion => dishPortion.Id == order.DishPortionId));
         }
 
         public decimal CountTotal(IList<DishPortionOrder> portionOrders)

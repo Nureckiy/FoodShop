@@ -14,5 +14,7 @@ namespace Hohotel.Services
         bool IsAvailable(RoomBooking roomBooking);
 
         Booking Book(Booking booking, string userId);
+
+        IList<string> GetActive(string userId);
     }
 }

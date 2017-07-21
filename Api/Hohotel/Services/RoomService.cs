@@ -26,12 +26,12 @@ namespace Hohotel.Services
             var res = _context.Rooms
                 .Include("Category")
                 .Where(room => room.Category.Id == filter.CategoryId &&
-                               (filter.EndDate == null ||
-                                !room.RoomBookings.Any(roomBooking =>
-                                    (roomBooking.Booking.Status == OrderStatus.NotStarted || roomBooking.Booking.Status == OrderStatus.Opened) &&
-                                    filter.StartDate < roomBooking.EndDate &&
-                                    filter.EndDate > roomBooking.StartDate
-                                ))
+                    (filter.EndDate == null ||
+                    !room.RoomBookings.Any(roomBooking =>
+                        (roomBooking.Booking.Status == OrderStatus.NotStarted || roomBooking.Booking.Status == OrderStatus.Opened) &&
+                        filter.StartDate < roomBooking.EndDate &&
+                        filter.EndDate > roomBooking.StartDate
+                    ))
                 );
             return res.ToList();
         }
@@ -54,15 +54,28 @@ namespace Hohotel.Services
 
         public Booking Book(Booking booking, string userId)
         {
-            foreach (var roomBooking in booking.RoomBookings)
-            {
-                roomBooking.Room = _context.Rooms.Single(room => room.Id == roomBooking.RoomId);
-            }
+            booking.RoomBookings.ToList()
+                .ForEach(roomBooking => 
+                    roomBooking.Room = _context.Rooms.Single(room => room.Id == roomBooking.RoomId));
             booking.Total = CountTotal(booking.RoomBookings.ToList());
             booking.UserId = userId;
             _context.Bookings.Add(booking);
             _context.SaveChanges();
             return booking;
+        }
+
+        public IList<string> GetActive(string userId)
+        {
+            var now = DateTime.Now;
+            return _context.Rooms
+                .Include("RoomBookings")
+                .Where(room => room.RoomBookings.Any(booking =>
+                    booking.Booking.UserId == userId &&
+                    booking.Booking.Status == OrderStatus.Opened &&
+                    booking.StartDate <= now
+                    && booking.EndDate >= now))
+                .Select(room => room.Address)
+                .ToList();
         }
 
         public decimal CountTotal(List<RoomBooking> roomBookings)

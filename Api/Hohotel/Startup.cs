@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Hohotel.Controllers;
 using Hohotel.Models;
 using Hohotel.Services;
 using Microsoft.AspNetCore.Builder;
@@ -57,17 +56,15 @@ namespace Hohotel
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
             var options = new JwtBearerOptions
             {
                 Audience = Configuration["auth0:clientId"],
                 Authority = $"https://{Configuration["auth0:domain"]}/",
-                TokenValidationParameters = new TokenValidationParameters
+                TokenValidationParameters
                 {
                     NameClaimType = "name"
                 }
             };
-
             app.UseJwtBearerAuthentication(options);
 
             app.UseCors("AllowAll");

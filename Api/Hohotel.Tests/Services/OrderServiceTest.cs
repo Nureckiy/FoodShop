@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using AutoMapper;
 using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Hohotel.Services;
-using Hohotel.Services.Mapping;
 using Hohotel.Tests.Factories;
 using Hohotel.Tests.Factories.Models;
 using Hohotel.Tests.Helper;
@@ -54,8 +51,6 @@ namespace Hohotel.Tests.Services
         {
             _context.Setup(c => c.Orders).Returns(DbSetMock.Create(new Order()).Object);
             Assert.Throws<NullReferenceException>(() => _service.PlaceOrder(null, "userid"));
-            Assert.Throws<ArgumentException>(() => _service.PlaceOrder(new OrderInfo(), null));
-            Assert.Throws<ArgumentException>(() => _service.PlaceOrder(new OrderInfo(), ""));
         }
     }
 }
