@@ -42,6 +42,13 @@ class service {
     return this.requestHelper.getWithAjax('room/active', success, failed);
   }
 
+  getBookings(success, failed) {
+    return this.requestHelper.getWithAjax('room/bookings', success, failed);
+  }
+
+  getOrders(success, failed) {
+    return this.requestHelper.getWithAjax('order', success, failed);
+  }
 
 
 
@@ -69,9 +76,7 @@ class service {
     return this.requestHelper.postWithAjax('user/publishSubscriptions', data, success, failed);
   }
 
-  getOrders(success, failed) {
-    return this.requestHelper.getWithAjax('order/getOrders', '', success, failed);
-  }
+
 
 
 

@@ -35,7 +35,7 @@ class BookingDetailsForm extends Component {
   }
 
   getInitialValues() {
-    const { name, email, user_metadata: { surname, patronymic, phone } } = utils.getProfile();
+    const { user_metadata: { name, email, surname, patronymic, phone } } = utils.getProfile();
     return { name, email, surname, patronymic, phone };
   }
   render() {

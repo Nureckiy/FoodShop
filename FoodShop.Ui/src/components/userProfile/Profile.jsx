@@ -5,11 +5,12 @@ import { Tabs, Tab, MenuItem, Button, Row, Col, Nav, NavItem } from 'react-boots
 import ViewProfile from './ViewProfile.jsx';
 import EditProfile from './EditProfile.jsx';
 import BookingsList from './BookingsList.jsx';
+import Activities from './Activities.jsx';
 import history from '../../store/History';
 
 class Profile extends Component {
   render() {
-    const { auth, auth: { updateProfile, logout } } = this.props;
+    const { getBookings, getOrders, bookings, orders, auth, auth: { updateProfile, logout } } = this.props;
     const profile = auth.getProfile();
     const profileInfo = Object.assign({ login: profile.name, email: profile.email, id: profile.user_id }, profile.user_metadata );
     return (
@@ -25,15 +26,17 @@ class Profile extends Component {
                   <Nav bsStyle="tabs">
                     <NavItem eventKey="1">Профиль</NavItem>
                     <NavItem eventKey="2">Настройки</NavItem>
-                    <NavItem eventKey="3">Забронированные номера</NavItem>
+                    <NavItem eventKey="3">Брони</NavItem>
+                    <NavItem eventKey="4">Активность</NavItem>
                     <NavItem className="pull-right" onClick={logout}>Выйти</NavItem>
                   </Nav>
                 </Col>
                 <Col sm={12}>
-                  <Tab.Content animation>
+                  <Tab.Content animation mountOnEnter>
                     <Tab.Pane eventKey="1"><ViewProfile {...profileInfo} /></Tab.Pane>
                     <Tab.Pane eventKey="2"><EditProfile initial={profileInfo} onSubmit={updateProfile} /></Tab.Pane>
-                    <Tab.Pane eventKey="3"><BookingsList /></Tab.Pane>
+                    <Tab.Pane eventKey="3"><BookingsList load={getBookings} bookings={bookings} /></Tab.Pane>
+                    <Tab.Pane eventKey="4"><Activities load={getOrders} orders={orders} /></Tab.Pane>
                   </Tab.Content>
                 </Col>
               </Row>
