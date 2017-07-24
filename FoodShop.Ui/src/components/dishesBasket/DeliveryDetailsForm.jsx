@@ -61,8 +61,8 @@ class DeliveryDetailsForm extends Component {
               placeholder="Email"
               label="Email"
             />
-            <input type="checkbox" id="take_away" onChange={this.handleDeliveryClick} />
-            <label htmlFor="take_away" className="check-label black" id="samLabel"><span></span>Заберу сам</label>
+            <input type="checkbox" id="takeAway" onChange={this.handleDeliveryClick} />
+            <label htmlFor="takeAway" className="check-label black" id="samLabel"><span></span>Заберу сам</label>
           </FormGroup>
           <FormGroup>
             {!hideAddress &&

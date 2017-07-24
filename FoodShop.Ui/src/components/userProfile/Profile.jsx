@@ -32,7 +32,7 @@ class Profile extends Component {
                   </Nav>
                 </Col>
                 <Col sm={12}>
-                  <Tab.Content animation mountOnEnter>
+                  <Tab.Content animation mountOnEnter unmountOnExit>
                     <Tab.Pane eventKey="1"><ViewProfile {...profileInfo} /></Tab.Pane>
                     <Tab.Pane eventKey="2"><EditProfile initial={profileInfo} onSubmit={updateProfile} /></Tab.Pane>
                     <Tab.Pane eventKey="3"><BookingsList load={getBookings} bookings={bookings} /></Tab.Pane>

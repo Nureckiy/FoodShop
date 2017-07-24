@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 import { ButtonToolbar, MenuItem, NavDropdown } from 'react-bootstrap';
-import mainCategories from '!json!../../sources/mainCategories.json';
+import { mainCategories } from '!json!../../sources/appVariables.json';
 
 class Navbar extends Component {
   renderClass(tabName, className) {

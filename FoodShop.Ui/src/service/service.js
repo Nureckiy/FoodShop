@@ -50,15 +50,13 @@ class service {
     return this.requestHelper.getWithAjax('order', success, failed);
   }
 
-
-
-
-
-
-
   sendFeedback(data, success, failed) {
-    return this.requestHelper.postWithAjax('feedback/addFeedback', data, success, failed);
+    return this.requestHelper.postWithAjax('feedback', data, success, failed);
   }
+
+
+
+
 
   getSubscriptions(data, success, failed) {
     return this.requestHelper.getWithAjax('user/getSubscriptions', data, success, failed);

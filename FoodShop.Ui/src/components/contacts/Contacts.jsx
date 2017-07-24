@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 
 import Header from '../layout/Header.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
-import contactInfo from '!json!../../sources/contactInfo.json';
+import { contactInfo } from '!json!../../sources/appVariables.json';
 import Field from '../common/Field.jsx';
 import * as utils from '../../utils/utils';
 import { FormGroup } from 'react-bootstrap';
 
 class Contacts extends Component {
-  getDefault() {
-    const name = utils.getProfileItem('name');
-    const email = utils.getProfileItem('email');
-    return { name, email };
+  getInitialValues() {
+    const { name, email } = utils.getProfile().user_metadata;
+    return { userName: name, email };
   }
   render() {
     const { sendFeedback } = this.props.actions;
-    const initial = this.getDefault();
+    const { address, phone, email } = contactInfo;
+    const initial = this.getInitialValues();
     return (
       <div>
         <Header
@@ -31,7 +31,7 @@ class Contacts extends Component {
                 <ControlledForm initialValues={initial} onSubmit={sendFeedback}>
                   <FormGroup>
                     <Field
-                      id="name"
+                      id="userName"
                       type="text"
                       placeholder="Представтесь"
                       label="Имя"
@@ -62,9 +62,9 @@ class Contacts extends Component {
                 <div className="contact-info">
                   <h3>Контактная информация</h3>
                   <ul>
-                    <li><span className="glyphicon glyphicon-map-marker"/>{contactInfo.address}</li>
-                    <li><span className="glyphicon glyphicon-earphone"/><a href={`tel://${contactInfo.phone}`}>{contactInfo.phone}</a></li>
-                    <li><span className="glyphicon glyphicon-envelope"/><a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a></li>
+                    <li><span className="glyphicon glyphicon-map-marker"/>{address}</li>
+                    <li><span className="glyphicon glyphicon-earphone"/><a href={`tel://${ phone }`}>{ phone }</a></li>
+                    <li><span className="glyphicon glyphicon-envelope"/><a href={`mailto:${ email }`}>{ email }</a></li>
                   </ul>
                 </div>
               </div>

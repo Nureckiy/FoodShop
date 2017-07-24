@@ -1,4 +1,3 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 import { Panel, Accordion, ListGroup, ListGroupItem } from 'react-bootstrap';
 import dateformat from 'dateformat';
@@ -16,17 +15,17 @@ class BookingsList extends Component {
   render() {
     const { bookings } = this.props;
     return (
-    <Accordion bsClass="full-headings-width panel-group" defaultActiveKey="1">
-      { bookings.map((booking, index) =>
+    <Accordion bsClass="full-headings-width panel-group">
+      { bookings && bookings.map((booking, index) =>
         <Panel
-          header={dateformat(booking.registrationTime, 'dd mmmm yyyy')}
           key={index}
-          eventKey={index}>
+          eventKey={index}
+          header={dateformat(booking.registrationTime, 'dd mmmm yyyy')}>
           <ListGroup fill className="options-list">
             <ListGroupItem header="Статус"> { messages.orderStatuses[booking.status] }</ListGroupItem>
             <ListGroupItem header="Заказ">
-            { booking.rooms.map((room, index) =>
-              <ListGroup className="paragraph">
+            { booking.rooms && booking.rooms.map(room =>
+              <ListGroup className="paragraph" key={room.id}>
                 <ListGroupItem>{this.renderDate(room)}</ListGroupItem>
                 <ListGroupItem>#{ room.address } ({ room.category.name })</ListGroupItem>
               </ListGroup>

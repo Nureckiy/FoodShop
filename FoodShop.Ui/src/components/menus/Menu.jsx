@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import Header from '../layout/Header.jsx';
 import GoodList from './GoodList.jsx';
-import mainCategories from '!json!../../sources/mainCategories.json';
+import { mainCategories } from '!json!../../sources/appVariables.json';
 import Loader from '../common/Loader.jsx';
 import config from '../../config';
 
