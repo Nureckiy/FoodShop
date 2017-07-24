@@ -1,10 +1,17 @@
 import { combineReducers } from 'redux';
-// import model from './Reducer';
-// import htmlModel from './htmlReducer';
 import {routerReducer} from 'react-router-redux';
 
+import AppReducer from './AppReducer';
+import MenuReducer from './MenuReducer';
+import UserProfileReducer from './UserProfileReducer';
+import AdminReducer from './AdminReducer';
+import BookingReducer from './BookingReducer';
+
 export default combineReducers({
-  // model,
-  // htmlModel,
+  AppReducer,
+  MenuReducer,
+  UserProfileReducer,
+  AdminReducer,
+  BookingReducer,
   routing: routerReducer
 });

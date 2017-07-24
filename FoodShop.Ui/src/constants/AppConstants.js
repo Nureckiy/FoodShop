@@ -1,0 +1,4 @@
+// send feedback
+export const SEND_FEEDBACK = 'SEND_FEEDBACK';
+export const SEND_FEEDBACK_SUCCESS = 'SEND_FEEDBACK_SUCCESS';
+export const SEND_FEEDBACK_FAIL = 'SEND_FEEDBACK_FAIL';

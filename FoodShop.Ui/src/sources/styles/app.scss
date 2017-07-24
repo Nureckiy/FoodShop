@@ -1,1 +1,19 @@
-@import "layout";
+// external
+@import url("../../../node_modules/bootstrap/dist/css/bootstrap.css");
+
+// common
+@import "style";
+
+// pages
+@import "user.scss";
+@import "menu.scss";
+@import "contacts.scss";
+@import "basket.scss";
+@import "admin.scss";
+@import "reservation.scss";
+
+// elements
+@import "slider.scss";
+@import "card.scss";
+
+
