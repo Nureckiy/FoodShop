@@ -28,7 +28,7 @@ namespace Hohotel.Tests.Factories.Models
 
         public static IList<RoomCategory> RoomCategories(this ITestDataFactory factory, int count)
         {
-            return Enumerable.Range(0, count).Select(e => factory.RoomCategory()).ToList();
+            return Enumerable.Range(0, count).Select((e, index) => factory.RoomCategory(index)).ToList();
         }
     }
 }

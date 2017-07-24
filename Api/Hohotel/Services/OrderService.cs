@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
@@ -16,6 +17,14 @@ namespace Hohotel.Services
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        public IList<OrderView> GetUserOrders(string userId)
+        {
+            return _context.Orders
+                .Where(order => order.UserId == userId)
+                .ProjectTo<OrderView>(_mapper)
+                .ToList();
         }
 
         public Order PlaceOrder(OrderInfo orderInfo, string userId)

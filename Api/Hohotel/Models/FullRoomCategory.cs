@@ -15,14 +15,5 @@ namespace Hohotel.Models
         public int GuestsNumber { get; set; }
         public decimal? MinPrice { get; set; }
         public IEnumerable<string> Images { get; set; }
-
-        public FullRoomCategory(RoomCategory category)
-        {
-            Id = category.Id;
-            Name = category.Name;
-            Description = category.Description;
-            CoverUrl = category.CoverUrl;
-            GuestsNumber = category.GuestsNumber;
-        }
     }
 }

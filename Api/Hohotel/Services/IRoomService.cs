@@ -15,6 +15,8 @@ namespace Hohotel.Services
 
         Booking Book(Booking booking, string userId);
 
+        IList<BookingView> GetUserBookings(string userId);
+
         IList<string> GetActive(string userId);
     }
 }

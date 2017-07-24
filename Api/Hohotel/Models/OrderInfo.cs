@@ -13,6 +13,7 @@ namespace Hohotel.Models
         public string Phone { get; set; }
         public string UserName { get; set; }
         public string Surname { get; set; }
+        public bool TakeAway { get; set; }
         public IList<DishPortionOrder> Portions { get; set; }
     }
 }

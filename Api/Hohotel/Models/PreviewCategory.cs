@@ -13,13 +13,5 @@ namespace Hohotel.Models
         public string Description { get; set; }
         public string CoverUrl { get; set; }
         public decimal? MinPrice { get; set; }
-
-        public PreviewCategory(RoomCategory category)
-        {
-            Id = category.Id;
-            Name = category.Name;
-            Description = category.Description;
-            CoverUrl = category.CoverUrl;
-        }
     }
 }

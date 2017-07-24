@@ -8,6 +8,7 @@ using Hohotel.Services;
 using Hohotel.Tests.Factories;
 using Hohotel.Tests.Factories.Models;
 using Hohotel.Tests.Helper;
+using Hohotel.Tests.Mapper;
 using Xunit;
 using Moq;
 
@@ -28,7 +29,8 @@ namespace Hohotel.Tests
         public RoomServiceTest()
         {
             _context = new Mock<HohotelContext>();
-            _service = new RoomService(_context.Object);
+            var mapper = AutomapperConfig.Initialize();
+            _service = new RoomService(_context.Object, mapper);
         }
 
         [Theory,
@@ -40,7 +42,7 @@ namespace Hohotel.Tests
         InlineData("02/03/2017", "3/03/2017")]
         public void Filter_OverlappingDateRange_ReturnEmptyArray(string startBookingDate, string endBookingDate)
         {
-            var testModel = ComposeTestModel(Convert.ToDateTime(startBookingDate), Convert.ToDateTime(endBookingDate));
+            var testModel = ComposeTestData(Convert.ToDateTime(startBookingDate), Convert.ToDateTime(endBookingDate));
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(testModel.Rooms.ToArray()).Object);
             _context.Setup(c => c.Bookings).Returns(DbSetMock.Create(testModel.Bookings.ToArray()).Object);
             var filter = TestData.Create.RoomFilter(1, new DateTime(2017, 3, 2), new DateTime(2017, 3, 14));
@@ -50,7 +52,7 @@ namespace Hohotel.Tests
         [Fact]
         public void Filter_CanceledOrClosedOrderStatus_ReturnArrayElements()
         {
-            var testModel = ComposeTestModel(Convert.ToDateTime("06/03/2017"), Convert.ToDateTime("10/03/2017"));
+            var testModel = ComposeTestData(Convert.ToDateTime("06/03/2017"), Convert.ToDateTime("10/03/2017"));
             testModel.Bookings[0].Status = OrderStatus.Canceled;
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(testModel.Rooms.ToArray()).Object);
             _context.Setup(c => c.Bookings).Returns(DbSetMock.Create(testModel.Bookings.ToArray()).Object);
@@ -69,7 +71,7 @@ namespace Hohotel.Tests
         InlineData("14/03/2017", "21/03/2017")]
         public void Filter_NonOverlappingDateRanges_ReturnArrayElements(string startBookingDate, string endBookingDate)
         {
-            var testModel = ComposeTestModel(Convert.ToDateTime(startBookingDate), Convert.ToDateTime(endBookingDate));
+            var testModel = ComposeTestData(Convert.ToDateTime(startBookingDate), Convert.ToDateTime(endBookingDate));
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(testModel.Rooms.ToArray()).Object);
             _context.Setup(c => c.Bookings).Returns(DbSetMock.Create(testModel.Bookings.ToArray()).Object);
             var filter = TestData.Create.RoomFilter(1, new DateTime(2017, 3, 2), new DateTime(2017, 3, 14));
@@ -80,7 +82,7 @@ namespace Hohotel.Tests
         [Fact]
         public void Filter_UnmatchedCategoryId_ReturnEmptyArray()
         {
-            var testModel = ComposeTestModel(Convert.ToDateTime(new DateTime(2017, 3, 6)), Convert.ToDateTime(new DateTime(2017, 3, 10)));
+            var testModel = ComposeTestData(Convert.ToDateTime(new DateTime(2017, 3, 6)), Convert.ToDateTime(new DateTime(2017, 3, 10)));
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(testModel.Rooms.ToArray()).Object);
             _context.Setup(c => c.Bookings).Returns(DbSetMock.Create(testModel.Bookings.ToArray()).Object);
             var filter = TestData.Create.RoomFilter(2);
@@ -90,7 +92,7 @@ namespace Hohotel.Tests
         [Fact]
         public void Filter_MatchedCategoryId_ReturnArrayElements()
         {
-            var testModel = ComposeTestModel(Convert.ToDateTime(new DateTime(2017, 3, 6)), Convert.ToDateTime(new DateTime(2017, 3, 10)));
+            var testModel = ComposeTestData(Convert.ToDateTime(new DateTime(2017, 3, 6)), Convert.ToDateTime(new DateTime(2017, 3, 10)));
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(testModel.Rooms.ToArray()).Object);
             _context.Setup(c => c.Bookings).Returns(DbSetMock.Create(testModel.Bookings.ToArray()).Object);
             var filter = TestData.Create.RoomFilter(1);
@@ -105,7 +107,7 @@ namespace Hohotel.Tests
          InlineData("14/03/2017", "21/03/2017")]
         public void IsAvailable_NotOccupped_ReturnTrue(string startDate, string endDate)
         {
-            var testModel = ComposeTestModel(Convert.ToDateTime(startDate), Convert.ToDateTime(endDate));
+            var testModel = ComposeTestData(Convert.ToDateTime(startDate), Convert.ToDateTime(endDate));
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(testModel.Rooms.ToArray()).Object);
             _context.Setup(c => c.Bookings).Returns(DbSetMock.Create(testModel.Bookings.ToArray()).Object);
             var roomBooking = TestData.Create.RoomBooking(startDate: new DateTime(2017, 3, 2), endDate: new DateTime(2017, 3, 14));
@@ -121,7 +123,7 @@ namespace Hohotel.Tests
          InlineData("02/03/2017", "3/03/2017")]
         public void IsAvailable_Occupped_ReturnFalse(string startDate, string endDate)
         {
-            var testModel = ComposeTestModel(Convert.ToDateTime(startDate), Convert.ToDateTime(endDate));
+            var testModel = ComposeTestData(Convert.ToDateTime(startDate), Convert.ToDateTime(endDate));
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(testModel.Rooms.ToArray()).Object);
             _context.Setup(c => c.Bookings).Returns(DbSetMock.Create(testModel.Bookings.ToArray()).Object);
             var roomBooking = TestData.Create.RoomBooking(startDate: new DateTime(2017, 3, 2), endDate: new DateTime(2017, 3, 14));
@@ -131,7 +133,7 @@ namespace Hohotel.Tests
         [Fact]
         public void IsAvailable_ClosedOrCanceledOrderStatus_ReturnTrue()
         {
-            var testModel = ComposeTestModel(new DateTime(2017, 3, 6), new DateTime(2017, 3, 10));
+            var testModel = ComposeTestData(new DateTime(2017, 3, 6), new DateTime(2017, 3, 10));
             var roomBooking = TestData.Create.RoomBooking(startDate: new DateTime(2017, 3, 2), endDate: new DateTime(2017, 3, 14));
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(testModel.Rooms.ToArray()).Object);
             _context.Setup(c => c.Bookings).Returns(DbSetMock.Create(testModel.Bookings.ToArray()).Object);   
@@ -211,6 +213,21 @@ namespace Hohotel.Tests
         }
 
         [Fact]
+        public void GetUserBookings()
+        {
+            var bookings = TestData.Create.Bookings(3);
+            bookings[0].UserId = "first user";
+            bookings[1].UserId = "second user";
+            bookings[2].UserId = "second user";
+
+            _context.Setup(c => c.Bookings).Returns(DbSetMock.Create(bookings.ToArray()).Object);
+
+            var result = _service.GetUserBookings("second user");
+            Assert.Equal(2, result.Count);
+            Assert.True(result.All(b => b.UserId == "second user"));
+        }
+
+        [Fact]
         public void GetActive()
         {
             var now = DateTime.Now;
@@ -230,7 +247,7 @@ namespace Hohotel.Tests
             Assert.Equal("room1 address", result[0]);
         }
 
-        private RoomTestModel ComposeTestModel(DateTime bookingStartDate, DateTime bookingEndDate, RoomCategory category = null)
+        private RoomTestModel ComposeTestData(DateTime bookingStartDate, DateTime bookingEndDate, RoomCategory category = null)
         {
             var roomBookings = new List<RoomBooking>()
             {

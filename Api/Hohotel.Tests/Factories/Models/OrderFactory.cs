@@ -31,7 +31,7 @@ namespace Hohotel.Tests.Factories.Models
                 Address = address,
                 TakeAway = takeAway,
                 Total = total,
-                DishPortionOrders = dishPortionOrders,
+                DishPortionOrders = dishPortionOrders ?? new List<DishPortionOrder>(),
                 Status = status
             };
             if (checkoutDate != null)

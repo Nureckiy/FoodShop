@@ -44,12 +44,20 @@ namespace Hohotel.Controllers
             _service.Book(booking, User.Identity.Name);
         }
 
-        // POST api/room/active
+        // GET api/room/active
         [Authorize]
         [HttpGet("Active")]
         public IList<string> Active()
         {
             return _service.GetActive(User.Identity.Name);
+        }
+
+        // POST api/room/bookings
+        [Authorize]
+        [HttpGet("bookings")]
+        public IList<BookingView> GetBookings()
+        {
+            return _service.GetUserBookings(User.Identity.Name);
         }
     }
 }

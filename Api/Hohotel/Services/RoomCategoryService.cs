@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hohotel.Services
@@ -11,39 +14,43 @@ namespace Hohotel.Services
     public class RoomCategoryService: IRoomCategoryService
     {
         private readonly HohotelContext _context;
+        private readonly IMapper _mapper;
 
-        public RoomCategoryService(HohotelContext context)
+        public RoomCategoryService(HohotelContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public IList<PreviewCategory> GetRoomCategories()
         {
             return _context.RoomCategories
-                .AsNoTracking()
-                .Select(category => new PreviewCategory(category)
+                .ProjectTo<PreviewCategory>(_mapper)
+                .AsEnumerable()
+                .Select(category =>
                 {
-                    MinPrice = _context.Rooms
-                        .Where(room => room.Category == category)
+                    category.MinPrice = _context.Rooms
+                        .Where(room => room.Category.Id == category.Id)
                         .Select(room => room.Price)
-                        .DefaultIfEmpty().Min()
+                        .DefaultIfEmpty().Min();
+                    return category;
                 })
                 .ToList();
         }
 
         public FullRoomCategory GetRoomCategoryById(int id)
         {
-            var rooms = _context.Rooms.Where(room => room.Category.Id == id);
-            return _context.RoomCategories
-                .AsNoTracking()
+            var result = _context.RoomCategories
                 .Where(category => category.Id == id)
-                .Select(category => new FullRoomCategory(category)
-                {
-                    MinPrice = rooms.Select(room => room.Price)
-                        .DefaultIfEmpty().Min(),
-                    Images = rooms.Select(room => room.ImageUrl)
-                })
-                .FirstOrDefault();
+                .ProjectTo<FullRoomCategory>(_mapper)
+                .SingleOrDefault();
+            if (result != null)
+            {
+                var rooms = _context.Rooms.Where(room => room.Category.Id == id);
+                result.MinPrice = rooms.Select(room => room.Price).DefaultIfEmpty().Min();
+                result.Images = rooms.Select(room => room.ImageUrl);
+            }
+            return result;
         }
     }
 }

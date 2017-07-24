@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using Hohotel.Services.Mapping;
 
 namespace Hohotel.Tests.Mapper
 {
     public class AutomapperConfig
     {
-        public static IConfigurationProvider GetConfig()
+        public static IMapper Initialize()
         {
-            return new MapperConfiguration(mc => mc.AddProfile<MappingProfile>());
+            AutoMapper.Mapper.Initialize(mc =>
+                mc.AddProfile<MappingProfile>()
+            );
+            return AutoMapper.Mapper.Instance;
         }
     }
 }

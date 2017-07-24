@@ -25,5 +25,12 @@ namespace Hohotel.Controllers
         {
             _service.PlaceOrder(order, User.Identity.Name);
         }
+
+        // GET api/order
+        [HttpGet]
+        public IList<OrderView> Get()
+        {
+            return _service.GetUserOrders(User.Identity.Name);
+        }
     }
 }

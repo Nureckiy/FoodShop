@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
@@ -11,10 +13,12 @@ namespace Hohotel.Services
     public class RoomService: IRoomService
     {
         private readonly HohotelContext _context;
+        private readonly IMapper _mapper;
 
-        public RoomService(HohotelContext context)
+        public RoomService(HohotelContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public IList<Room> Filter(RoomFilter filter)
@@ -62,6 +66,14 @@ namespace Hohotel.Services
             _context.Bookings.Add(booking);
             _context.SaveChanges();
             return booking;
+        }
+
+        public IList<BookingView> GetUserBookings(string userId)
+        {
+            return _context.Bookings
+                .Where(booking => booking.UserId == userId)
+                .ProjectTo<BookingView>(_mapper)
+                .ToList();
         }
 
         public IList<string> GetActive(string userId)

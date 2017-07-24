@@ -29,6 +29,8 @@ namespace Hohotel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AppConfiguration>(Configuration.GetSection("AppVariables"));
+
             // Add framework services.
             services.AddDbContext<HohotelContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("HohotelContext")));
             services.AddMvc()
@@ -49,6 +51,7 @@ namespace Hohotel
             services.AddTransient<IRoomCategoryService, RoomCategoryService>();
             services.AddTransient<IDishService, DishService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IMailService, EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +63,7 @@ namespace Hohotel
             {
                 Audience = Configuration["auth0:clientId"],
                 Authority = $"https://{Configuration["auth0:domain"]}/",
-                TokenValidationParameters
+                TokenValidationParameters =
                 {
                     NameClaimType = "name"
                 }
