@@ -17,14 +17,6 @@ class ControlledForm extends Component {
       this.setState( initialValues );
     }
   }
-  handleChildChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.id;
-    this.setState({
-      [name]: value
-    });
-  }
   renderChilds() {
     const { children } = this.props;
     let result = [];
@@ -58,7 +50,20 @@ class ControlledForm extends Component {
     if (child.props.onChange) {
       child.props.onChange(event);
     }
-    this.handleChildChange(event);
+    this.handleChildChange(event, child.props.section);
+  }
+  handleChildChange(event, section) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.id;
+    const item = { [name]: value };
+    if(section) {
+      this.setState({
+        [section]: item
+      });
+    } else {
+      this.setState(item);
+    }
   }
   renderSubmit(e) {
     e.preventDefault();
@@ -66,10 +71,10 @@ class ControlledForm extends Component {
     onSubmit(this.state);
   }
   render() {
-    const { className } = this.props;
+    const { className, id } = this.props;
     const children = this.renderChilds();
     return (
-      <Form className={className} onSubmit={this.renderSubmit}>
+      <Form className={className} onSubmit={this.renderSubmit} id={id}>
         { children }
       </Form>
     );
