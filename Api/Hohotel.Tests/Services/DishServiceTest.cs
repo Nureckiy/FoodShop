@@ -76,6 +76,24 @@ namespace Hohotel.Tests.Services
             Assert.Throws<NullReferenceException>(() => _service.GetByCategoryName(null));
         }
 
+        [Fact]
+        public void AddDish()
+        {
+            var portions = TestData.Create.DishPortions(3);
+            var dish = TestData.Create.Dish(dishPortions: portions);
+            var dishesMock = DbSetMock.Create(new Dish[0]);
+
+            _context.Setup(c => c.Dishes).Returns(dishesMock.Object);
+
+            _service.AddDish(dish, "userId");
+
+            dishesMock.Verify(m => m.Add(It.IsAny<Dish>()), Times.Once);
+            _context.Verify(m => m.SaveChanges(), Times.Once);
+            Assert.Equal("userId", dish.CreatedBy);
+            Assert.Equal(portions, dish.DishPortions);
+            Assert.NotNull(dish.CreatedTime);
+        }
+
         private IList<Dish> ComposeDishes()
         {
             var dishes = TestData.Create.Dishes(3);

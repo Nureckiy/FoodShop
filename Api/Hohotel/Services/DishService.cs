@@ -38,5 +38,14 @@ namespace Hohotel.Services
                 .Where(dish => categoryName.Equals(dish.Category.ToString(), StringComparison.OrdinalIgnoreCase))
                 .ToList();
         }
+
+        public void AddDish(Dish dish, string userId)
+        {
+            dish.CreatedBy = userId;
+            dish.CreatedTime = DateTime.Now;
+
+            _context.Dishes.Add(dish);
+            _context.SaveChanges();
+        }
     }
 }

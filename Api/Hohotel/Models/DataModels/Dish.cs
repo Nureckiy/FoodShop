@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Hohotel.Enums;
 
@@ -13,5 +14,7 @@ namespace Hohotel.Models.DataModels
         public string Description { get; set; }
         public virtual IList<DishPortion> DishPortions { get; set; }
         public DishTypes Category { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedTime { get; set; }
     }
 }

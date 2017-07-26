@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hohotel.Models.DataModels
@@ -13,5 +14,7 @@ namespace Hohotel.Models.DataModels
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
         public virtual IList<RoomBooking> RoomBookings { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedTime { get; set; }
     }
 }

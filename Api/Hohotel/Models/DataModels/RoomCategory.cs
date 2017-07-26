@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hohotel.Models.DataModels
 {
@@ -10,5 +11,7 @@ namespace Hohotel.Models.DataModels
         public int GuestsNumber { get; set; }
         public string Description { get; set; }
         public string CoverUrl { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedTime { get; set; }
     }
 }

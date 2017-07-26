@@ -34,5 +34,12 @@ namespace Hohotel.Controllers
         {
             return _service.GetByCategoryName(category);
         }
+
+        // POST api/dish
+        [HttpPost()]
+        public void Post([FromBody]Dish dish)
+        {
+            _service.AddDish(dish, User.Identity.Name);
+        }
     }
 }
