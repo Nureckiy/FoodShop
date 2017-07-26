@@ -118,9 +118,15 @@ export function renderNumberOptions(number) {
   return options;
 }
 
-export function renderOptions(items) {
+export function renderArrayOptions(items) {
   return items.map(item => {
     return { value: item, text: item };
+  });
+}
+
+export function renderObjectOptions(item) {
+  return Object.keys(item).map(key => {
+    return { value: key, text: item[key] };
   });
 }
 
@@ -136,24 +142,13 @@ export function makePortionsList(selected) {
   return res;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export function mapChildren(children, callback) {
+  if (Array.isArray(children)) {
+    return children.map(callback);
+  } else {
+    return callback(children, 0);
+  }
+}
 
 function joinElementToArray(arr, el, index) {
   if (~index) {

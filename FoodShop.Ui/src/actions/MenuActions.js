@@ -8,7 +8,7 @@ export function getDishes(data) {
       type: types.GET_DISH
     });
 
-    service.getDishesByCategoryName({ name: data }, success, fail);
+    service.getDishesByCategoryName(data, success, fail);
 
     function success(data, status) {
       dispatch({

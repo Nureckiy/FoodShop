@@ -70,7 +70,7 @@ class DeliveryDetailsForm extends Component {
                 id="address"
                 controlClass="select-number"
                 label="Доставить в номер"
-                options={utils.renderOptions(availableAddresses)}
+                options={utils.renderArrayOptions(availableAddresses)}
                 required
               />
             }

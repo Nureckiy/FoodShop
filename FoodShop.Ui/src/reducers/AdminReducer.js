@@ -8,13 +8,13 @@ const initialState = {
 export default function AdminReducer(state = initialState, action) {
     switch (action.type) {
 
-      case types.GET_SUBSCRIPTIONS:
+      case types.ADD_DISH:
         return {
           ...state,
           activeRequestStatus: true
         };
 
-      case types.GET_SUBSCRIPTIONS_SUCCESS:
+      case types.ADD_DISH_SUCCESS:
         return {
           ...state,
           activeRequestStatus: false,

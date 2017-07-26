@@ -54,13 +54,12 @@ class service {
     return this.requestHelper.postWithAjax('feedback', data, success, failed);
   }
 
-
-
-
-
-  getSubscriptions(data, success, failed) {
-    return this.requestHelper.getWithAjax('user/getSubscriptions', data, success, failed);
+  addDish(data, success, failed) {
+    return this.requestHelper.postWithAjax('dish', data, success, failed);
   }
+
+
+
 
   getAllSubscriptions(success, failed) {
     return this.requestHelper.getWithAjax('user/getAllSubscriptions', '', success, failed);

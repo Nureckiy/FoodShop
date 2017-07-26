@@ -1,48 +1,42 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
-import AddGoodModal from './AddGoodModal.jsx';
+import ControlledModal from '../common/ControlledModal.jsx';
 import Tile from '../common/Tile.jsx';
+import AddDishForm from './AddDishForm.jsx';
 
 class GoodList extends Component {
   constructor() {
     super();
     this.state = {
-      showModal: false,
       currentDish: {}
     };
-    this.closeModal = this.closeModal.bind(this);
-    this.onSave = this.onSave.bind(this);
+    this.submitDishForm = this.submitDishForm.bind(this);
   }
   openModal(item) {
     this.setState({
-      showModal: true,
       currentDish: item
     });
-
-
-
+    this.refs.addDishModal.toggle();
   }
-  closeModal() {
-    this.setState({ showModal: false });
-  }
-  onSave(saved) {
-    let { onSelect } = this.props;
-    this.closeModal();
-    onSelect(saved);
+  submitDishForm() {
+    const { onSelect } = this.props;
+    const { addDishModal, addDishForm } = this.refs;
+    const values = addDishForm.getSelected();
+    onSelect(values);
+    addDishModal.toggle();
   }
   render() {
     const { selected, items } = this.props;
-    const { showModal, currentDish } = this.state;
+    const { currentDish } = this.state;
     const model = selected.find(x => x.id === currentDish.id);
     return (
       <div className="row">
-        <AddGoodModal
-          show={showModal}
-          onHide={this.closeModal}
-          onSave={this.onSave}
-          model={model ? model : currentDish}
-        />
+        <ControlledModal ref="addDishModal" onSubmit={this.submitDishForm} title="Добавить в корзину">
+          <AddDishForm
+            ref="addDishForm"
+            model={model ? model : currentDish}
+          />
+        </ControlledModal>
         {items.map(item =>
           <Tile key={item.id} item={item} onClick={() => this.openModal(item)} />
         )}

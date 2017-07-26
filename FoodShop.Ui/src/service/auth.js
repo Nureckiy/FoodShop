@@ -86,7 +86,7 @@ export default class AuthService extends EventEmitter {
 
   isAdmin() {
     const profile = this.getProfile();
-    return profile && profile.roles && profile.roles.includes('admin');
+    return profile && profile.roles && profile.roles.includes('ROLE_ADMIN');
   }
 
   updateProfile(userId, data) {

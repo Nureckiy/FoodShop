@@ -1,7 +1,7 @@
-/*eslint no-unused-vars: "off"*/
-
 import React, { Component } from 'react';
 import { Form, FormGroup } from 'react-bootstrap';
+
+import * as utils from '../../utils/utils';
 
 class ControlledForm extends Component {
   constructor(props) {
@@ -19,11 +19,7 @@ class ControlledForm extends Component {
   }
   renderChilds() {
     const { children } = this.props;
-    let result = [];
-    mapChildren(children, (child, key) => {
-      result.push(this.renderChild(child, key));
-    });
-    return result;
+    return utils.mapChildren(children, (child, key) => this.renderChild(child, key));
   }
   renderChild(child, key) {
     let newProps = { key };
@@ -33,37 +29,34 @@ class ControlledForm extends Component {
     return React.cloneElement(child, newProps);
   }
   transformFormGroupChildren(item) {
-    let result = [];
-    mapChildren(item.props.children, (child, key) => {
-      const value = child.props.type === 'checkbox'
-        ? { checked:  this.state[child.props.id] }
-        : { value:  this.state[child.props.id] };
-      result.push(React.cloneElement(child, {
-        ...value,
+    return utils.mapChildren(item.props.children, (child, key) =>
+      React.cloneElement(child, {
+        ...this.renderValue(child),
         key,
         onChange: (event) => this.renderOnChange(event, child)
-      }));
-    });
-    return result;
+      })
+    );
+  }
+  renderValue(child) {
+    const { type, id } = child.props;
+    const value = this.state[id];
+    return type === 'checkbox'
+      ? { checked:  value }
+      : { value };
   }
   renderOnChange(event, child) {
-    if (child.props.onChange) {
-      child.props.onChange(event);
-    }
-    this.handleChildChange(event, child.props.section);
+    const { onChange, section } = child.props;
+    onChange && onChange(event);
+    this.handleChildChange(event, section);
   }
   handleChildChange(event, section) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.id;
-    const item = { [name]: value };
+    const { type, checked, value, id } = event.target;
+    const itemValue = type === 'checkbox' ? checked : value;
+    let item = { [id]: itemValue };
     if(section) {
-      this.setState({
-        [section]: item
-      });
-    } else {
-      this.setState(item);
+      item = { [section]: item };
     }
+    this.setState(item);
   }
   renderSubmit(e) {
     e.preventDefault();
@@ -78,16 +71,6 @@ class ControlledForm extends Component {
         { children }
       </Form>
     );
-  }
-}
-
-function mapChildren(children, callback) {
-  if (children) {
-    if (Array.isArray(children)) {
-      children.forEach((child, index) => callback(child, index));
-    } else {
-      callback(children, 0);
-    }
   }
 }
 

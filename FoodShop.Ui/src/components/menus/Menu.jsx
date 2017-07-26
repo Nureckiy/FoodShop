@@ -4,8 +4,11 @@ import React, { Component } from 'react';
 import Header from '../layout/Header.jsx';
 import GoodList from './GoodList.jsx';
 import { mainCategories } from '!json!../../sources/appVariables.json';
+import AddTile from '../admin/AddTile.jsx';
+import CreateDishForm from '../admin/CreateDishForm.jsx';
 import Loader from '../common/Loader.jsx';
 import config from '../../config';
+import ControlledModal from '../common/ControlledModal.jsx';
 
 class Menu extends Component {
   componentWillMount() {
@@ -27,8 +30,8 @@ class Menu extends Component {
   }
   render() {
     const { dishes, activeRequestStatus, selectedDishes } = this.props.model;
-    const { selectDish } = this.props.actions;
-    const { category } = this.props;
+    const { selectDish, createDish } = this.props.actions;
+    const { category, auth } = this.props;
     const categoryName = category && mainCategories[category] ? mainCategories[category] : 'Популярные блюда';
     return (
       <div>
@@ -49,6 +52,12 @@ class Menu extends Component {
               </a>
             </div>
           </div>
+          <ControlledModal ref="addDishModal" title="Добавить новое блюдо" onSubmit={() => this.refs.addDishModal.toggle()}>
+            <CreateDishForm onSubmit={createDish} formId="createDishForm"/>
+          </ControlledModal>
+          { auth.isAdmin() &&
+            <AddTile onClick={() => this.refs.addDishModal.toggle()} />
+          }
           { activeRequestStatus
             ? <Loader />
             : <GoodList selected={selectedDishes} items={dishes} onSelect={selectDish}/>
