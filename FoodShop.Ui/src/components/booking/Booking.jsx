@@ -1,5 +1,3 @@
-/*eslint no-unused-vars: "off"*/
-
 import React, { Component } from 'react';
 
 import RoomTile from '../common/RoomTile.jsx';

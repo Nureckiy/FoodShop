@@ -14,11 +14,9 @@ class BookingDetailsForm extends Component {
     this.hideAlert = this.hideAlert.bind(this);
     this.state = { error: false };
   }
-
   hideAlert() {
     this.setState({ error: false });
   }
-
   handleSubmit(details) {
     const { book, selectedRooms } = this.props;
     if(selectedRooms.length) {
@@ -33,7 +31,6 @@ class BookingDetailsForm extends Component {
       });
     }
   }
-
   getInitialValues() {
     const { user_metadata: { name, email, surname, patronymic, phone } } = utils.getProfile();
     return { name, email, surname, patronymic, phone };

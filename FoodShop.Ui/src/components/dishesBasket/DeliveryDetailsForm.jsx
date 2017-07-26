@@ -29,7 +29,7 @@ class DeliveryDetailsForm extends Component {
     const { onBack, onSubmit, selected, availableAddresses } = this.props;
     const { hideAddress } = this.state;
     const initial = this.getInitialValues();
-    const total = utils.calculateDishTotal(selected);
+    const total = utils.calculateSelectedTotal(selected);
     return (
       <div className="row animate-box">
         <div className="row">

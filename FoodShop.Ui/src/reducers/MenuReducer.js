@@ -35,7 +35,7 @@ export default function MenuReducer(state = initialState, action) {
     case types.SELECT_DISH:
       return {
         ...state,
-        selectedDishes: utils.mergeDishes(state.selectedDishes, action.good)
+        selectedDishes: utils.mergeDishToArray(state.selectedDishes, action.good)
       };
 
     case types.CLEAR_SELECTED_DISHES:

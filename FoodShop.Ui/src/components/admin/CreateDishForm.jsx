@@ -4,9 +4,10 @@ import { FormGroup, Button, Glyphicon } from 'react-bootstrap';
 import Field from '../common/Field.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
 import Select from '../common/RenderSelect';
-import * as utils from '../../utils/utils';
-import { mainCategories } from '!json!../../sources/appVariables.json';
 import FieldArray from '../common/FieldArray';
+import * as utils from '../../utils/utils';
+
+import { mainCategories } from '!json!../../sources/appVariables.json';
 
 class AddDishModal extends Component {
   render() {
