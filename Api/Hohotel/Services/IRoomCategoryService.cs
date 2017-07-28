@@ -13,9 +13,9 @@ namespace Hohotel.Services
 
         FullRoomCategory GetRoomCategoryById(int id);
 
-        void AddRoomCategory(RoomCategory category, string userId);
+        RoomCategory AddRoomCategory(RoomCategory category);
 
-        void EditRoomCategory(RoomCategory category, string userId);
+        RoomCategory EditRoomCategory(RoomCategory category);
 
         void DeleteRoomCategory(int id);
 

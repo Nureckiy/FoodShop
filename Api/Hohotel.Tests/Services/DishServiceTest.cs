@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
@@ -9,7 +8,6 @@ using Hohotel.Services;
 using Hohotel.Tests.Factories;
 using Hohotel.Tests.Factories.Models;
 using Hohotel.Tests.Helper;
-using Microsoft.AspNetCore.Razor.Chunks;
 using Moq;
 using Xunit;
 
@@ -86,15 +84,11 @@ namespace Hohotel.Tests.Services
 
             _context.Setup(c => c.Dishes).Returns(dishesMock.Object);
 
-            _service.AddDish(dish, "userId");
+            var result = _service.AddDish(dish);
 
             dishesMock.Verify(m => m.Add(It.IsAny<Dish>()), Times.Once);
             _context.Verify(m => m.SaveChanges(), Times.Once);
-            Assert.Equal("userId", dish.CreatedBy);
-            Assert.Equal("userId", dish.ModifiedBy);
-            Assert.Equal(portions, dish.DishPortions);
-            Assert.NotNull(dish.CreatedTime);
-            Assert.NotNull(dish.ModifiedTime);
+            Assert.Equal(dish, result);
         }
 
         [Fact]
@@ -112,14 +106,12 @@ namespace Hohotel.Tests.Services
             var newPortions = TestData.Create.DishPortions(2);
             var editedDish = TestData.Create.Dish(2, dishPortions: newPortions);
 
-            _service.EditDish(editedDish, "userId");
+            var result = _service.EditDish(editedDish);
 
             dishesMock.Verify(m => m.Update(It.IsAny<Dish>()), Times.Once);
             dishPortionsMock.Verify(m => m.RemoveRange(It.Is<IEnumerable<DishPortion>>(dp => dp.All(p => p.Id == 2))), Times.Once);
             _context.Verify(m => m.SaveChanges(), Times.Once);
-            Assert.Equal("userId", editedDish.ModifiedBy);
-            Assert.Equal(newPortions, editedDish.DishPortions);
-            Assert.NotNull(editedDish.ModifiedTime);
+            Assert.Equal(editedDish, result);
         }
 
         [Fact]

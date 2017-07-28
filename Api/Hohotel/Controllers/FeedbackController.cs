@@ -24,7 +24,8 @@ namespace Hohotel.Controllers
         [HttpPost]
         public void Post([FromBody]Feedback feedback)
         {
-            _service.SendFeedback(feedback, User.Identity.Name);
+            feedback.UserId = User.Identity.Name;
+            _service.SendFeedback(feedback);
         }
     }
 }

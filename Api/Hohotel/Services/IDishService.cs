@@ -12,9 +12,9 @@ namespace Hohotel.Services
 
         IList<Dish> GetByCategoryName(string categoryName);
 
-        void AddDish(Dish dish, string userId);
+        Dish AddDish(Dish dish);
 
-        void EditDish(Dish dish, string userId);
+        Dish EditDish(Dish dish);
 
         void DeleteDish(int id);
     }

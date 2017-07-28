@@ -53,22 +53,18 @@ namespace Hohotel.Services
             return result;
         }
 
-        public void AddRoomCategory(RoomCategory category, string userId)
+        public RoomCategory AddRoomCategory(RoomCategory category)
         {
-            category.CreatedBy = userId;
-            category.ModifiedBy = userId;
-            category.CreatedTime = DateTime.Now;
-            category.ModifiedTime = DateTime.Now;
             _context.RoomCategories.Add(category);
             _context.SaveChanges();
+            return category;
         }
 
-        public void EditRoomCategory(RoomCategory category, string userId)
+        public RoomCategory EditRoomCategory(RoomCategory category)
         {
-            category.ModifiedBy = userId;
-            category.ModifiedTime = DateTime.Now;
             _context.RoomCategories.Update(category);
             _context.SaveChanges();
+            return category;
         }
 
         public void DeleteRoomCategory(int id)

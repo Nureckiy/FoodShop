@@ -6,7 +6,7 @@ namespace Hohotel.Services
 {
     public interface IOrderService
     {
-        Order PlaceOrder(OrderInfo order, string userId);
+        Order PlaceOrder(OrderInfo order);
 
         IList<OrderView> GetUserOrders(string userId);
     }

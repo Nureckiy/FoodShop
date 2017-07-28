@@ -13,15 +13,15 @@ namespace Hohotel.Services
 
         bool IsAvailable(RoomBooking roomBooking);
 
-        Booking Book(Booking booking, string userId);
+        Booking Book(Booking booking);
 
         IList<BookingView> GetUserBookings(string userId);
 
         IList<string> GetActive(string userId);
 
-        void AddRoom(Room room, string userId);
+        Room AddRoom(Room room);
 
-        void EditRoom(Room room, string userId);
+        Room EditRoom(Room room);
 
         void DeleteRoom(int id);
     }

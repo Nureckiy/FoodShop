@@ -176,12 +176,11 @@ namespace Hohotel.Tests
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(room).Object);
             _context.Setup(c => c.Bookings).Returns(bookingsMock.Object);
             
-            _service.Book(booking, "userId");
+            _service.Book(booking);
 
             bookingsMock.Verify(m => m.Add(It.IsAny<Booking>()), Times.Once);
             _context.Verify(m => m.SaveChanges(), Times.Once);
             Assert.Equal(room, booking.RoomBookings[0].Room);
-            Assert.Equal("userId", booking.UserId);
         }
 
         [Fact]
@@ -257,14 +256,11 @@ namespace Hohotel.Tests
             _context.Setup(c => c.Rooms).Returns(roomMock.Object);
             _context.Setup(c => c.RoomCategories).Returns(DbSetMock.Create(category).Object);
 
-            _service.AddRoom(room, "userId");
+            var result = _service.AddRoom(room);
 
             roomMock.Verify(m => m.Add(It.IsAny<Room>()), Times.Once);
             _context.Verify(c => c.SaveChanges(), Times.Once);
-            Assert.Equal("userId", room.CreatedBy);
-            Assert.Equal("userId", room.ModifiedBy);
-            Assert.NotNull(room.CreatedTime);
-            Assert.NotNull(room.ModifiedTime);
+            Assert.Equal(room, result);
         }
 
         [Fact]
@@ -279,12 +275,11 @@ namespace Hohotel.Tests
 
             var newRoom = TestData.Create.Room(category: category, price: 10);
 
-            _service.EditRoom(newRoom, "userId");
+            var result = _service.EditRoom(newRoom);
 
             roomMock.Verify(m => m.Update(It.IsAny<Room>()), Times.Once);
             _context.Verify(c => c.SaveChanges(), Times.Once);
-            Assert.Equal("userId", newRoom.ModifiedBy);
-            Assert.NotNull(newRoom.ModifiedTime);
+            Assert.Equal(room.Id, result.Id);
         }
 
         [Fact]

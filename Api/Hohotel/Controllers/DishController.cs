@@ -38,17 +38,24 @@ namespace Hohotel.Controllers
         // POST api/dish
         [Authorize]
         [HttpPost]
-        public void Post([FromBody]Dish dish)
+        public Dish Post([FromBody]Dish dish)
         {
-            _service.AddDish(dish, User.Identity.Name);
+            dish.CreatedBy = User.Identity.Name;
+            dish.ModifiedBy = User.Identity.Name;
+            dish.CreatedTime = DateTime.Now;
+            dish.ModifiedTime = DateTime.Now;
+
+            return _service.AddDish(dish);
         }
 
         // PUT api/dish
         [Authorize]
         [HttpPut]
-        public void Put([FromBody]Dish dish)
+        public Dish Put([FromBody]Dish dish)
         {
-            _service.EditDish(dish, User.Identity.Name);
+            dish.ModifiedBy = User.Identity.Name;
+            dish.ModifiedTime = DateTime.Now;
+            return _service.EditDish(dish);
         }
 
         // DELETE api/dish/1

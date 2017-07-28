@@ -56,13 +56,12 @@ namespace Hohotel.Services
             return isAvailable;
         }
 
-        public Booking Book(Booking booking, string userId)
+        public Booking Book(Booking booking)
         {
             booking.RoomBookings.ToList()
                 .ForEach(roomBooking => 
                     roomBooking.Room = _context.Rooms.Single(room => room.Id == roomBooking.RoomId));
             booking.Total = CountTotal(booking.RoomBookings.ToList());
-            booking.UserId = userId;
             _context.Bookings.Add(booking);
             _context.SaveChanges();
             return booking;
@@ -90,24 +89,20 @@ namespace Hohotel.Services
                 .ToList();
         }
 
-        public void AddRoom(Room room, string userId)
+        public Room AddRoom(Room room)
         {
-            room.CreatedBy = userId;
-            room.ModifiedBy = userId;
-            room.CreatedTime = DateTime.Now;
-            room.ModifiedTime = DateTime.Now;
             room.Category = _context.RoomCategories.Find(room.Category.Id);
             _context.Rooms.Add(room);
             _context.SaveChanges();
+            return room;
         }
 
-        public void EditRoom(Room room, string userId)
+        public Room EditRoom(Room room)
         {
-            room.ModifiedBy = userId;
-            room.ModifiedTime = DateTime.Now;
             room.Category = _context.RoomCategories.Find(room.Category.Id);
             _context.Rooms.Update(room);
             _context.SaveChanges();
+            return room;
         }
 
         public void DeleteRoom(int id)

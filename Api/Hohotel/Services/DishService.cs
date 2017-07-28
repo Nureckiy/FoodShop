@@ -40,27 +40,23 @@ namespace Hohotel.Services
                 .ToList();
         }
 
-        public void AddDish(Dish dish, string userId)
+        public Dish AddDish(Dish dish)
         {
-            dish.CreatedBy = userId;
-            dish.ModifiedBy = userId;
-            dish.CreatedTime = DateTime.Now;
-            dish.ModifiedTime = DateTime.Now;
-
             _context.Dishes.Add(dish);
             _context.SaveChanges();
+            return dish;
         }
 
-        public void EditDish(Dish dish, string userId)
+        public Dish EditDish(Dish dish)
         {
-            dish.ModifiedBy = userId;
-            dish.ModifiedTime = DateTime.Now;
             _context.DishPortions.RemoveRange(_context.DishPortions
                 .Where(portion => portion.Parent.Id == dish.Id && 
                 dish.DishPortions.All(dp => dp.Id != portion.Id))
             );
             _context.Dishes.Update(dish);
             _context.SaveChanges();
+
+            return dish;
         }
 
         public void DeleteDish(int id)

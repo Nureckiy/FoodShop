@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Hohotel.Services;
@@ -21,9 +18,10 @@ namespace Hohotel.Controllers
 
         // POST api/order
         [HttpPost]
-        public void Post([FromBody]OrderInfo order)
+        public Order Post([FromBody]OrderInfo order)
         {
-            _service.PlaceOrder(order, User.Identity.Name);
+            order.UserId = User.Identity.Name;
+            return _service.PlaceOrder(order);
         }
 
         // GET api/order

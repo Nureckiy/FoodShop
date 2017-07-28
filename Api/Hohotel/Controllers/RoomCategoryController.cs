@@ -31,7 +31,7 @@ namespace Hohotel.Controllers
         [HttpGet("{id}")]
         public FullRoomCategory Get(int id)
         {
-            return _service.GetRoomCategoryById(id); ;
+            return _service.GetRoomCategoryById(id);
         }
 
         // GET: api/roomCategory/inStock
@@ -44,17 +44,23 @@ namespace Hohotel.Controllers
         // POST api/roomCategory
         [Authorize]
         [HttpPost]
-        public void Post([FromBody]RoomCategory category)
+        public RoomCategory Post([FromBody]RoomCategory category)
         {
-            _service.AddRoomCategory(category, User.Identity.Name);
+            category.CreatedBy = User.Identity.Name;
+            category.ModifiedBy = User.Identity.Name;
+            category.CreatedTime = DateTime.Now;
+            category.ModifiedTime = DateTime.Now;
+            return _service.AddRoomCategory(category);
         }
 
         // PUT api/roomCategory
         [Authorize]
         [HttpPut]
-        public void Put([FromBody]RoomCategory category)
+        public RoomCategory Put([FromBody]RoomCategory category)
         {
-            _service.EditRoomCategory(category, User.Identity.Name);
+            category.ModifiedBy = User.Identity.Name;
+            category.ModifiedTime = DateTime.Now;
+            return _service.EditRoomCategory(category);
         }
 
         // DELETE api/roomCategory/1

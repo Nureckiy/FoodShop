@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Hohotel.Services;
@@ -10,7 +8,6 @@ using Hohotel.Tests.Factories;
 using Hohotel.Tests.Factories.Models;
 using Hohotel.Tests.Helper;
 using Hohotel.Tests.Mapper;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
 
@@ -80,14 +77,11 @@ namespace Hohotel.Tests.Services
 
             _context.Setup(c => c.RoomCategories).Returns(categoryMock.Object);
 
-            _service.AddRoomCategory(category, "userId");
+            var result =_service.AddRoomCategory(category);
 
             categoryMock.Verify(m => m.Add(It.IsAny<RoomCategory>()), Times.Once);
             _context.Verify(c => c.SaveChanges(), Times.Once);
-            Assert.Equal("userId", category.CreatedBy);
-            Assert.Equal("userId", category.ModifiedBy);
-            Assert.NotNull(category.CreatedTime);
-            Assert.NotNull(category.ModifiedTime);
+            Assert.Equal(category, result);
         }
 
         [Fact]
@@ -100,12 +94,11 @@ namespace Hohotel.Tests.Services
 
             var editedCategory = TestData.Create.RoomCategory(3);
 
-            _service.EditRoomCategory(editedCategory, "userId");
+            var result = _service.EditRoomCategory(editedCategory);
 
             categoryMock.Verify(m => m.Update(It.IsAny<RoomCategory>()), Times.Once);
             _context.Verify(m => m.SaveChanges(), Times.Once);
-            Assert.Equal("userId", editedCategory.ModifiedBy);
-            Assert.NotNull(editedCategory.ModifiedTime);
+            Assert.Equal(category.Id, result.Id);
         }
 
         [Fact]
@@ -123,6 +116,25 @@ namespace Hohotel.Tests.Services
 
             roomCategoryMock.Verify(m => m.Remove(It.IsAny<RoomCategory>()), Times.Once);
             _context.Verify(c => c.SaveChanges(), Times.Once);
+        }
+
+        [Fact]
+        public void GetCategoriesInfo()
+        {
+            var roomCategories = new []
+            {
+                TestData.Create.RoomCategory(1, "first category"),
+                TestData.Create.RoomCategory(2, "second category")
+            };
+
+            _context.Setup(c => c.RoomCategories).Returns(DbSetMock.Create(roomCategories).Object);
+
+            var result = _service.GetCategoriesInfo();
+
+            Assert.Equal(2, result.Count);
+            Assert.IsType<List<ItemInfo>>(result);
+            Assert.Equal("first category", result.Single(i => i.Id == 1).Name);
+            Assert.Equal("second category", result.Single(i => i.Id == 2).Name);
         }
     }
 }

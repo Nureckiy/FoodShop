@@ -15,7 +15,7 @@ namespace Hohotel.Services
             _configuration = configuration.Value;
         }
 
-        public void SendFeedback(Feedback feedback, string userId)
+        public void SendFeedback(Feedback feedback)
         {
             var message = CreateEmail(feedback);
 

@@ -41,7 +41,8 @@ namespace Hohotel.Controllers
         [HttpPost("Book")]
         public void Book([FromBody]Booking booking)
         {
-            _service.Book(booking, User.Identity.Name);
+            booking.UserId = User.Identity.Name;
+            _service.Book(booking);
         }
 
         // GET api/room/active
@@ -63,17 +64,23 @@ namespace Hohotel.Controllers
         // POST api/room
         [Authorize]
         [HttpPost]
-        public void Post([FromBody]Room room)
+        public Room Post([FromBody]Room room)
         {
-            _service.AddRoom(room, User.Identity.Name);
+            room.CreatedBy = User.Identity.Name;
+            room.ModifiedBy = User.Identity.Name;
+            room.CreatedTime = DateTime.Now;
+            room.ModifiedTime = DateTime.Now;
+            return _service.AddRoom(room);
         }
 
         // PUT api/room
         [Authorize]
         [HttpPut]
-        public void Put([FromBody]Room room)
+        public Room Put([FromBody]Room room)
         {
-            _service.EditRoom(room, User.Identity.Name);
+            room.ModifiedBy = User.Identity.Name;
+            room.ModifiedTime = DateTime.Now;
+            return _service.EditRoom(room);
         }
 
         // DELETE api/room/1
