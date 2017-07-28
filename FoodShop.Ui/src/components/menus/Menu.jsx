@@ -5,7 +5,7 @@ import Header from '../layout/Header.jsx';
 import GoodList from './GoodList.jsx';
 import { mainCategories } from '!json!../../sources/appVariables.json';
 import AddTile from '../admin/AddTile.jsx';
-import CreateDishForm from '../admin/CreateDishForm.jsx';
+import DishControlForm from '../admin/DishControlForm.jsx';
 import Loader from '../common/Loader.jsx';
 import config from '../../config';
 import ControlledModal from '../common/ControlledModal.jsx';
@@ -51,7 +51,7 @@ class Menu extends Component {
             </a>
           </div>
           <ControlledModal ref="addDishModal" title="Добавить новое блюдо" onSubmit={() => this.refs.addDishModal.toggle()}>
-            <CreateDishForm onSubmit={createDish} formId="createDishForm" defaultCategory={category}/>
+            <DishControlForm onSubmit={createDish} formId="createDishForm" defaultCategory={category}/>
           </ControlledModal>
           { auth.isAdmin() &&
             <AddTile onClick={() => this.refs.addDishModal.toggle()} />

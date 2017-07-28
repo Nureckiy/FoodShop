@@ -8,7 +8,7 @@ import Loader from '../common/Loader.jsx';
 import Slider from '../common/Slider.jsx';
 import AddTile from '../admin/AddTile.jsx';
 import ControlledModal from '../common/ControlledModal.jsx';
-import CreateRoomForm from '../admin/CreateRoomForm.jsx';
+import RoomControlForm from '../admin/RoomControlForm.jsx';
 import DateRangePicker from '../common/DateRangePicker.jsx';
 import BookingTotal from './BookingTotal.jsx';
 
@@ -57,7 +57,7 @@ class Booking extends Component {
             <b>Цена: <span className="cursive-font">от ${currentRoomCategory.minPrice}</span></b>
           </div>
           <ControlledModal ref="addRoomModal" title="Добавить новую комнату" onSubmit={this.openAddModal}>
-            <CreateRoomForm
+            <RoomControlForm
               onSubmit={createRoom}
               loadCategories={getRoomCategoriesInfo}
               categories={roomCategoriesInfo}

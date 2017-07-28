@@ -5,7 +5,7 @@ import { Form, Panel, Button } from 'react-bootstrap';
 import RoomTileControl from '../booking/RoomTileControl.jsx';
 import ControlledModal from '../common/ControlledModal.jsx';
 import DateRangePicker from '../common/DateRangePicker.jsx';
-import CreateRoomForm from '../admin/CreateRoomForm.jsx';
+import RoomControlForm from './RoomControlForm.jsx';
 
 class RoomTileWithEditControl extends RoomTileControl {
   openEditModal() {
@@ -27,7 +27,7 @@ class RoomTileWithEditControl extends RoomTileControl {
           ref="editRoomModal"
           title="Редактировать"
           closeOnSubmit >
-            <CreateRoomForm
+            <RoomControlForm
               formId="editRoomForm"
               onSubmit={onEdit}
               initial={room}

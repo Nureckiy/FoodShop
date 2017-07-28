@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ControlledModal from '../common/ControlledModal.jsx';
 import Tile from '../common/Tile.jsx';
 import AddDishForm from './AddDishForm.jsx';
-import CreateDishForm from '../admin/CreateDishForm.jsx';
+import DishControlForm from '../admin/DishControlForm.jsx';
 
 class GoodList extends Component {
   constructor() {
@@ -41,7 +41,7 @@ class GoodList extends Component {
           />
         </ControlledModal>
         <ControlledModal ref="editDishModal" title="Редактировать" closeOnSubmit>
-          <CreateDishForm
+          <DishControlForm
             formId="editDishModal"
             initialValues={ currentDish }
             onSubmit={editDish}

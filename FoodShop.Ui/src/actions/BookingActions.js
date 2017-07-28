@@ -1,6 +1,7 @@
 import * as types from '../constants/BookingConstants';
 import service from '../service/service';
 import * as utils from '../utils/utils';
+import { create, createAsync } from './ActionCreator';
 
 export function setCurrentRoomCategory(category) {
   return (dispatch) => {
@@ -12,109 +13,38 @@ export function setCurrentRoomCategory(category) {
 }
 
 export function getRoomCategories() {
-  return (dispatch) => {
-    dispatch({
-      type: types.GET_ROOM_CATEGORIES
-    });
-
-    service.getRoomCategories(success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.GET_ROOM_CATEGORIES_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.GET_ROOM_CATEGORIES_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.getRoomCategories,
+    types.GET_ROOM_CATEGORIES,
+    types.GET_ROOM_CATEGORIES_SUCCESS,
+    types.GET_ROOM_CATEGORIES_FAIL
+  );
 }
 
 export function getRoomCategoriesInfo() {
-  return (dispatch) => {
-    dispatch({
-      type: types.GET_ROOM_CATEGORIES_INFO
-    });
-
-    service.getRoomCategoriesInfo(success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.GET_ROOM_CATEGORIES_INFO_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.GET_ROOM_CATEGORIES_INFO_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.getRoomCategoriesInfo(),
+    types.GET_ROOM_CATEGORIES_INFO,
+    types.GET_ROOM_CATEGORIES_INFO_SUCCESS,
+    types.GET_ROOM_CATEGORIES_INFO_FAIL,
+  );
 }
 
 export function getRoomCategory(id) {
-  return (dispatch) => {
-    dispatch({
-      type: types.GET_ROOMS_CATEGORY_BY_ID
-    });
-
-    service.getRoomCategoryById(id, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.GET_ROOMS_CATEGORY_BY_ID_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.GET_ROOMS_CATEGORY_BY_ID_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.getRoomCategoryById,
+    types.GET_ROOMS_CATEGORY_BY_ID,
+    types.GET_ROOMS_CATEGORY_BY_ID_SUCCESS,
+    types.GET_ROOMS_CATEGORY_BY_ID_FAIL,
+    id
+  );
 }
 
 export function getRooms(id, startDate, endDate) {
-  return (dispatch) => {
-    dispatch({
-      type: types.GET_ROOMS
-    });
-
-    const filter = { categoryId: id, startDate, endDate };
-
-    service.getRooms(filter, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.GET_ROOMS_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.GET_ROOMS_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  const filter = { categoryId: id, startDate, endDate };
+  return createAsync(service.getRooms,
+    types.GET_ROOMS,
+    types.GET_ROOMS_SUCCESS,
+    types.GET_ROOMS_FAIL,
+    filter
+  );
 }
 
 export function addRoom(room) {
@@ -123,7 +53,7 @@ export function addRoom(room) {
       type: types.ADD_ROOM,
       room
     });
-
+    const fail = create(dispatch, types.ADD_ROOM_FAIL);
     const filter = Object.assign({ roomId: room.id, ...utils.renderDateRange(room)});
     service.checkRoomAvailability(filter, success, fail);
 
@@ -139,16 +69,6 @@ export function addRoom(room) {
         fail({ message: 'номер недоступен в выбранный промежуток'}, status);
       }
     }
-
-    function fail(error, status) {
-      dispatch({
-        type: types.ADD_ROOM_FAIL,
-        error,
-        room,
-        status
-      });
-    }
-
   };
 }
 
@@ -162,55 +82,21 @@ export function removeRoom(id) {
 }
 
 export function createRoom(data) {
-  return (dispatch) => {
-    dispatch({
-      type: types.CREATE_ROOM
-    });
-
-    return service.addRoom(data, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.CREATE_ROOM_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.CREATE_ROOM_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.addRoom,
+    types.ADD_ROOM,
+    types.ADD_ROOM_SUCCESS,
+    types.ADD_ROOM_FAIL,
+    data
+  );
 }
 
 export function editRoom(data) {
-  return (dispatch) => {
-    dispatch({
-      type: types.EDIT_ROOM
-    });
-
-    return service.editRoom(data, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.EDIT_ROOM_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.EDIT_ROOM_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.editRoom,
+    types.EDIT_ROOM,
+    types.EDIT_ROOM_SUCCESS,
+    types.EDIT_ROOM_FAIL,
+    data
+  );
 }
 
 export function clearSelectedRooms() {
@@ -221,80 +107,29 @@ export function clearSelectedRooms() {
   };
 }
 
-export function book(values) {
-  return (dispatch) => {
-    dispatch({
-      type: types.BOOK
-    });
-
-    return service.book(values, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.BOOK_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.BOOK_FAIL,
-        data,
-        status
-      });
-    }
-  };
+export function book(data) {
+  return createAsync(service.book,
+    types.BOOK,
+    types.BOOK_SUCCESS,
+    types.BOOK_FAIL,
+    data
+  );
 }
 
 export function createRoomCategory(data) {
-  return (dispatch) => {
-    dispatch({
-      type: types.CREATE_ROOM_CATEGORIES
-    });
-
-    return service.addRoomCategory(data, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.CREATE_ROOM_CATEGORIES_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.CREATE_ROOM_CATEGORIES_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.addRoomCategory,
+    types.CREATE_ROOM_CATEGORY,
+    types.CREATE_ROOM_CATEGORY_SUCCESS,
+    types.CREATE_ROOM_CATEGORY_FAIL,
+    data
+  );
 }
 
 export function editRoomCategory(data) {
-  return (dispatch) => {
-    dispatch({
-      type: types.EDIT_ROOM_CATEGORIES
-    });
-
-    return service.editRoomCategory(data, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.EDIT_ROOM_CATEGORIES_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.EDIT_ROOM_CATEGORIES_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.editRoomCategory,
+    types.EDIT_ROOM_CATEGORY,
+    types.EDIT_ROOM_CATEGORY_SUCCESS,
+    types.EDIT_ROOM_CATEGORY_FAIL,
+    data
+  );
 }

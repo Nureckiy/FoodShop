@@ -7,7 +7,7 @@ import Select from '../common/RenderSelect.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
 import * as utils from '../../utils/utils';
 
-class CreateRoomForm extends Component {
+class RoomControlForm extends Component {
   componentWillMount() {
     const { loadCategories } = this.props;
     loadCategories();
@@ -63,4 +63,4 @@ class CreateRoomForm extends Component {
   }
 }
 
-export default CreateRoomForm;
+export default RoomControlForm;

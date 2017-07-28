@@ -1,57 +1,24 @@
 import * as types from '../constants/MenuConstants';
 import service from '../service/service';
 import * as utils from '../utils/utils';
+import { createAsync } from './ActionCreator';
 
 export function getDishes(data) {
-  return (dispatch) => {
-    dispatch({
-      type: types.GET_DISH
-    });
-
-    service.getDishesByCategoryName(data, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.GET_DISH_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.GET_DISH_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.getDishesByCategoryName,
+    types.GET_DISH,
+    types.GET_DISH_SUCCESS,
+    types.GET_DISH_FAIL,
+    data
+  );
 }
 
 export function getPopularDishes(count) {
-  return (dispatch) => {
-    dispatch({
-      type: types.GET_DISH
-    });
-
-    service.getPopularDishes(count, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.GET_DISH_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.GET_DISH_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.getPopularDishes,
+    types.GET_DISH,
+    types.GET_DISH_SUCCESS,
+    types.GET_DISH_FAIL,
+    count
+  );
 }
 
 export function selectDish(good) {
@@ -74,134 +41,40 @@ export function changeConfiguration(configuration) {
   };
 }
 
-export function updateTotal(goods) {
-  return (dispatch) => {
-    dispatch({
-      type: types.UPDATE_TOTAL
-    });
-
-    service.getTotal(goods, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.UPDATE_TOTAL_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.UPDATE_TOTAL_FAIL,
-        data,
-        status
-      });
-    }
-  };
-}
-
 export function addOrder(selected, deliveryDetails) {
-  return (dispatch) => {
-    dispatch({
-      type: types.ADD_ORDER
-    });
+  const portions = utils.makePortionsList(selected);
+  const data = { portions, ...deliveryDetails };
 
-    const portions = utils.makePortionsList(selected);
-
-    service.addOrder({ portions, ...deliveryDetails }, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.ADD_ORDER_SUCCSESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.ADD_ORDER_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.addOrder,
+    types.ADD_ORDER,
+    types.ADD_ORDER_SUCCSESS,
+    types.ADD_ORDER_FAIL,
+    data
+  );
 }
 
 export function getAvailableAddresses() {
-  return (dispatch) => {
-    dispatch({
-      type: types.GET_AVAILABLE_ADDRESSES
-    });
-
-    service.getAvailableAddresses(success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.GET_AVAILABLE_ADDRESSES_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.GET_AVAILABLE_ADDRESSES_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.getAvailableAddresses,
+    types.GET_AVAILABLE_ADDRESSES,
+    types.GET_AVAILABLE_ADDRESSES_SUCCESS,
+    types.GET_AVAILABLE_ADDRESSES_FAIL
+  );
 }
 
 export function createDish(dish) {
-  return (dispatch) => {
-    dispatch({
-      type: types.CREATE_DISH
-    });
-
-    service.addDish(dish, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.CREATE_DISH_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.CREATE_DISH_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.addDish,
+    types.CREATE_DISH,
+    types.CREATE_DISH_SUCCESS,
+    types.CREATE_DISH_FAIL,
+    dish
+  );
 }
 
 export function editDish(dish) {
-  return (dispatch) => {
-    dispatch({
-      type: types.EDIT_DISH
-    });
-
-    service.editDish(dish, success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.EDIT_DISH_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.EDIT_DISH_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.editDish,
+    types.EDIT_DISH,
+    types.EDIT_DISH_SUCCESS,
+    types.EDIT_DISH_FAIL,
+    dish
+  );
 }

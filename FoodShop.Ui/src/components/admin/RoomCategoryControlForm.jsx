@@ -4,7 +4,7 @@ import { FormGroup } from 'react-bootstrap';
 import Field from '../common/Field.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
 
-class CreateRoomCategoryForm extends Component {
+class RoomCategoryControlForm extends Component {
   render() {
     const { onSubmit, formId, initial } = this.props;
     return (
@@ -38,4 +38,4 @@ class CreateRoomCategoryForm extends Component {
   }
 }
 
-export default CreateRoomCategoryForm;
+export default RoomCategoryControlForm;

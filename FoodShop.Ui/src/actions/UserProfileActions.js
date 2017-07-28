@@ -1,55 +1,19 @@
-/*eslint no-unused-vars: "off"*/
 import * as types from '../constants/UserProfileConstants';
 import service from '../service/service';
+import { createAsync } from './ActionCreator';
 
 export function getBookings() {
-  return (dispatch) => {
-    dispatch({
-      type: types.GET_BOOKINGS
-    });
-
-    service.getBookings(success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.GET_BOOKINGS_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.GET_BOOKINGS_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.getBookings,
+    types.GET_BOOKINGS,
+    types.GET_BOOKINGS_SUCCESS,
+    types.GET_BOOKINGS_FAIL
+  );
 }
 
 export function getOrders() {
-  return (dispatch) => {
-    dispatch({
-      type: types.GET_ORDERS
-    });
-
-    service.getOrders(success, fail);
-
-    function success(data, status) {
-      dispatch({
-        type: types.GET_ORDERS_SUCCESS,
-        data,
-        status
-      });
-    }
-
-    function fail(data, status) {
-      dispatch({
-        type: types.GET_ORDERS_FAIL,
-        data,
-        status
-      });
-    }
-  };
+  return createAsync(service.getOrders,
+    types.GET_ORDERS,
+    types.GET_ORDERS_SUCCESS,
+    types.GET_ORDERS_FAIL,
+  );
 }

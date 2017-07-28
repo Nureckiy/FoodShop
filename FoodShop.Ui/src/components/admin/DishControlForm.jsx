@@ -6,10 +6,9 @@ import ControlledForm from '../common/ControlledForm.jsx';
 import Select from '../common/RenderSelect';
 import FieldArray from '../common/FieldArray';
 import * as utils from '../../utils/utils';
-
 import { mainCategories } from '!json!../../sources/appVariables.json';
 
-class CreateDishForm extends Component {
+class DishControlForm extends Component {
   render() {
     const { onSubmit, formId, defaultCategory, initialValues } = this.props;
     let initial = initialValues;
@@ -19,6 +18,7 @@ class CreateDishForm extends Component {
     }
     return (
       <ControlledForm onSubmit={ onSubmit } id={ formId } initialValues={ initial }>
+        <Button bsStyle="dancer">Удалить</Button>
         <FormGroup>
           <Field
             id="name"
@@ -73,4 +73,4 @@ class CreateDishForm extends Component {
   }
 }
 
-export default CreateDishForm;
+export default DishControlForm;

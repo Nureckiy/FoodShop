@@ -5,7 +5,7 @@ import Loader from '../common/Loader.jsx';
 import Tile from '../common/Tile.jsx';
 import AddTile from '../admin/AddTile.jsx';
 import ControlledModal from '../common/ControlledModal.jsx';
-import CreateRoomCategoryForm from './CreateRoomCategoryForm.jsx';
+import CreateRoomCategoryForm from '../admin/RoomCategoryControlForm.jsx';
 import history from '../../store/History';
 
 class Rooms extends Component {
