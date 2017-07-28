@@ -71,6 +71,15 @@ namespace Hohotel.Services
             _context.SaveChanges();
         }
 
+        public void DeleteRoomCategory(int id)
+        {
+            var roomCategory = _context.RoomCategories
+                .Include(r => r.Rooms)
+                .Single(rc => rc.Id == id);
+            _context.RoomCategories.Remove(roomCategory);
+            _context.SaveChanges();
+        }
+
         public IList<ItemInfo> GetCategoriesInfo()
         {
             return _context.RoomCategories

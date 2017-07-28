@@ -17,6 +17,8 @@ namespace Hohotel.Services
 
         void EditRoomCategory(RoomCategory category, string userId);
 
+        void DeleteRoomCategory(int id);
+
         IList<ItemInfo> GetCategoriesInfo();
     }
 }

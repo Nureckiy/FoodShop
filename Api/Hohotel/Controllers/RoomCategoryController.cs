@@ -56,5 +56,13 @@ namespace Hohotel.Controllers
         {
             _service.EditRoomCategory(category, User.Identity.Name);
         }
+
+        // DELETE api/roomCategory/1
+        [Authorize]
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _service.DeleteRoomCategory(id);
+        }
     }
 }

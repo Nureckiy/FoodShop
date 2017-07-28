@@ -50,5 +50,13 @@ namespace Hohotel.Controllers
         {
             _service.EditDish(dish, User.Identity.Name);
         }
+
+        // DELETE api/dish/1
+        [Authorize]
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _service.DeleteDish(id);
+        }
     }
 }

@@ -287,6 +287,20 @@ namespace Hohotel.Tests
             Assert.NotNull(newRoom.ModifiedTime);
         }
 
+        [Fact]
+        public void DeleteRoom()
+        {
+            var room = TestData.Create.Room(4);
+            var roomMock = DbSetMock.Create(room);
+
+            _context.Setup(c => c.Rooms).Returns(roomMock.Object);
+
+            _service.DeleteRoom(4);
+
+            roomMock.Verify(m => m.Remove(It.IsAny<Room>()), Times.Once);
+            _context.Verify(c => c.SaveChanges(), Times.Once);
+        }
+
         private RoomTestModel ComposeTestData(DateTime bookingStartDate, DateTime bookingEndDate, RoomCategory category = null)
         {
             var roomBookings = new List<RoomBooking>()

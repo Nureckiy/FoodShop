@@ -28,9 +28,9 @@ namespace Hohotel.Tests.Factories.Models
             return model;
         }
 
-        public static IList<DishPortion> DishPortions(this ITestDataFactory factory, int count, IList<DishPortionOrder> dishPortionOrders = null)
+        public static IList<DishPortion> DishPortions(this ITestDataFactory factory, int count, IList<DishPortionOrder> dishPortionOrders = null, Dish parent = null)
         {
-            return Enumerable.Range(0, count).Select(index => factory.DishPortion(index, dishPortionOrders: dishPortionOrders)).ToList();
+            return Enumerable.Range(0, count).Select(index => factory.DishPortion(index, dishPortionOrders: dishPortionOrders, parent: parent)).ToList();
         }
     }
 }

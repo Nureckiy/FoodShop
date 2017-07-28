@@ -15,5 +15,7 @@ namespace Hohotel.Services
         void AddDish(Dish dish, string userId);
 
         void EditDish(Dish dish, string userId);
+
+        void DeleteDish(int id);
     }
 }

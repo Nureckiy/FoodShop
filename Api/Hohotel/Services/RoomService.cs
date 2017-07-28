@@ -110,6 +110,14 @@ namespace Hohotel.Services
             _context.SaveChanges();
         }
 
+        public void DeleteRoom(int id)
+        {
+            var room = new Room { Id = id };
+            _context.Rooms.Attach(room);
+            _context.Rooms.Remove(room);
+            _context.SaveChanges();
+        }
+
         public decimal CountTotal(List<RoomBooking> roomBookings)
         {
             return roomBookings.Sum(roomBooking => CountTotal(roomBooking));

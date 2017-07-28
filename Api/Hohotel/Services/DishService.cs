@@ -7,6 +7,7 @@ using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
+using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
 namespace Hohotel.Services
 {
@@ -54,7 +55,20 @@ namespace Hohotel.Services
         {
             dish.ModifiedBy = userId;
             dish.ModifiedTime = DateTime.Now;
+            _context.DishPortions.RemoveRange(_context.DishPortions
+                .Where(portion => portion.Parent.Id == dish.Id && 
+                dish.DishPortions.All(dp => dp.Id != portion.Id))
+            );
             _context.Dishes.Update(dish);
+            _context.SaveChanges();
+        }
+
+        public void DeleteDish(int id)
+        {
+            var dish = _context.Dishes
+                .Include(d => d.DishPortions)
+                .Single(d => d.Id == id);
+            _context.Dishes.Remove(dish);
             _context.SaveChanges();
         }
     }

@@ -75,5 +75,13 @@ namespace Hohotel.Controllers
         {
             _service.EditRoom(room, User.Identity.Name);
         }
+
+        // DELETE api/room/1
+        [Authorize]
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _service.DeleteRoom(id);
+        }
     }
 }

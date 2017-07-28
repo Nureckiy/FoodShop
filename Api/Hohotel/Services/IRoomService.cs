@@ -22,5 +22,7 @@ namespace Hohotel.Services
         void AddRoom(Room room, string userId);
 
         void EditRoom(Room room, string userId);
+
+        void DeleteRoom(int id);
     }
 }

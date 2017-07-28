@@ -107,5 +107,22 @@ namespace Hohotel.Tests.Services
             Assert.Equal("userId", editedCategory.ModifiedBy);
             Assert.NotNull(editedCategory.ModifiedTime);
         }
+
+        [Fact]
+        public void DeleteRoomCategory()
+        {
+            var rooms = TestData.Create.Rooms(3);
+            var roomCategory = TestData.Create.RoomCategory(7, rooms: rooms);
+            var roomMock = DbSetMock.Create(rooms.ToArray());
+            var roomCategoryMock = DbSetMock.Create(roomCategory);
+
+            _context.Setup(c => c.Rooms).Returns(roomMock.Object);
+            _context.Setup(c => c.RoomCategories).Returns(roomCategoryMock.Object);
+
+            _service.DeleteRoomCategory(7);
+
+            roomCategoryMock.Verify(m => m.Remove(It.IsAny<RoomCategory>()), Times.Once);
+            _context.Verify(c => c.SaveChanges(), Times.Once);
+        }
     }
 }
