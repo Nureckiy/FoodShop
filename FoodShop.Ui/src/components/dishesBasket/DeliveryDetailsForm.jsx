@@ -61,16 +61,20 @@ class DeliveryDetailsForm extends Component {
               placeholder="Email"
               label="Email"
             />
-            <input type="checkbox" id="takeAway" onChange={this.handleDeliveryClick} />
-            <label htmlFor="takeAway" className="check-label black" id="samLabel"><span></span>Заберу сам</label>
+            <Field
+              id="takeAway"
+              type="checkbox"
+              label="Заберу сам"
+              onChange={this.handleDeliveryClick} />
           </FormGroup>
           <FormGroup>
             {!hideAddress &&
               <RenderSelect
                 id="address"
-                controlClass="select-number"
+                type="text"
                 label="Доставить в номер"
                 options={utils.renderArrayOptions(availableAddresses)}
+                defaultEmptyOption
                 required
               />
             }

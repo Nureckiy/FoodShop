@@ -102,14 +102,14 @@ export function renderDateRange({ arrivalDate, departureDate }) {
   return result;
 }
 
+function renderDate(date) {
+  return date.format('MM/DD/YYYY');
+}
+
 function addOptionIfExist(item, option, optionName) {
   if(option) {
     item[optionName] = option;
   }
-}
-
-function renderDate(date) {
-  return date.format('MM/DD/YYYY');
 }
 
 export function renderNumberOptions(number) {
@@ -133,6 +133,23 @@ export function renderObjectOptions(item) {
   return Object.keys(item).map(key => {
     return { value: key, text: item[key] };
   });
+}
+
+export function renderObjectArrayOptions(items) {
+  return items.map(item => {
+    return { value: item.id, text: item.name };
+  });
+}
+
+export function arraysEqual(a, b) {
+  if (a === b) return true;
+  if (!a || !b) return false;
+  if (a.length !== b.length) return false;
+
+  for (let i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
 }
 
 function joinElementToArray(arr, item, comparison) {

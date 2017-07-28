@@ -3,15 +3,25 @@ import React, { Component } from 'react';
 import Header from '../layout/Header.jsx';
 import Loader from '../common/Loader.jsx';
 import Tile from '../common/Tile.jsx';
+import AddTile from '../admin/AddTile.jsx';
+import ControlledModal from '../common/ControlledModal.jsx';
+import CreateRoomCategoryForm from './CreateRoomCategoryForm.jsx';
 import history from '../../store/History';
 
 class Rooms extends Component {
-  componentWillMount() {
-    const { getRoomCategories } = this.props;
+  constructor(props) {
+    super(props);
+    this.state = { selected: {} };
+    const { getRoomCategories } = props;
     getRoomCategories();
   }
+  openEditRoomCategoryModal(item) {
+    this.setState({ selected: item });
+    this.refs.editCategoryModal.toggle();
+  }
   render() {
-    const { activeRequestStatus, roomCategories } = this.props;
+    const { activeRequestStatus, roomCategories, createRoomCategory, editRoomCategory, auth } = this.props;
+    const { selected } = this.state;
     return (
       <div>
         <Header
@@ -31,15 +41,28 @@ class Rooms extends Component {
             </div>
           </div>
           <div className="row">
+            <ControlledModal ref="addCategoryModal" title="Добавить новый тип номеров" closeOnSubmit>
+              <CreateRoomCategoryForm onSubmit={createRoomCategory} formId="createRoomCategoryForm"/>
+            </ControlledModal>
+            <ControlledModal ref="editCategoryModal" title="Редактировать" closeOnSubmit>
+              <CreateRoomCategoryForm
+                formId="editRoomCategoryForm"
+                initial={selected}
+                onSubmit={editRoomCategory} />
+            </ControlledModal>
+            { auth.isAdmin() &&
+              <AddTile onClick={() => this.refs.addCategoryModal.toggle() }/>
+            }
             {activeRequestStatus
             ? <Loader />
-            : roomCategories.map(item =>
+            : roomCategories && roomCategories.map(item =>
                 <Tile
                   key={item.id}
                   item={item}
                   onClick={() => history.push(`/booking/${item.id}`)}
                   price={`От $${item.minPrice}`}
-                />
+                  withOptionsBtn
+                  onOptionsBtnClick={() => this.openEditRoomCategoryModal(item)} />
             )}
           </div>
         </div>

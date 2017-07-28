@@ -153,3 +153,55 @@ export function getAvailableAddresses() {
     }
   };
 }
+
+export function createDish(dish) {
+  return (dispatch) => {
+    dispatch({
+      type: types.CREATE_DISH
+    });
+
+    service.addDish(dish, success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.CREATE_DISH_SUCCESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.CREATE_DISH_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}
+
+export function editDish(dish) {
+  return (dispatch) => {
+    dispatch({
+      type: types.EDIT_DISH
+    });
+
+    service.editDish(dish, success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.EDIT_DISH_SUCCESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.EDIT_DISH_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}

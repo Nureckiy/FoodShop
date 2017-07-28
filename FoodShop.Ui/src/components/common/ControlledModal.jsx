@@ -1,4 +1,3 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
@@ -9,17 +8,23 @@ class ControlledModal extends Component {
       show: false
     };
     this.toggle = this.toggle.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   toggle() {
     const show = !this.state.show;
     this.setState({ show });
   }
   renderSubmitOptions() {
-    const { children, onSubmit } = this.props;
+    const { children } = this.props;
     let options = {};
     if (children && children.props.formId) options.form = children.props.formId;
-    if (onSubmit) options.onClick = onSubmit;
+    options.onClick = this.handleSubmit;
     return options;
+  }
+  handleSubmit(event) {
+    const { onSubmit, closeOnSubmit } = this.props;
+    if(onSubmit) onSubmit(event);
+    if(closeOnSubmit) this.toggle();
   }
   render() {
     const { title, children } = this.props;

@@ -30,7 +30,7 @@ class Menu extends Component {
   }
   render() {
     const { dishes, activeRequestStatus, selectedDishes } = this.props.model;
-    const { selectDish, createDish } = this.props.actions;
+    const { selectDish, createDish, editDish } = this.props.actions;
     const { category, auth } = this.props;
     const categoryName = category && mainCategories[category] ? mainCategories[category] : 'Популярные блюда';
     return (
@@ -42,25 +42,23 @@ class Menu extends Component {
           className={category ? 'cut' : ''}
         />
         <div className="container content">
-          <div className="row">
-            <div className="col-md-8 col-md-offset-2 text-center title">
-              <h2 className="cursive-font primary-color">{categoryName}</h2>
-              <p>Приготовлением вкусностей занимаются профессиональные повара и используются только самые свежие
-                продукты.</p>
-              <a href="#/basket/" className="btn-tra">
-                Корзина <i id="basket-icon" className="glyphicon glyphicon-shopping-cart"/>
-              </a>
-            </div>
+          <div className="col-md-8 col-md-offset-2 text-center title">
+            <h2 className="cursive-font primary-color">{categoryName}</h2>
+            <p>Приготовлением вкусностей занимаются профессиональные повара и используются только самые свежие
+              продукты.</p>
+            <a href="#/basket/" className="btn-tra">
+              Корзина <i id="basket-icon" className="glyphicon glyphicon-shopping-cart"/>
+            </a>
           </div>
           <ControlledModal ref="addDishModal" title="Добавить новое блюдо" onSubmit={() => this.refs.addDishModal.toggle()}>
-            <CreateDishForm onSubmit={createDish} formId="createDishForm"/>
+            <CreateDishForm onSubmit={createDish} formId="createDishForm" defaultCategory={category}/>
           </ControlledModal>
           { auth.isAdmin() &&
             <AddTile onClick={() => this.refs.addDishModal.toggle()} />
           }
           { activeRequestStatus
             ? <Loader />
-            : <GoodList selected={selectedDishes} items={dishes} onSelect={selectDish}/>
+            : <GoodList selected={selectedDishes} items={dishes} onSelect={selectDish} editDish={editDish}/>
           }
         </div>
       </div>

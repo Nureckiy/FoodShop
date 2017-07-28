@@ -57,10 +57,9 @@ class AddDishForm extends Component {
             <th>{item.size}</th>
             <th>
               <RenderSelect
-                defaultValue={utils.findNumber(currentSelected, item.id)}
+                value={utils.findNumber(currentSelected, item.id)}
                 onChange={e => this.handleSelect(e, item)}
                 options={values}
-                controlClass="select-number"
               />
             </th>
           </tr>

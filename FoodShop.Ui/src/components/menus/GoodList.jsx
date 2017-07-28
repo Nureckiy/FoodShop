@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ControlledModal from '../common/ControlledModal.jsx';
 import Tile from '../common/Tile.jsx';
 import AddDishForm from './AddDishForm.jsx';
+import CreateDishForm from '../admin/CreateDishForm.jsx';
 
 class GoodList extends Component {
   constructor() {
@@ -10,15 +11,17 @@ class GoodList extends Component {
     this.state = {
       currentDish: {}
     };
-    this.submitDishForm = this.submitDishForm.bind(this);
+    this.submitAddDishForm = this.submitAddDishForm.bind(this);
   }
-  openModal(item) {
-    this.setState({
-      currentDish: item
-    });
+  openAddDishModal(currentDish) {
+    this.setState({ currentDish });
     this.refs.addDishModal.toggle();
   }
-  submitDishForm() {
+  openEditDishModal(currentDish) {
+    this.setState({ currentDish });
+    this.refs.editDishModal.toggle();
+  }
+  submitAddDishForm() {
     const { onSelect } = this.props;
     const { addDishModal, addDishForm } = this.refs;
     const values = addDishForm.getSelected();
@@ -26,19 +29,31 @@ class GoodList extends Component {
     addDishModal.toggle();
   }
   render() {
-    const { selected, items } = this.props;
+    const { selected, items, editDish } = this.props;
     const { currentDish } = this.state;
     const model = selected.find(x => x.id === currentDish.id);
     return (
-      <div className="row">
-        <ControlledModal ref="addDishModal" onSubmit={this.submitDishForm} title="Добавить в корзину">
+      <div>
+        <ControlledModal ref="addDishModal" onSubmit={this.submitAddDishForm} title="Добавить в корзину">
           <AddDishForm
             ref="addDishForm"
             model={model ? model : currentDish}
           />
         </ControlledModal>
+        <ControlledModal ref="editDishModal" title="Редактировать" closeOnSubmit>
+          <CreateDishForm
+            formId="editDishModal"
+            initialValues={ currentDish }
+            onSubmit={editDish}
+          />
+        </ControlledModal>
         {items.map(item =>
-          <Tile key={item.id} item={item} onClick={() => this.openModal(item)} />
+          <Tile
+            key={item.id}
+            item={item}
+            onClick={() => this.openAddDishModal(item)}
+            withOptionsBtn
+            onOptionsBtnClick={() => this.openEditDishModal(item)} />
         )}
       </div>
     );

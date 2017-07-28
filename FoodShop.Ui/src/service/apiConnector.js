@@ -17,6 +17,19 @@ var RequestHelper = function() {
     );
   };
 
+  this.putWithAjax = (url, entity, success, failed) => {
+    return makeRequest({
+        url: this.host + url,
+        type: 'PUT',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(entity)
+      },
+      success,
+      failed
+    );
+  };
+
   this.patchToExternal = (url, entity, success, failed) => {
     return makeRequest({
         url: url,
@@ -32,11 +45,12 @@ var RequestHelper = function() {
     );
   };
 
-  this.getWithAjax = (url, success, failed) => {
+  this.getWithAjax = (url, entity, success, failed) => {
     return makeRequest({
         url: this.host + url,
         type: 'GET',
-        dataType: 'json'
+        contentType: 'application/json',
+        data: entity
       },
       success,
       failed

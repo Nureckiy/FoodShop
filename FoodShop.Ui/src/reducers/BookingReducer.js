@@ -3,6 +3,7 @@ import * as utils from '../utils/utils';
 
 const initialState = {
   roomCategories: [],
+  roomCategoriesInfo: [],
   currentRoomCategory: {},
   filteredRooms: [],
   selectedRooms: []
@@ -35,6 +36,12 @@ export default function RoomsReducer(state = initialState, action) {
         ...state,
         roomCategories: action.data,
         activeRequestStatus: false
+      };
+
+    case types.GET_ROOM_CATEGORIES_INFO_SUCCESS:
+      return {
+        ...state,
+        roomCategoriesInfo: action.data
       };
 
     case types.GET_ROOMS_CATEGORY_BY_ID_SUCCESS:

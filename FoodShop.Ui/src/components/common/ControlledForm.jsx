@@ -23,23 +23,31 @@ class ControlledForm extends Component {
   }
   renderChild(child, key) {
     let newProps = { key };
-    if (child.type === FormGroup || child.props.className && child.props.className.includes('form-group')) {
+    if (child.type === FormGroup || child.props && child.props.className && child.props.className.includes('form-group')) {
       newProps.children = this.transformFormGroupChildren(child);
     }
     return React.cloneElement(child, newProps);
   }
   transformFormGroupChildren(item) {
     return utils.mapChildren(item.props.children, (child, key) =>
-      React.cloneElement(child, {
+      this.cloneObject(child, {
         ...this.renderValue(child),
         key,
         onChange: (event) => this.renderOnChange(event, child)
       })
     );
   }
+  cloneObject(item, props) {
+    if(item && item.props) {
+      return React.cloneElement(item, props);
+    }
+  }
   renderValue(child) {
-    const { type, id } = child.props;
-    const value = this.state[id];
+    if(!child || !child.props) return;
+    const { type, id, section } = child.props;
+    const value = section
+      ? this.state[section][id]
+      : this.state[id];
     return type === 'checkbox'
       ? { checked:  value }
       : { value };
@@ -54,7 +62,9 @@ class ControlledForm extends Component {
     const itemValue = type === 'checkbox' ? checked : value;
     let item = { [id]: itemValue };
     if(section) {
-      item = { [section]: item };
+      let sectionItem = this.state[section];
+      sectionItem[id] = itemValue;
+      item = { [section]: sectionItem };
     }
     this.setState(item);
   }

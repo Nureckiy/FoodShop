@@ -1,7 +1,6 @@
 import * as types from '../constants/BookingConstants';
 import service from '../service/service';
 import * as utils from '../utils/utils';
-import Promise from 'es6-promise';
 
 export function setCurrentRoomCategory(category) {
   return (dispatch) => {
@@ -38,6 +37,32 @@ export function getRoomCategories() {
   };
 }
 
+export function getRoomCategoriesInfo() {
+  return (dispatch) => {
+    dispatch({
+      type: types.GET_ROOM_CATEGORIES_INFO
+    });
+
+    service.getRoomCategoriesInfo(success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.GET_ROOM_CATEGORIES_INFO_SUCCESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.GET_ROOM_CATEGORIES_INFO_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}
+
 export function getRoomCategory(id) {
   return (dispatch) => {
     dispatch({
@@ -64,16 +89,15 @@ export function getRoomCategory(id) {
   };
 }
 
-
-export function getRooms(filter) {
+export function getRooms(id, startDate, endDate) {
   return (dispatch) => {
     dispatch({
       type: types.GET_ROOMS
     });
 
-    const data = Object.assign({}, filter, utils.renderDateRange(filter));
+    const filter = { categoryId: id, startDate, endDate };
 
-    service.getRooms(data, success, fail);
+    service.getRooms(filter, success, fail);
 
     function success(data, status) {
       dispatch({
@@ -99,17 +123,9 @@ export function addRoom(room) {
       type: types.ADD_ROOM,
       room
     });
-    return new Promise((resolve, reject) => {
-      if (!room.arrivalDate || !room.departureDate) {
-        fail(room);
-        reject(new Error('Введен некорректный временной промежуток'));
-      } else {
-        service.checkRoomAvailability(Object.assign({
-          roomId: room.id,
-          ...utils.renderDateRange(room)
-        }), success, fail);
-      }
-    });
+
+    const filter = Object.assign({ roomId: room.id, ...utils.renderDateRange(room)});
+    service.checkRoomAvailability(filter, success, fail);
 
     function success(data, status) {
       if (data) {
@@ -145,6 +161,58 @@ export function removeRoom(id) {
   };
 }
 
+export function createRoom(data) {
+  return (dispatch) => {
+    dispatch({
+      type: types.CREATE_ROOM
+    });
+
+    return service.addRoom(data, success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.CREATE_ROOM_SUCCESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.CREATE_ROOM_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}
+
+export function editRoom(data) {
+  return (dispatch) => {
+    dispatch({
+      type: types.EDIT_ROOM
+    });
+
+    return service.editRoom(data, success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.EDIT_ROOM_SUCCESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.EDIT_ROOM_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}
+
 export function clearSelectedRooms() {
   return (dispatch) => {
     dispatch({
@@ -172,6 +240,58 @@ export function book(values) {
     function fail(data, status) {
       dispatch({
         type: types.BOOK_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}
+
+export function createRoomCategory(data) {
+  return (dispatch) => {
+    dispatch({
+      type: types.CREATE_ROOM_CATEGORIES
+    });
+
+    return service.addRoomCategory(data, success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.CREATE_ROOM_CATEGORIES_SUCCESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.CREATE_ROOM_CATEGORIES_FAIL,
+        data,
+        status
+      });
+    }
+  };
+}
+
+export function editRoomCategory(data) {
+  return (dispatch) => {
+    dispatch({
+      type: types.EDIT_ROOM_CATEGORIES
+    });
+
+    return service.editRoomCategory(data, success, fail);
+
+    function success(data, status) {
+      dispatch({
+        type: types.EDIT_ROOM_CATEGORIES_SUCCESS,
+        data,
+        status
+      });
+    }
+
+    function fail(data, status) {
+      dispatch({
+        type: types.EDIT_ROOM_CATEGORIES_FAIL,
         data,
         status
       });

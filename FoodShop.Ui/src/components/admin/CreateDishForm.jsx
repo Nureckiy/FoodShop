@@ -9,11 +9,16 @@ import * as utils from '../../utils/utils';
 
 import { mainCategories } from '!json!../../sources/appVariables.json';
 
-class AddDishModal extends Component {
+class CreateDishForm extends Component {
   render() {
-    const { onSubmit, formId } = this.props;
+    const { onSubmit, formId, defaultCategory, initialValues } = this.props;
+    let initial = initialValues;
+    if(!initial) {
+      const category = defaultCategory ? defaultCategory : Object.keys(mainCategories)[0];
+      initial = { category };
+    }
     return (
-      <ControlledForm onSubmit={ onSubmit } id={ formId }>
+      <ControlledForm onSubmit={ onSubmit } id={ formId } initialValues={ initial }>
         <FormGroup>
           <Field
             id="name"
@@ -34,8 +39,8 @@ class AddDishModal extends Component {
           <Select
             id="category"
             label="Тип"
+            defaultValue={defaultCategory}
             options={utils.renderObjectOptions(mainCategories)}
-            controlClass="select-number"
             required
           />
         </FormGroup>
@@ -46,17 +51,16 @@ class AddDishModal extends Component {
               id="size"
               type="text"
               label="Размер"
-              required
             />
             <Field
               id="weight"
-              type="number"
+              type="text"
               label="Вес"
             />
             <Field
               id="price"
               type="number"
-              label="Стоимость"
+              label="Стоимость, $"
               required
             />
           </FieldArray>
@@ -69,4 +73,4 @@ class AddDishModal extends Component {
   }
 }
 
-export default AddDishModal;
+export default CreateDishForm;

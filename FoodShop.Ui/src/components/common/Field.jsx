@@ -4,12 +4,10 @@ import { ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
 class Field extends Component {
   renderLabel() {
-    const { label, id, type } = this.props;
+    const { label, id, type, required } = this.props;
     let { labelClass } = this.props;
     if (!label) return;
-    if (!labelClass) {
-      labelClass = '';
-    }
+    labelClass = `${required?'required':''} ${labelClass}`;
     if (type === 'checkbox') {
       return <ControlLabel
         id="samLabel"
@@ -29,7 +27,8 @@ class Field extends Component {
       className = '';
     }
     const label = this.renderLabel();
-    const inputOption = { type, required, onChange, id, value };
+    const renderedValue = value ? value : '';
+    const inputOption = { type, required, onChange, id, value: renderedValue };
     return (
       <span className={className}>
         { type !== 'checkbox' && label }

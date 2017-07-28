@@ -3,13 +3,6 @@
   margin: 0;
   padding: 0;
 }
-@font-face {
-  font-family: 'icomoon';
-  src: url("../fonts/icomoon/icomoon.eot");
-  src: url("../fonts/icomoon/icomoon.eot") format("embedded-opentype"), url("../fonts/icomoon/icomoon.ttf") format("truetype"), url("../fonts/icomoon/icomoon.woff") format("woff"), url("../fonts/icomoon/icomoon.svg") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
 
 @media (max-width: 978px) {
   .container {
@@ -32,7 +25,8 @@
 
 .form-control {
   border: 2px solid rgba(0,0,0,0.1);
-  padding: 20px 15px;
+  padding: 10px 15px;
+  height: auto;
   font-size: 16px;
   box-shadow: none;
   background: transparent;
@@ -40,8 +34,12 @@
 }
 
 .control-label.required:after {
-  content:"*";
-  color:red;
+  content:" *";
+  color: #ff0000;;
+}
+
+:invalid {
+  border-color: #ff0000;
 }
 
 .control-label {

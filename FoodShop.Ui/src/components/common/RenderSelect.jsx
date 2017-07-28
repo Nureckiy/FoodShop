@@ -2,34 +2,28 @@ import React, { Component } from 'react';
 import { FormControl, ControlLabel } from 'react-bootstrap';
 
 class RenderSelect extends Component {
-  constructor(props) {
-    super(props);
-    const { defaultValue } = this.props;
-    this.state = {
-      value: defaultValue
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
-  handleChange(event) {
-    const { onChange } = this.props;
-    this.setState({ value: event.target.value });
-    onChange(event);
+  componentWillMount() {
+    const { id, defaultValue, onChange } = this.props;
+    if (defaultValue) {
+      onChange({ target: { id, value: defaultValue }});
+    }
   }
   render() {
-    const { options, id, className, label, controlClass, required } = this.props;
-    const { value } = this.state;
+    const { options, id, className, label, controlClass, required, value, defaultEmptyOption, onChange } = this.props;
+    let { labelClass } = this.props;
+    if(required) {
+      labelClass = '' + labelClass + ' required';
+    }
+    const inputOption = { required, id, value, onChange };
     return(
       <span className={className}>
-        {label && <ControlLabel>{label}</ControlLabel>}
+        {label && <ControlLabel className={labelClass}>{label}</ControlLabel>}
         <FormControl
           componentClass="select"
           className={controlClass}
-          id={id}
-          value={value}
-          onChange={this.handleChange}
-          required={required}
+          { ...inputOption }
         >
-          <option></option>
+          { defaultEmptyOption && <option /> }
           {options.map((item) => (
             <option key={item.value} value={item.value}>{item.text}</option>
           ))}
