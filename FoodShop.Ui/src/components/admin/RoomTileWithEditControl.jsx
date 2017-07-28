@@ -12,7 +12,7 @@ class RoomTileWithEditControl extends RoomTileControl {
     this.refs.editRoomModal.toggle();
   }
   render() {
-    const { className, room, room: { error }, onEdit, loadCategories, categories } = this.props;
+    const { className, room, room: { error }, onEdit, onRemove, loadCategories, categories } = this.props;
     return (
       <span>
         <Form className={className} onSubmit={this.handleSubmit}>
@@ -32,6 +32,7 @@ class RoomTileWithEditControl extends RoomTileControl {
               onSubmit={onEdit}
               initial={room}
               loadCategories={loadCategories}
+              onRemove={onRemove}
               categories={categories} />
         </ControlledModal>
       </span>

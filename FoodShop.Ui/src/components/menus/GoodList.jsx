@@ -12,6 +12,7 @@ class GoodList extends Component {
       currentDish: {}
     };
     this.submitAddDishForm = this.submitAddDishForm.bind(this);
+    this.getTileOptions = this.getTileOptions.bind(this);
   }
   openAddDishModal(currentDish) {
     this.setState({ currentDish });
@@ -28,10 +29,24 @@ class GoodList extends Component {
     onSelect(values);
     addDishModal.toggle();
   }
+  renderTiles() {
+    const { items } = this.props;
+    return items.map(item => <Tile {...this.getTileOptions(item)} />);
+  }
+  getTileOptions(item) {
+    const { auth } = this.props;
+    let options = { key: item.id, item, onClick: () => this.openAddDishModal(item) };
+    if (auth.isAdmin()) {
+      options.withOptionsBtn = true;
+      options.onOptionsBtnClick= () => this.openEditDishModal(item);
+    }
+    return options;
+  }
   render() {
-    const { selected, items, editDish } = this.props;
+    const { selected, editDish, removeDish } = this.props;
     const { currentDish } = this.state;
     const model = selected.find(x => x.id === currentDish.id);
+    const tiles = this.renderTiles();
     return (
       <div>
         <ControlledModal ref="addDishModal" onSubmit={this.submitAddDishForm} title="Добавить в корзину">
@@ -45,19 +60,14 @@ class GoodList extends Component {
             formId="editDishModal"
             initialValues={ currentDish }
             onSubmit={editDish}
+            onRemove={removeDish}
           />
         </ControlledModal>
-        {items.map(item =>
-          <Tile
-            key={item.id}
-            item={item}
-            onClick={() => this.openAddDishModal(item)}
-            withOptionsBtn
-            onOptionsBtnClick={() => this.openEditDishModal(item)} />
-        )}
+        { tiles }
       </div>
     );
   }
 }
 
 export default GoodList;
+

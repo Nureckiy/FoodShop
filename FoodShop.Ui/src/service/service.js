@@ -26,6 +26,10 @@ class service {
     return this.requestHelper.putWithAjax('roomCategory', data, success, failed);
   };
 
+  removeRoomCategory = (data, success, failed) => {
+    return this.requestHelper.deleteWithAjax(`roomCategory/${data}`, '', success, failed);
+  };
+
   getRooms = (data, success, failed) => {
     return this.requestHelper.getWithAjax('room', data, success, failed);
   };
@@ -36,6 +40,10 @@ class service {
 
   editRoom = (data, success, failed) => {
     return this.requestHelper.putWithAjax('room', data, success, failed);
+  };
+
+  removeRoom = (data, success, failed) => {
+    return this.requestHelper.deleteWithAjax(`room/${data}`, '', success, failed);
   };
 
   checkRoomAvailability = (data, success, failed) => {
@@ -64,6 +72,10 @@ class service {
 
   editDish = (data, success, failed) => {
     return this.requestHelper.putWithAjax('dish', data, success, failed);
+  };
+
+  removeDish = (data, success, failed) => {
+    return this.requestHelper.deleteWithAjax(`dish/${data}`, '', success, failed);
   };
 
   addOrder = (data, success, failed) => {

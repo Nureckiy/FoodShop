@@ -78,3 +78,12 @@ export function editDish(dish) {
     dish
   );
 }
+
+export function removeDish(id) {
+  return createAsync(service.removeDish,
+    types.REMOVE_DISH,
+    types.REMOVE_DISH_SUCCESS,
+    types.REMOVE_DISH_FAIL,
+    id
+  );
+}

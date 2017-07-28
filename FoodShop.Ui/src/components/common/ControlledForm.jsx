@@ -23,7 +23,8 @@ class ControlledForm extends Component {
   }
   renderChild(child, key) {
     let newProps = { key };
-    if (child.type === FormGroup || child.props && child.props.className && child.props.className.includes('form-group')) {
+    if(!child) return;
+    if (isFormGroup(child)) {
       newProps.children = this.transformFormGroupChildren(child);
     }
     return React.cloneElement(child, newProps);
@@ -82,6 +83,13 @@ class ControlledForm extends Component {
       </Form>
     );
   }
+}
+
+function isFormGroup(item) {
+  return item.type === FormGroup ||
+    item.props
+    && item.props.className
+    && item.props.className.includes('form-group');
 }
 
 export default ControlledForm;

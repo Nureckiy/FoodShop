@@ -21,7 +21,7 @@ export function getRoomCategories() {
 }
 
 export function getRoomCategoriesInfo() {
-  return createAsync(service.getRoomCategoriesInfo(),
+  return createAsync(service.getRoomCategoriesInfo,
     types.GET_ROOM_CATEGORIES_INFO,
     types.GET_ROOM_CATEGORIES_INFO_SUCCESS,
     types.GET_ROOM_CATEGORIES_INFO_FAIL,
@@ -72,10 +72,10 @@ export function addRoom(room) {
   };
 }
 
-export function removeRoom(id) {
+export function deleteRoom(id) {
   return (dispatch) => {
     dispatch({
-      type: types.REMOVE_ROOM,
+      type: types.DELETE_ROOM,
       id
     });
   };
@@ -83,9 +83,9 @@ export function removeRoom(id) {
 
 export function createRoom(data) {
   return createAsync(service.addRoom,
-    types.ADD_ROOM,
-    types.ADD_ROOM_SUCCESS,
-    types.ADD_ROOM_FAIL,
+    types.CREATE_ROOM,
+    types.CREATE_ROOM_SUCCESS,
+    types.CREATE_ROOM_FAIL,
     data
   );
 }
@@ -95,6 +95,15 @@ export function editRoom(data) {
     types.EDIT_ROOM,
     types.EDIT_ROOM_SUCCESS,
     types.EDIT_ROOM_FAIL,
+    data
+  );
+}
+
+export function removeRoom(data) {
+  return createAsync(service.removeRoom,
+    types.REMOVE_ROOM,
+    types.REMOVE_ROOM_SUCCESS,
+    types.REMOVE_ROOM_FAIL,
     data
   );
 }
@@ -130,6 +139,15 @@ export function editRoomCategory(data) {
     types.EDIT_ROOM_CATEGORY,
     types.EDIT_ROOM_CATEGORY_SUCCESS,
     types.EDIT_ROOM_CATEGORY_FAIL,
+    data
+  );
+}
+
+export function removeRoomCategory(data) {
+  return createAsync(service.removeRoomCategory,
+    types.REMOVE_ROOM_CATEGORY,
+    types.REMOVE_ROOM_CATEGORY_SUCCESS,
+    types.REMOVE_ROOM_CATEGORY_FAIL,
     data
   );
 }

@@ -13,6 +13,11 @@ export const EDIT_DISH = 'EDIT_DISH';
 export const EDIT_DISH_SUCCESS = 'EDIT_DISH_SUCCESS';
 export const EDIT_DISH_FAIL = 'EDIT_DISH_FAIL';
 
+// Remove dish
+export const REMOVE_DISH = 'REMOVE_DISH';
+export const REMOVE_DISH_SUCCESS = 'REMOVE_DISH_SUCCESS';
+export const REMOVE_DISH_FAIL = 'REMOVE_DISH_FAIL';
+
 // Update total cost of order
 export const UPDATE_TOTAL = 'UPDATE_TOTAL';
 export const UPDATE_TOTAL_SUCCESS = 'UPDATE_TOTAL_SUCCESS';

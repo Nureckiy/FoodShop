@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { FormGroup } from 'react-bootstrap';
+import { FormGroup, Button } from 'react-bootstrap';
 
 import Field from '../common/Field.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
 
 class RoomCategoryControlForm extends Component {
   render() {
-    const { onSubmit, formId, initial } = this.props;
+    const { onSubmit, formId, initial, onRemove } = this.props;
     return (
       <ControlledForm onSubmit={ onSubmit } id={ formId } initialValues={initial} >
+        { onRemove && <Button bsStyle="danger" onClick={() => onRemove(initial.id)}>Удалить</Button> }
         <FormGroup>
           <Field
             id="name"

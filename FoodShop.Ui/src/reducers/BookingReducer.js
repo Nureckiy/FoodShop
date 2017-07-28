@@ -83,7 +83,7 @@ export default function RoomsReducer(state = initialState, action) {
         selectedRooms: utils.removeElementFromArray(state.selectedRooms, action.room.id)
       };
 
-    case types.REMOVE_ROOM:
+    case types.DELETE_ROOM:
       return {
         ...state,
         selectedRooms: utils.removeElementFromArray(state.selectedRooms, action.id)

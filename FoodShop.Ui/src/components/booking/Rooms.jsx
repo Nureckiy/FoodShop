@@ -14,13 +14,23 @@ class Rooms extends Component {
     this.state = { selected: {} };
     const { getRoomCategories } = props;
     getRoomCategories();
+    this.getTileOptions = this.getTileOptions.bind(this);
   }
   openEditRoomCategoryModal(item) {
     this.setState({ selected: item });
     this.refs.editCategoryModal.toggle();
   }
+  getTileOptions(item) {
+    const { auth } = this.props;
+    let options = { key: item.id, item, price: `От $${item.minPrice}`, onClick: () => history.push(`/booking/${item.id}`)};
+    if(auth.isAdmin) {
+      options.withOptionsBtn = true;
+      options.onOptionsBtnClick = () => this.openEditRoomCategoryModal(item);
+    }
+    return options;
+  }
   render() {
-    const { activeRequestStatus, roomCategories, createRoomCategory, editRoomCategory, auth } = this.props;
+    const { auth, activeRequestStatus, roomCategories, createRoomCategory, editRoomCategory, removeRoomCategory } = this.props;
     const { selected } = this.state;
     return (
       <div>
@@ -48,7 +58,8 @@ class Rooms extends Component {
               <CreateRoomCategoryForm
                 formId="editRoomCategoryForm"
                 initial={selected}
-                onSubmit={editRoomCategory} />
+                onSubmit={editRoomCategory}
+                onRemove={removeRoomCategory} />
             </ControlledModal>
             { auth.isAdmin() &&
               <AddTile onClick={() => this.refs.addCategoryModal.toggle() }/>
@@ -56,13 +67,7 @@ class Rooms extends Component {
             {activeRequestStatus
             ? <Loader />
             : roomCategories && roomCategories.map(item =>
-                <Tile
-                  key={item.id}
-                  item={item}
-                  onClick={() => history.push(`/booking/${item.id}`)}
-                  price={`От $${item.minPrice}`}
-                  withOptionsBtn
-                  onOptionsBtnClick={() => this.openEditRoomCategoryModal(item)} />
+                <Tile {...this.getTileOptions(item)}/>
             )}
           </div>
         </div>

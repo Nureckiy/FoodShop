@@ -85,21 +85,21 @@ class Booking extends Component {
                   { auth.isAdmin()
                     ? <RoomTileWithEditControl
                         room={room}
-                        onSubmit={addRoom}
                         onEdit={editRoom}
+                        onRemove={removeRoom}
                         loadCategories={getRoomCategoriesInfo}
                         categories={roomCategoriesInfo}
                         className="col-md-3 col-sm-4 date-form" />
                     : <RoomTileControl
-                      room={room}
-                      onSubmit={addRoom}
-                      className="col-md-3 col-sm-4 date-form"/>
+                        room={room}
+                        onSubmit={addRoom}
+                        className="col-md-3 col-sm-4 date-form"/>
                   }
                 </div>
               )
             }
           <div className="row">
-            <BookingTotal selected={selectedRooms} onRemove={removeRoom} />
+            <BookingTotal selected={selectedRooms} />
           </div>
         </div>
       </div>

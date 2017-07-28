@@ -1,4 +1,5 @@
 /*eslint no-unused-vars: "off"*/
+
 import React, { Component } from 'react';
 
 import Header from '../layout/Header.jsx';
@@ -30,7 +31,7 @@ class Menu extends Component {
   }
   render() {
     const { dishes, activeRequestStatus, selectedDishes } = this.props.model;
-    const { selectDish, createDish, editDish } = this.props.actions;
+    const { selectDish, createDish, editDish, removeDish } = this.props.actions;
     const { category, auth } = this.props;
     const categoryName = category && mainCategories[category] ? mainCategories[category] : 'Популярные блюда';
     return (
@@ -58,7 +59,13 @@ class Menu extends Component {
           }
           { activeRequestStatus
             ? <Loader />
-            : <GoodList selected={selectedDishes} items={dishes} onSelect={selectDish} editDish={editDish}/>
+            : <GoodList
+                selected={selectedDishes}
+                items={dishes}
+                onSelect={selectDish}
+                editDish={editDish}
+                auth={auth}
+                removeDish={removeDish}/>
           }
         </div>
       </div>

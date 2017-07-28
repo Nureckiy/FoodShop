@@ -9,7 +9,7 @@ import * as utils from '../../utils/utils';
 
 class BookingOrder extends Component {
   render() {
-    const { selectedRooms, removeRoom, clearSelectedRooms, book } = this.props;
+    const { selectedRooms, deleteRoom, clearSelectedRooms, book } = this.props;
     return (
       <div>
         <Header
@@ -25,7 +25,7 @@ class BookingOrder extends Component {
           {selectedRooms.map(room =>
             <div key={room.id} className="row sample">
               <RoomTile {...room} className="col-md-10 col-sm-12" />
-              <BookingSummaryControl onSubmit={removeRoom} {...room} className="col-md-2 col-sm-4 date-form text-center" />
+              <BookingSummaryControl onSubmit={deleteRoom} {...room} className="col-md-2 col-sm-4 date-form text-center" />
             </div>
           )}
           <div className="row">

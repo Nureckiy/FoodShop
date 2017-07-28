@@ -10,7 +10,7 @@ import { mainCategories } from '!json!../../sources/appVariables.json';
 
 class DishControlForm extends Component {
   render() {
-    const { onSubmit, formId, defaultCategory, initialValues } = this.props;
+    const { onSubmit, formId, defaultCategory, initialValues, onRemove } = this.props;
     let initial = initialValues;
     if(!initial) {
       const category = defaultCategory ? defaultCategory : Object.keys(mainCategories)[0];
@@ -18,7 +18,7 @@ class DishControlForm extends Component {
     }
     return (
       <ControlledForm onSubmit={ onSubmit } id={ formId } initialValues={ initial }>
-        <Button bsStyle="dancer">Удалить</Button>
+        { onRemove && <Button bsStyle="danger" onClick={() => onRemove(initial.id)}>Удалить</Button> }
         <FormGroup>
           <Field
             id="name"

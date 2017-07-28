@@ -1,4 +1,3 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 import { FormGroup } from 'react-bootstrap';
 
@@ -6,6 +5,7 @@ import Field from '../common/Field.jsx';
 import Select from '../common/RenderSelect.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
 import * as utils from '../../utils/utils';
+import { Button } from 'react-bootstrap';
 
 class RoomControlForm extends Component {
   componentWillMount() {
@@ -23,10 +23,11 @@ class RoomControlForm extends Component {
     return initialValues;
   }
   render() {
-    const { onSubmit, formId, categories, initial } = this.props;
+    const { onSubmit, formId, categories, initial, onRemove } = this.props;
     const initialValues = this.prepareInitial(initial);
     return (
       <ControlledForm onSubmit={ onSubmit } id={ formId } initialValues={ initialValues } >
+        { onRemove && <Button bsStyle="danger" onClick={() => onRemove(initialValues.id)}>Удалить</Button> }
         <FormGroup>
           <Field
             id="address"

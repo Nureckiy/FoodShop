@@ -30,6 +30,19 @@ var RequestHelper = function() {
     );
   };
 
+  this.deleteWithAjax = (url, entity, success, failed) => {
+    return makeRequest({
+        url: this.host + url,
+        type: 'DELETE',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(entity)
+      },
+      success,
+      failed
+    );
+  };
+
   this.patchToExternal = (url, entity, success, failed) => {
     return makeRequest({
         url: url,
