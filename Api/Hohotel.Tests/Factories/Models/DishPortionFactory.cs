@@ -12,7 +12,7 @@ namespace Hohotel.Tests.Factories.Models
             int id = 0,
             Dish parent = null,
             string size = null,
-            double? weight = null,
+            string weight = null,
             decimal price = 0,
             IList<DishPortionOrder> dishPortionOrders = null)
         {

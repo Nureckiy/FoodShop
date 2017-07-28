@@ -71,5 +71,41 @@ namespace Hohotel.Tests.Services
 
             Assert.Null(_service.GetRoomCategoryById(10));
         }
+
+        [Fact]
+        public void AddRoomCategory()
+        {
+            var category = TestData.Create.RoomCategory();
+            var categoryMock = DbSetMock.Create(new RoomCategory[0]);
+
+            _context.Setup(c => c.RoomCategories).Returns(categoryMock.Object);
+
+            _service.AddRoomCategory(category, "userId");
+
+            categoryMock.Verify(m => m.Add(It.IsAny<RoomCategory>()), Times.Once);
+            _context.Verify(c => c.SaveChanges(), Times.Once);
+            Assert.Equal("userId", category.CreatedBy);
+            Assert.Equal("userId", category.ModifiedBy);
+            Assert.NotNull(category.CreatedTime);
+            Assert.NotNull(category.ModifiedTime);
+        }
+
+        [Fact]
+        public void EditRoomCategory()
+        {
+            var category = TestData.Create.RoomCategory(3);
+            var categoryMock = DbSetMock.Create(category);
+
+            _context.Setup(c => c.RoomCategories).Returns(categoryMock.Object);
+
+            var editedCategory = TestData.Create.RoomCategory(3);
+
+            _service.EditRoomCategory(editedCategory, "userId");
+
+            categoryMock.Verify(m => m.Update(It.IsAny<RoomCategory>()), Times.Once);
+            _context.Verify(m => m.SaveChanges(), Times.Once);
+            Assert.Equal("userId", editedCategory.ModifiedBy);
+            Assert.NotNull(editedCategory.ModifiedTime);
+        }
     }
 }

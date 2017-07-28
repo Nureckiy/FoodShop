@@ -9,9 +9,10 @@ using Hohotel.Enums;
 namespace Hohotel.Migrations
 {
     [DbContext(typeof(HohotelContext))]
-    partial class HohotelContextModelSnapshot : ModelSnapshot
+    [Migration("20170727133354_AddModifiedByFields")]
+    partial class AddModifiedByFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -82,7 +83,7 @@ namespace Hohotel.Migrations
 
                     b.Property<string>("Size");
 
-                    b.Property<string>("Weight");
+                    b.Property<double?>("Weight");
 
                     b.HasKey("Id");
 

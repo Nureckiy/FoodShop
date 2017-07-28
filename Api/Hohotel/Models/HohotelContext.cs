@@ -22,6 +22,7 @@ namespace Hohotel.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             //define m-m relationship between Rooms and Bookings tables
             modelBuilder.Entity<RoomBooking>()
                 .HasKey(k => new { k.RoomId, k.BookingId });

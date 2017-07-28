@@ -30,8 +30,8 @@ namespace Hohotel.Controllers
         }
 
         // POST api/room
-        [HttpPost]
-        public IList<Room> Post([FromBody]RoomFilter filter)
+        [HttpGet]
+        public IList<Room> Get([FromHeader]RoomFilter filter)
         {
             return _service.Filter(filter);
         }
@@ -58,6 +58,22 @@ namespace Hohotel.Controllers
         public IList<BookingView> GetBookings()
         {
             return _service.GetUserBookings(User.Identity.Name);
+        }
+
+        // POST api/room
+        [Authorize]
+        [HttpPost]
+        public void Post([FromBody]Room room)
+        {
+            _service.AddRoom(room, User.Identity.Name);
+        }
+
+        // PUT api/room
+        [Authorize]
+        [HttpPut]
+        public void Put([FromBody]Room room)
+        {
+            _service.EditRoom(room, User.Identity.Name);
         }
     }
 }

@@ -22,7 +22,7 @@ VALUES
 
 SET IDENTITY_INSERT Dishes OFF;
 
-INSERT INTO DishPortions(Size, Price, ParentId)
+INSERT INTO DishPortions(Weight, Price, ParentId)
 VALUES
 (N'850 г', 27.90, 1),
 (N'830 г', 34.50, 2),

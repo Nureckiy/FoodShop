@@ -36,10 +36,19 @@ namespace Hohotel.Controllers
         }
 
         // POST api/dish
-        [HttpPost()]
+        [Authorize]
+        [HttpPost]
         public void Post([FromBody]Dish dish)
         {
             _service.AddDish(dish, User.Identity.Name);
+        }
+
+        // PUT api/dish
+        [Authorize]
+        [HttpPut]
+        public void Put([FromBody]Dish dish)
+        {
+            _service.EditDish(dish, User.Identity.Name);
         }
     }
 }

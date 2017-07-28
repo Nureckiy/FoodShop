@@ -42,9 +42,19 @@ namespace Hohotel.Services
         public void AddDish(Dish dish, string userId)
         {
             dish.CreatedBy = userId;
+            dish.ModifiedBy = userId;
             dish.CreatedTime = DateTime.Now;
+            dish.ModifiedTime = DateTime.Now;
 
             _context.Dishes.Add(dish);
+            _context.SaveChanges();
+        }
+
+        public void EditDish(Dish dish, string userId)
+        {
+            dish.ModifiedBy = userId;
+            dish.ModifiedTime = DateTime.Now;
+            _context.Dishes.Update(dish);
             _context.SaveChanges();
         }
     }

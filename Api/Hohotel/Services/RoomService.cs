@@ -90,6 +90,26 @@ namespace Hohotel.Services
                 .ToList();
         }
 
+        public void AddRoom(Room room, string userId)
+        {
+            room.CreatedBy = userId;
+            room.ModifiedBy = userId;
+            room.CreatedTime = DateTime.Now;
+            room.ModifiedTime = DateTime.Now;
+            room.Category = _context.RoomCategories.Find(room.Category.Id);
+            _context.Rooms.Add(room);
+            _context.SaveChanges();
+        }
+
+        public void EditRoom(Room room, string userId)
+        {
+            room.ModifiedBy = userId;
+            room.ModifiedTime = DateTime.Now;
+            room.Category = _context.RoomCategories.Find(room.Category.Id);
+            _context.Rooms.Update(room);
+            _context.SaveChanges();
+        }
+
         public decimal CountTotal(List<RoomBooking> roomBookings)
         {
             return roomBookings.Sum(roomBooking => CountTotal(roomBooking));
@@ -100,5 +120,7 @@ namespace Hohotel.Services
             var bookingDateRange = (booking.EndDate - booking.StartDate);
             return booking.Room.Price * bookingDateRange.Value.Days;
         } 
+
+
     }
 }

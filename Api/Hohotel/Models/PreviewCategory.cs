@@ -13,5 +13,6 @@ namespace Hohotel.Models
         public string Description { get; set; }
         public string CoverUrl { get; set; }
         public decimal? MinPrice { get; set; }
+        public int GuestsNumber { get; set; }
     }
 }

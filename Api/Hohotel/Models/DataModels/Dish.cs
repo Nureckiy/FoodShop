@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Hohotel.Enums;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Hohotel.Models.DataModels
 {
@@ -16,5 +18,7 @@ namespace Hohotel.Models.DataModels
         public DishTypes Category { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedTime { get; set; }
+        public string ModifiedBy { get; set; }
+        public DateTime? ModifiedTime { get; set; }
     }
 }

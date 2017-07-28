@@ -90,8 +90,30 @@ namespace Hohotel.Tests.Services
             dishesMock.Verify(m => m.Add(It.IsAny<Dish>()), Times.Once);
             _context.Verify(m => m.SaveChanges(), Times.Once);
             Assert.Equal("userId", dish.CreatedBy);
+            Assert.Equal("userId", dish.ModifiedBy);
             Assert.Equal(portions, dish.DishPortions);
             Assert.NotNull(dish.CreatedTime);
+            Assert.NotNull(dish.ModifiedTime);
+        }
+
+        [Fact]
+        public void EditDish()
+        {
+            var dish = TestData.Create.Dish(2, dishPortions: TestData.Create.DishPortions(3));
+            var dishesMock = DbSetMock.Create(dish);
+
+            _context.Setup(c => c.Dishes).Returns(dishesMock.Object);
+
+            var portions = TestData.Create.DishPortions(4);
+            var editedDish = TestData.Create.Dish(2, dishPortions: portions);
+
+            _service.EditDish(editedDish, "userId");
+
+            dishesMock.Verify(m => m.Update(It.IsAny<Dish>()), Times.Once);
+            _context.Verify(m => m.SaveChanges(), Times.Once);
+            Assert.Equal("userId", editedDish.ModifiedBy);
+            Assert.Equal(portions, editedDish.DishPortions);
+            Assert.NotNull(editedDish.ModifiedTime);
         }
 
         private IList<Dish> ComposeDishes()

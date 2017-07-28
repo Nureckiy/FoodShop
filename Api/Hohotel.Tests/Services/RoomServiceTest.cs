@@ -247,6 +247,46 @@ namespace Hohotel.Tests
             Assert.Equal("room1 address", result[0]);
         }
 
+        [Fact]
+        public void AddRoom()
+        {
+            var category = TestData.Create.RoomCategory(3);
+            var room = TestData.Create.Room(category: category);
+            var roomMock = DbSetMock.Create(new Room[0]);
+
+            _context.Setup(c => c.Rooms).Returns(roomMock.Object);
+            _context.Setup(c => c.RoomCategories).Returns(DbSetMock.Create(category).Object);
+
+            _service.AddRoom(room, "userId");
+
+            roomMock.Verify(m => m.Add(It.IsAny<Room>()), Times.Once);
+            _context.Verify(c => c.SaveChanges(), Times.Once);
+            Assert.Equal("userId", room.CreatedBy);
+            Assert.Equal("userId", room.ModifiedBy);
+            Assert.NotNull(room.CreatedTime);
+            Assert.NotNull(room.ModifiedTime);
+        }
+
+        [Fact]
+        public void EditRoom()
+        {
+            var category = TestData.Create.RoomCategory(3);
+            var room = TestData.Create.Room(category: category);
+            var roomMock = DbSetMock.Create(room);
+
+            _context.Setup(c => c.Rooms).Returns(roomMock.Object);
+            _context.Setup(c => c.RoomCategories).Returns(DbSetMock.Create(category).Object);
+
+            var newRoom = TestData.Create.Room(category: category, price: 10);
+
+            _service.EditRoom(newRoom, "userId");
+
+            roomMock.Verify(m => m.Update(It.IsAny<Room>()), Times.Once);
+            _context.Verify(c => c.SaveChanges(), Times.Once);
+            Assert.Equal("userId", newRoom.ModifiedBy);
+            Assert.NotNull(newRoom.ModifiedTime);
+        }
+
         private RoomTestModel ComposeTestData(DateTime bookingStartDate, DateTime bookingEndDate, RoomCategory category = null)
         {
             var roomBookings = new List<RoomBooking>()
