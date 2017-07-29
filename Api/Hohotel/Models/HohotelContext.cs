@@ -1,5 +1,6 @@
 ﻿using Hohotel.Models.DataModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Hohotel.Models
 {
@@ -22,6 +23,7 @@ namespace Hohotel.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             //define m-m relationship between Rooms and Bookings tables
             modelBuilder.Entity<RoomBooking>()
                 .HasKey(k => new { k.RoomId, k.BookingId });
@@ -49,6 +51,18 @@ namespace Hohotel.Models
                 .HasOne(rb => rb.Order)
                 .WithMany(b => b.DishPortionOrders)
                 .HasForeignKey(rb => rb.OrderId);
+
+            //enable cascade delete rooms items
+            modelBuilder.Entity<Room>()
+                .HasOne(r => r.Category)
+                .WithMany(c => c.Rooms)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            //enable cascade delete dishPortion items
+            modelBuilder.Entity<DishPortion>()
+                .HasOne(r => r.Parent)
+                .WithMany(c => c.DishPortions)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -9,9 +9,10 @@ using Hohotel.Enums;
 namespace Hohotel.Migrations
 {
     [DbContext(typeof(HohotelContext))]
-    partial class HohotelContextModelSnapshot : ModelSnapshot
+    [Migration("20170726101213_AddCreationInfoToModels")]
+    partial class AddCreationInfoToModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -60,10 +61,6 @@ namespace Hohotel.Migrations
 
                     b.Property<string>("ImageUrl");
 
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedTime");
-
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
@@ -82,7 +79,7 @@ namespace Hohotel.Migrations
 
                     b.Property<string>("Size");
 
-                    b.Property<string>("Weight");
+                    b.Property<double?>("Weight");
 
                     b.HasKey("Id");
 
@@ -153,10 +150,6 @@ namespace Hohotel.Migrations
 
                     b.Property<string>("ImageUrl");
 
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedTime");
-
                     b.Property<decimal>("Price");
 
                     b.HasKey("Id");
@@ -197,10 +190,6 @@ namespace Hohotel.Migrations
                     b.Property<string>("Description");
 
                     b.Property<int>("GuestsNumber");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedTime");
 
                     b.Property<string>("Name");
 

@@ -11,5 +11,11 @@ namespace Hohotel.Services
         IList<Dish> GetPopular(int count);
 
         IList<Dish> GetByCategoryName(string categoryName);
+
+        Dish AddDish(Dish dish);
+
+        Dish EditDish(Dish dish);
+
+        void DeleteDish(int id);
     }
 }

@@ -52,5 +52,35 @@ namespace Hohotel.Services
             }
             return result;
         }
+
+        public RoomCategory AddRoomCategory(RoomCategory category)
+        {
+            _context.RoomCategories.Add(category);
+            _context.SaveChanges();
+            return category;
+        }
+
+        public RoomCategory EditRoomCategory(RoomCategory category)
+        {
+            _context.RoomCategories.Update(category);
+            _context.SaveChanges();
+            return category;
+        }
+
+        public void DeleteRoomCategory(int id)
+        {
+            var roomCategory = _context.RoomCategories
+                .Include(r => r.Rooms)
+                .Single(rc => rc.Id == id);
+            _context.RoomCategories.Remove(roomCategory);
+            _context.SaveChanges();
+        }
+
+        public IList<ItemInfo> GetCategoriesInfo()
+        {
+            return _context.RoomCategories
+                .ProjectTo<ItemInfo>(_mapper)
+                .ToList();
+        }
     }
 }

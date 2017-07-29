@@ -176,12 +176,11 @@ namespace Hohotel.Tests
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(room).Object);
             _context.Setup(c => c.Bookings).Returns(bookingsMock.Object);
             
-            _service.Book(booking, "userId");
+            _service.Book(booking);
 
             bookingsMock.Verify(m => m.Add(It.IsAny<Booking>()), Times.Once);
             _context.Verify(m => m.SaveChanges(), Times.Once);
             Assert.Equal(room, booking.RoomBookings[0].Room);
-            Assert.Equal("userId", booking.UserId);
         }
 
         [Fact]
@@ -245,6 +244,56 @@ namespace Hohotel.Tests
 
             Assert.Single(result);
             Assert.Equal("room1 address", result[0]);
+        }
+
+        [Fact]
+        public void AddRoom()
+        {
+            var category = TestData.Create.RoomCategory(3);
+            var room = TestData.Create.Room(category: category);
+            var roomMock = DbSetMock.Create(new Room[0]);
+
+            _context.Setup(c => c.Rooms).Returns(roomMock.Object);
+            _context.Setup(c => c.RoomCategories).Returns(DbSetMock.Create(category).Object);
+
+            var result = _service.AddRoom(room);
+
+            roomMock.Verify(m => m.Add(It.IsAny<Room>()), Times.Once);
+            _context.Verify(c => c.SaveChanges(), Times.Once);
+            Assert.Equal(room, result);
+        }
+
+        [Fact]
+        public void EditRoom()
+        {
+            var category = TestData.Create.RoomCategory(3);
+            var room = TestData.Create.Room(category: category);
+            var roomMock = DbSetMock.Create(room);
+
+            _context.Setup(c => c.Rooms).Returns(roomMock.Object);
+            _context.Setup(c => c.RoomCategories).Returns(DbSetMock.Create(category).Object);
+
+            var newRoom = TestData.Create.Room(category: category, price: 10);
+
+            var result = _service.EditRoom(newRoom);
+
+            roomMock.Verify(m => m.Update(It.IsAny<Room>()), Times.Once);
+            _context.Verify(c => c.SaveChanges(), Times.Once);
+            Assert.Equal(room.Id, result.Id);
+        }
+
+        [Fact]
+        public void DeleteRoom()
+        {
+            var room = TestData.Create.Room(4);
+            var roomMock = DbSetMock.Create(room);
+
+            _context.Setup(c => c.Rooms).Returns(roomMock.Object);
+
+            _service.DeleteRoom(4);
+
+            roomMock.Verify(m => m.Remove(It.IsAny<Room>()), Times.Once);
+            _context.Verify(c => c.SaveChanges(), Times.Once);
         }
 
         private RoomTestModel ComposeTestData(DateTime bookingStartDate, DateTime bookingEndDate, RoomCategory category = null)

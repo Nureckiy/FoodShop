@@ -30,8 +30,8 @@ namespace Hohotel.Controllers
         }
 
         // POST api/room
-        [HttpPost]
-        public IList<Room> Post([FromBody]RoomFilter filter)
+        [HttpGet]
+        public IList<Room> Get([FromHeader]RoomFilter filter)
         {
             return _service.Filter(filter);
         }
@@ -41,7 +41,8 @@ namespace Hohotel.Controllers
         [HttpPost("Book")]
         public void Book([FromBody]Booking booking)
         {
-            _service.Book(booking, User.Identity.Name);
+            booking.UserId = User.Identity.Name;
+            _service.Book(booking);
         }
 
         // GET api/room/active
@@ -58,6 +59,36 @@ namespace Hohotel.Controllers
         public IList<BookingView> GetBookings()
         {
             return _service.GetUserBookings(User.Identity.Name);
+        }
+
+        // POST api/room
+        [Authorize]
+        [HttpPost]
+        public Room Post([FromBody]Room room)
+        {
+            room.CreatedBy = User.Identity.Name;
+            room.ModifiedBy = User.Identity.Name;
+            room.CreatedTime = DateTime.Now;
+            room.ModifiedTime = DateTime.Now;
+            return _service.AddRoom(room);
+        }
+
+        // PUT api/room
+        [Authorize]
+        [HttpPut]
+        public Room Put([FromBody]Room room)
+        {
+            room.ModifiedBy = User.Identity.Name;
+            room.ModifiedTime = DateTime.Now;
+            return _service.EditRoom(room);
+        }
+
+        // DELETE api/room/1
+        [Authorize]
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _service.DeleteRoom(id);
         }
     }
 }

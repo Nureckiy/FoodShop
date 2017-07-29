@@ -45,6 +45,8 @@ namespace Hohotel.Services.Mapping
                 .ForMember(r => r.Description, o => o.MapFrom(rb => rb.Room.Description))
                 .ForMember(r => r.ImageUrl, o => o.MapFrom(rb => rb.Room.ImageUrl))
                 .ForMember(r => r.Price, o => o.MapFrom(rb => rb.Room.Price));
+
+            CreateMap<RoomCategory, ItemInfo>();
         }
     }
 }

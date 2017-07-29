@@ -34,5 +34,36 @@ namespace Hohotel.Controllers
         {
             return _service.GetByCategoryName(category);
         }
+
+        // POST api/dish
+        [Authorize]
+        [HttpPost]
+        public Dish Post([FromBody]Dish dish)
+        {
+            dish.CreatedBy = User.Identity.Name;
+            dish.ModifiedBy = User.Identity.Name;
+            dish.CreatedTime = DateTime.Now;
+            dish.ModifiedTime = DateTime.Now;
+
+            return _service.AddDish(dish);
+        }
+
+        // PUT api/dish
+        [Authorize]
+        [HttpPut]
+        public Dish Put([FromBody]Dish dish)
+        {
+            dish.ModifiedBy = User.Identity.Name;
+            dish.ModifiedTime = DateTime.Now;
+            return _service.EditDish(dish);
+        }
+
+        // DELETE api/dish/1
+        [Authorize]
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _service.DeleteDish(id);
+        }
     }
 }

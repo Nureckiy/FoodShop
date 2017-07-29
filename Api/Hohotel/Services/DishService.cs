@@ -7,6 +7,7 @@ using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
+using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
 namespace Hohotel.Services
 {
@@ -37,6 +38,34 @@ namespace Hohotel.Services
                 .Include("DishPortions")
                 .Where(dish => categoryName.Equals(dish.Category.ToString(), StringComparison.OrdinalIgnoreCase))
                 .ToList();
+        }
+
+        public Dish AddDish(Dish dish)
+        {
+            _context.Dishes.Add(dish);
+            _context.SaveChanges();
+            return dish;
+        }
+
+        public Dish EditDish(Dish dish)
+        {
+            _context.DishPortions.RemoveRange(_context.DishPortions
+                .Where(portion => portion.Parent.Id == dish.Id && 
+                dish.DishPortions.All(dp => dp.Id != portion.Id))
+            );
+            _context.Dishes.Update(dish);
+            _context.SaveChanges();
+
+            return dish;
+        }
+
+        public void DeleteDish(int id)
+        {
+            var dish = _context.Dishes
+                .Include(d => d.DishPortions)
+                .Single(d => d.Id == id);
+            _context.Dishes.Remove(dish);
+            _context.SaveChanges();
         }
     }
 }

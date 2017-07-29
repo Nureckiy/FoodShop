@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Hohotel.Models;
 using Hohotel.Services;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Hohotel
 {
@@ -37,6 +39,8 @@ namespace Hohotel
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.Converters =
+                        new List<JsonConverter> { new StringEnumConverter {CamelCaseText = true} };
                 });
             services.AddAutoMapper();
             services.AddCors(options => options.AddPolicy("AllowAll", p =>

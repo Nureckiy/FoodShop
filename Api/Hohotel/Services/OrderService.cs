@@ -27,12 +27,11 @@ namespace Hohotel.Services
                 .ToList();
         }
 
-        public Order PlaceOrder(OrderInfo orderInfo, string userId)
+        public Order PlaceOrder(OrderInfo orderInfo)
         {
             var order = _mapper.Map<OrderInfo, Order>(orderInfo);
             LoadOrders(order.DishPortionOrders);
             order.Total = CountTotal(order.DishPortionOrders);
-            order.UserId = userId;
             order.Status = OrderStatus.Opened;
             _context.Orders.Add(order);
             _context.SaveChanges();

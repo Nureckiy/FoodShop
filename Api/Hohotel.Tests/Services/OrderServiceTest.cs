@@ -37,11 +37,10 @@ namespace Hohotel.Tests.Services
             _context.Setup(c => c.DishPortions).Returns(DbSetMock.Create(portion).Object);
             _context.Setup(c => c.Orders).Returns(orderMock.Object);
             
-            var order = _service.PlaceOrder(orderInfo, "userid");
+            var order = _service.PlaceOrder(orderInfo);
             
             orderMock.Verify(m => m.Add(It.IsAny<Order>()), Times.Once);
             _context.Verify(c => c.SaveChanges(), Times.Once);
-            Assert.Equal(order.UserId, "userid");
             Assert.Equal(order.Total, 65.94m);
             Assert.Equal(order.Status, OrderStatus.Opened);
         }
@@ -50,7 +49,7 @@ namespace Hohotel.Tests.Services
         public void PlaceOrder_NullableVariables_ThrowError()
         {
             _context.Setup(c => c.Orders).Returns(DbSetMock.Create(new Order()).Object);
-            Assert.Throws<NullReferenceException>(() => _service.PlaceOrder(null, "userid"));
+            Assert.Throws<NullReferenceException>(() => _service.PlaceOrder(null));
         }
 
         [Fact]

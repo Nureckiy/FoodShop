@@ -8,6 +8,6 @@ namespace Hohotel.Services
 {
     public interface IMailService
     {
-        void SendFeedback(Feedback feedback, string userId);
+        void SendFeedback(Feedback feedback);
     }
 }
