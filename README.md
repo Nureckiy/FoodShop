@@ -5,7 +5,7 @@ The project is a web application that allows to provide booking operations on th
 
 To work with server it"s nessesary to install .Net Core SDK and mssql localdb.
 
-On the first run execute "dotnet restore" command.
+On the first run execute "dotnet restore" command. For initialize database, run "dotnet ef database update". To set initnial data, execute "inserts.sql" script.
 
 ## Build application
 Navigate to /Api/Hohotel repository and run "dotnet build -c release" command. Compiled files will creates on the /bin/Release folder.
