@@ -1,35 +1,35 @@
 import React, { Component } from 'react';
-import { Panel, Accordion, ListGroup, ListGroupItem } from 'react-bootstrap';
-import dateformat from 'dateformat';
+import { Panel, Accordion, ListGroup, ListGroupItem, Label } from 'react-bootstrap';
 
 import messages from '!json!../../sources/appVariables.json';
+import * as utils from '../../utils/utils';
 
 class BookingsList extends Component {
   componentWillMount() {
     this.props.load();
   }
-  renderDate({ startDate, endDate }) {
-    const format = (date) => dateformat(date, 'dd mmmm');
-    return `${format(startDate)} - ${format(endDate)}`;
-  }
+
   render() {
     const { bookings } = this.props;
+    const format = (date) => utils.standardDateFormat(date);
     return (
     <Accordion bsClass="full-headings-width panel-group">
       { bookings && bookings.map((booking, index) =>
         <Panel
           key={index}
           eventKey={index}
-          header={dateformat(booking.registrationTime, 'dd mmmm yyyy')}>
+          header={utils.fullDateFormat(booking.registrationTime)}
+        >
           <ListGroup fill className="options-list">
             <ListGroupItem header="Статус"> { messages.orderStatuses[booking.status] }</ListGroupItem>
             <ListGroupItem header="Заказ">
+            <ListGroup className="paragraph">
             { booking.rooms && booking.rooms.map(room =>
-              <ListGroup className="paragraph" key={room.id}>
-                <ListGroupItem>{this.renderDate(room)}</ListGroupItem>
-                <ListGroupItem>#{ room.address } ({ room.category.name })</ListGroupItem>
-              </ListGroup>
+              <ListGroupItem key={room.id}>
+                <Label>#{ room.address }</Label> { room.category.name }. {format(room.startDate)} - {format(room.endDate)}
+              </ListGroupItem>
             )}
+            </ListGroup>
             </ListGroupItem>
             <ListGroupItem header="Имя">{ booking.name } { booking.surname } { booking.patronymic }</ListGroupItem>
             <ListGroupItem header="Email">{ booking.email }</ListGroupItem>

@@ -9,21 +9,7 @@ class FieldArray extends Component {
     this.onChange = this.onChange.bind(this);
     this.removeField = this.removeField.bind(this);
   }
-  pushField() {
-    this.change(values => values.push({}));
-  }
-  onChange(index, fieldValues) {
-    this.change(values => values[index] = fieldValues);
-  }
-  removeField(index) {
-    this.change(values => values.splice(index, 1));
-  }
-  change(callback) {
-    const { onChange, id } = this.props;
-    let value = Object.assign([], this.props.value);
-    callback(value);
-    onChange({ target: { value, id }});
-  }
+
   render() {
     const { children, value } = this.props;
     return (
@@ -40,6 +26,25 @@ class FieldArray extends Component {
         )}
       </span>
     );
+  }
+
+  pushField() {
+    this.change(values => values.push({}));
+  }
+
+  onChange(index, fieldValues) {
+    this.change(values => values[index] = fieldValues);
+  }
+
+  removeField(index) {
+    this.change(values => values.splice(index, 1));
+  }
+
+  change(callback) {
+    const { onChange, id } = this.props;
+    let value = Object.assign([], this.props.value);
+    callback(value);
+    onChange({ target: { value, id }});
   }
 }
 

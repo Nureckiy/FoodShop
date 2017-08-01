@@ -21,6 +21,7 @@ class RoomCategoryControlForm extends Component {
             id="guestsNumber"
             type="number"
             label="Количество гостей"
+            min="0"
             required
           />
           <Field

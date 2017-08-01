@@ -1,9 +1,11 @@
+/*eslint no-unused-vars: "off"*/
+
 import React, { Component } from 'react';
 import { FormGroup, Button, Glyphicon } from 'react-bootstrap';
 
 import Field from '../common/Field.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
-import Select from '../common/RenderSelect';
+import Select from '../common/Select';
 import FieldArray from '../common/FieldArray';
 import * as utils from '../../utils/utils';
 import { mainCategories } from '!json!../../sources/appVariables.json';
@@ -61,6 +63,8 @@ class DishControlForm extends Component {
               id="price"
               type="number"
               label="Стоимость, $"
+              min="0"
+              step="0.01"
               required
             />
           </FieldArray>

@@ -11,33 +11,13 @@ class BookingDetailsForm extends Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.hideAlert = this.hideAlert.bind(this);
+    this.hideErrorMsg = this.hideErrorMsg.bind(this);
     this.state = { error: false };
   }
-  hideAlert() {
-    this.setState({ error: false });
-  }
-  handleSubmit(details) {
-    const { book, selectedRooms } = this.props;
-    if(selectedRooms.length) {
-      book(Object.assign(
-        { roomBookings: utils.parseRoomBooking(selectedRooms) },
-        details,
-      ));
-      history.push('summary/booking');
-    } else {
-      this.setState({
-        error: 'Выберите хотя-бы один номер'
-      });
-    }
-  }
-  getInitialValues() {
-    const { user_metadata: { name, email, surname, patronymic, phone } } = utils.getProfile();
-    return { name, email, surname, patronymic, phone };
-  }
+
   render() {
     const { error } = this.state;
-    const initial = this.getInitialValues();
+    const initial = getInitialValues();
     return (
       <ControlledForm className="col-sm-12" initialValues={initial} onSubmit={this.handleSubmit}>
         <FormGroup bsClass="col-md-5">
@@ -86,7 +66,7 @@ class BookingDetailsForm extends Component {
         <div className="date-form col-sm-12">
           <Fade in={!!error}>
             <Alert bsStyle="danger">
-              <button type="button" className="close" aria-label="Close" onClick={this.hideAlert}>
+              <button type="button" className="close" aria-label="Close" onClick={this.hideErrorMsg}>
                 <span aria-hidden="true">&times;</span>
               </button>
               <p>{ error }</p>
@@ -96,6 +76,29 @@ class BookingDetailsForm extends Component {
       </ControlledForm>
     );
   }
+
+  hideErrorMsg() {
+    this.setState({ error: false });
+  }
+
+  showErrorMsg(error) {
+    this.setState({ error });
+  }
+
+  handleSubmit(details) {
+    const { book, selectedRooms } = this.props;
+    if(selectedRooms.length) {
+      book({ roomBookings: utils.parseRoomBooking(selectedRooms), ...details });
+      history.push('summary/booking');
+    } else {
+      this.showErrorMsg('Выберите хотя-бы один номер');
+    }
+  }
+}
+
+function getInitialValues() {
+  const { name, email, surname, patronymic, phone } = utils.getProfile().user_metadata;
+  return { name, email, surname, patronymic, phone };
 }
 
 export default BookingDetailsForm;

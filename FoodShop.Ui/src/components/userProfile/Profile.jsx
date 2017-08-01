@@ -1,12 +1,10 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 import Header from '../layout/Header.jsx';
-import { Tabs, Tab, MenuItem, Button, Row, Col, Nav, NavItem } from 'react-bootstrap';
+import { Tab, Row, Col, Nav, NavItem } from 'react-bootstrap';
 import ViewProfile from './ViewProfile.jsx';
 import EditProfile from './EditProfile.jsx';
 import BookingsList from './BookingsList.jsx';
 import Activities from './Activities.jsx';
-import history from '../../store/History';
 
 class Profile extends Component {
   render() {

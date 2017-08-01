@@ -1,4 +1,3 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -12,16 +11,6 @@ class DatePickerRange extends Component {
     };
   }
 
-  onDatesChange({ startDate, endDate }) {
-    const { onChange } = this.props;
-    this.setState({ startDate, endDate });
-    onChange(startDate, endDate);
-  }
-
-  onFocusChange(focusedInput) {
-    this.setState({ focusedInput });
-  }
-
   render() {
     const { startDate, endDate, focusedInput } = this.state;
     return(
@@ -33,6 +22,16 @@ class DatePickerRange extends Component {
         focusedInput={focusedInput}
       />
     );
+  }
+
+  onDatesChange({ startDate, endDate }) {
+    const { onChange } = this.props;
+    this.setState({ startDate, endDate });
+    onChange(startDate, endDate);
+  }
+
+  onFocusChange(focusedInput) {
+    this.setState({ focusedInput });
   }
 }
 

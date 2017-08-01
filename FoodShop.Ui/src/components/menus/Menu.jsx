@@ -1,13 +1,10 @@
-/*eslint no-unused-vars: "off"*/
-
 import React, { Component } from 'react';
 
 import Header from '../layout/Header.jsx';
 import GoodList from './GoodList.jsx';
 import { mainCategories } from '!json!../../sources/appVariables.json';
-import AddTile from '../admin/AddTile.jsx';
 import DishControlForm from '../admin/DishControlForm.jsx';
-import Loader from '../common/Loader.jsx';
+import LoadingComponent from '../common/LoadingComponent.jsx';
 import config from '../../config';
 import ControlledModal from '../common/ControlledModal.jsx';
 
@@ -54,19 +51,17 @@ class Menu extends Component {
           <ControlledModal ref="addDishModal" title="Добавить новое блюдо" onSubmit={() => this.refs.addDishModal.toggle()}>
             <DishControlForm onSubmit={createDish} formId="createDishForm" defaultCategory={category}/>
           </ControlledModal>
-          { auth.isAdmin() &&
-            <AddTile onClick={() => this.refs.addDishModal.toggle()} />
-          }
-          { activeRequestStatus
-            ? <Loader />
-            : <GoodList
-                selected={selectedDishes}
-                items={dishes}
-                onSelect={selectDish}
-                editDish={editDish}
-                auth={auth}
-                removeDish={removeDish}/>
-          }
+          <LoadingComponent showLoader={activeRequestStatus}>
+            <GoodList
+              selected={selectedDishes}
+              items={dishes}
+              onCreate={createDish}
+              onSelect={selectDish}
+              editDish={editDish}
+              auth={auth}
+              defaultCategory={category}
+              removeDish={removeDish}/>
+          </LoadingComponent>
         </div>
       </div>
     );

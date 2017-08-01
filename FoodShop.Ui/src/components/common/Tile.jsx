@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import { Glyphicon } from 'react-bootstrap';
 
 class Tile extends Component {
-  handleOptionsBtnClick(event) {
-    const { onOptionsBtnClick } = this.props;
-    event.stopPropagation();
-    onOptionsBtnClick(event);
-  }
   render() {
     const {item: {name, description, imageUrl, coverUrl}, onClick, price, withOptionsBtn } = this.props;
     let image = imageUrl ? imageUrl : coverUrl;
@@ -31,6 +26,12 @@ class Tile extends Component {
         </a>
       </div>
     );
+  }
+
+  handleOptionsBtnClick(event) {
+    const { onOptionsBtnClick } = this.props;
+    event.stopPropagation();
+    onOptionsBtnClick(event);
   }
 }
 

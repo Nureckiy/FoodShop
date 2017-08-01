@@ -101,6 +101,9 @@ input[type="checkbox"]:checked + #adress-group .check-label {
   .active * {
     color: #777;
   }
+  .active .label {
+    color: #fff;
+  }
   .active button {
     color: #fff;
   }

@@ -15,17 +15,36 @@ class Basket extends Component {
     this.goBack = this.goBack.bind(this);
     this.addOrder = this.addOrder.bind(this);
   }
+
+  render() {
+    const child = this.renderChild();
+    return (
+      <div>
+        <Header
+          backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
+          className="cut"
+        />
+        <div className="container content">
+          { child  }
+        </div>
+      </div>
+    );
+  }
+
   goToNext() {
     this.setState({ isFirstStep: false });
   }
+
   goBack() {
     this.setState({ isFirstStep: true });
   }
+
   addOrder(details) {
     const { addOrder, selectedDishes } = this.props;
     addOrder(selectedDishes, details);
     history.push('summary/dishOrder');
   }
+
   renderChild() {
     const { auth, selectedDishes, clearSelected, changeConfiguration, getAvailableAddresses, availableAddresses } = this.props;
     const { isFirstStep } = this.state;
@@ -47,20 +66,6 @@ class Basket extends Component {
         getAvailableAddresses={getAvailableAddresses}
         availableAddresses={availableAddresses}
       />;
-  }
-  render() {
-    const child = this.renderChild();
-    return (
-      <div>
-        <Header
-          backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
-          className="cut"
-        />
-        <div className="container content">
-          { child  }
-        </div>
-      </div>
-    );
   }
 }
 

@@ -1,17 +1,13 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 import { Panel, Accordion, ListGroup, ListGroupItem } from 'react-bootstrap';
-import dateformat from 'dateformat';
 
 import messages from '!json!../../sources/appVariables.json';
+import * as utils from '../../utils/utils';
 
 class Activities extends Component {
   componentWillMount() {
     const { load } = this.props;
     load();
-  }
-  renderDate(date) {
-    return  dateformat(date, 'dd mmmm yyyy');
   }
   render() {
     const { orders } = this.props;
@@ -21,11 +17,11 @@ class Activities extends Component {
           <Panel
             key={index}
             eventKey={index}
-            header={this.renderDate(order.checkoutDate)}>
+            header={utils.fullDateFormat(order.checkoutDate)}>
             <ListGroup fill className="options-list">
               <ListGroupItem header="Статус"> { messages.orderStatuses[order.status] }</ListGroupItem>
               <ListGroupItem header="Завершен"> { order.completionDate
-                ? `Завершен ${this.renderDate(order.completionDate)}`
+                ? `Завершен ${utils.fullDateFormat(order.completionDate)}`
                 : 'Нет'
               }
               </ListGroupItem>
@@ -50,8 +46,5 @@ class Activities extends Component {
     );
   }
 }
-
-
-
 
 export default Activities;

@@ -1,17 +1,9 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
 
 import { ButtonToolbar, MenuItem, NavDropdown } from 'react-bootstrap';
 import { mainCategories } from '!json!../../sources/appVariables.json';
 
 class Navbar extends Component {
-  renderClass(tabName, className) {
-    const { pathname } = this.props;
-    if (!className) {
-      className = '';
-    }
-    return pathname.includes(tabName) ? className + ' active' : className;
-  }
   render() {
     const { auth } = this.props;
     const profile = auth.getProfile();
@@ -59,6 +51,14 @@ class Navbar extends Component {
           </div>
       </nav>
     );
+  }
+
+  renderClass(tabName, className) {
+    const { pathname } = this.props;
+    if (!className) {
+      className = '';
+    }
+    return pathname.includes(tabName) ? className + ' active' : className;
   }
 }
 

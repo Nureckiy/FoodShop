@@ -1,15 +1,10 @@
-/*eslint no-unused-vars: "off"*/
-
 import React, { Component } from 'react';
 
 import { FormGroup } from 'react-bootstrap';
 import Field from '../common/Field.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
+
 class EditProfile extends Component {
-  handleSubmit(values) {
-    const { initial: { id }, onSubmit } = this.props;
-    onSubmit(id, {user_metadata:  values });
-  }
   render() {
     const { initial } = this.props;
     return (
@@ -61,6 +56,11 @@ class EditProfile extends Component {
         </div>
       </ControlledForm>
     );
+  }
+
+  handleSubmit(values) {
+    const { initial: { id }, onSubmit } = this.props;
+    onSubmit(id, {user_metadata:  values });
   }
 }
 

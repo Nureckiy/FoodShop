@@ -10,10 +10,7 @@ class AdminPage extends Component {
     const { getAllSubscriptions } = this.props.actions;
     getAllSubscriptions();
   }
-  handleSubmit(selected) {
-    const { publishSubscriptions } = this.props.actions;
-    publishSubscriptions(Object.keys(selected));
-  }
+
   render() {
     const { subscriptions } = this.props;
     return (
@@ -48,6 +45,11 @@ class AdminPage extends Component {
         </div>
       </span>
     );
+  }
+
+  handleSubmit(selected) {
+    const { publishSubscriptions } = this.props.actions;
+    publishSubscriptions(Object.keys(selected));
   }
 }
 

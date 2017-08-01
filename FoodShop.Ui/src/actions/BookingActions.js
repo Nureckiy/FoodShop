@@ -1,7 +1,7 @@
 import * as types from '../constants/BookingConstants';
 import service from '../service/service';
 import * as utils from '../utils/utils';
-import { create, createAsync } from './ActionCreator';
+import { createAsync } from './ActionCreator';
 
 export function setCurrentRoomCategory(category) {
   return (dispatch) => {
@@ -53,7 +53,6 @@ export function addRoom(room) {
       type: types.ADD_ROOM,
       room
     });
-    const fail = create(dispatch, types.ADD_ROOM_FAIL);
     const filter = Object.assign({ roomId: room.id, ...utils.renderDateRange(room)});
     service.checkRoomAvailability(filter, success, fail);
 
@@ -68,6 +67,15 @@ export function addRoom(room) {
       } else {
         fail({ message: 'номер недоступен в выбранный промежуток'}, status);
       }
+    }
+
+    function fail(error, status) {
+      dispatch({
+        type: types.ADD_ROOM_FAIL,
+        error,
+        room,
+        status
+      });
     }
   };
 }

@@ -1,24 +1,6 @@
 import React, { Component } from 'react';
 
 class TotalGoodItem extends Component {
-  decrease() {
-    this.changeValue(parseInt(this.props.item.number) - 1);
-  }
-  increase() {
-    this.changeValue(parseInt(this.props.item.number) + 1);
-  }
-  handleEnter(event) {
-    this.changeValue(event.target.value.replace(/[^\d]/g, ''));
-  }
-  remove() {
-    this.changeValue(0);
-  }
-  changeValue(value) {
-    const { onChange } = this.props;
-    let { item } = this.props;
-    item.number = value;
-    onChange(item);
-  }
   render() {
     const { title, item: { size, number, price } } = this.props;
     const total = number * price;
@@ -33,6 +15,29 @@ class TotalGoodItem extends Component {
         </div>
       </li>
     );
+  }
+
+  decrease() {
+    this.changeValue(parseInt(this.props.item.number) - 1);
+  }
+
+  increase() {
+    this.changeValue(parseInt(this.props.item.number) + 1);
+  }
+
+  handleEnter(event) {
+    this.changeValue(event.target.value.replace(/[^\d]/g, ''));
+  }
+
+  remove() {
+    this.changeValue(0);
+  }
+
+  changeValue(value) {
+    const { onChange } = this.props;
+    let { item } = this.props;
+    item.number = value;
+    onChange(item);
   }
 }
 

@@ -8,14 +8,9 @@ import * as utils from '../../utils/utils';
 import { FormGroup } from 'react-bootstrap';
 
 class Contacts extends Component {
-  getInitialValues() {
-    const { name, email } = utils.getProfile().user_metadata;
-    return { userName: name, email };
-  }
   render() {
     const { sendFeedback } = this.props.actions;
     const { address, phone, email } = contactInfo;
-    const initial = this.getInitialValues();
     return (
       <div>
         <Header
@@ -28,7 +23,7 @@ class Contacts extends Component {
             <div className="col-md-12">
               <div className="col-md-6">
                 <h3>Пишите нам</h3>
-                <ControlledForm initialValues={initial} onSubmit={sendFeedback}>
+                <ControlledForm initialValues={getInitialValues()} onSubmit={sendFeedback}>
                   <FormGroup>
                     <Field
                       id="userName"
@@ -76,5 +71,9 @@ class Contacts extends Component {
   }
 }
 
+function getInitialValues() {
+  const { name, email } = utils.getProfile().user_metadata;
+  return { userName: name, email };
+}
 
 export default Contacts;

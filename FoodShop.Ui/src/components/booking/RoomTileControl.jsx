@@ -10,26 +10,45 @@ class RoomTileControl extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
   }
+
+  render() {
+    const { className, room: { error }, withEditButton, onEdit } = this.props;
+    const errorMsg = error ? error.message : this.state.error;
+    return (
+      <Form className={className} onSubmit={this.handleSubmit}>
+        { withEditButton &&
+          <Button type="button" className="btn btn-success col-sm-12" onClick={onEdit}>Редактировать</Button>
+        }
+        <Button type="submit" className="btn btn-success col-sm-12">Добавить</Button>
+        <DateRangePicker onChange={this.handleDateChange} />
+        <Panel className="col-sm-12 error-message" collapsible expanded={!!errorMsg}>
+          {errorMsg && <p>{ errorMsg }</p>}
+        </Panel>
+      </Form>
+    );
+  }
+
   handleSubmit(e){
     e.preventDefault();
     const { onSubmit, room } = this.props;
     const { arrivalDate, departureDate } = this.state;
-    onSubmit(Object.assign(room, { arrivalDate, departureDate }));
+    const error = validate([arrivalDate, departureDate]);
+    if (error) {
+      this.setState({ error });
+    } else {
+      onSubmit(Object.assign(room, { arrivalDate, departureDate }));
+    }
   }
+
   handleDateChange(arrivalDate, departureDate){
     this.setState({ arrivalDate, departureDate });
   }
-  render() {
-    const { className, room: { error } } = this.props;
-    return (
-      <Form className={className} onSubmit={this.handleSubmit}>
-        <Button type="submit" className="btn btn-success col-sm-12">Добавить</Button>
-        <DateRangePicker onChange={this.handleDateChange} />
-        <Panel className="col-sm-12 error-message" collapsible expanded={!!error}>
-          {error && <p>{ error.message }</p>}
-        </Panel>
-      </Form>
-    );
+}
+
+function validate(params) {
+  const allIsNotNull = params.every(e => e);
+  if(!allIsNotNull) {
+    return 'Указан некорректный промежуток';
   }
 }
 

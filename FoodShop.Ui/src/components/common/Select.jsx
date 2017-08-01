@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { FormControl, ControlLabel } from 'react-bootstrap';
 
-class RenderSelect extends Component {
+import * as utils from '../../utils/utils';
+
+class Select extends Component {
   componentWillMount() {
     const { id, defaultValue, onChange } = this.props;
     if (defaultValue) {
@@ -9,20 +11,17 @@ class RenderSelect extends Component {
     }
   }
   render() {
-    const { options, id, className, label, controlClass, required, value, defaultEmptyOption, onChange } = this.props;
+    const { options, className, label, controlClass, required, defaultEmptyOption } = this.props;
     let { labelClass } = this.props;
     if(required) {
       labelClass = '' + labelClass + ' required';
     }
-    const inputOption = { required, id, value, onChange };
+    let inputOptions = Object.assign({}, this.props, {className: {controlClass}, componentClass: 'select'});
+    utils.deleteProps(inputOptions, ['section', 'options', 'labelClass', 'defaultEmptyOption']);
     return(
       <span className={className}>
         {label && <ControlLabel className={labelClass}>{label}</ControlLabel>}
-        <FormControl
-          componentClass="select"
-          className={controlClass}
-          { ...inputOption }
-        >
+        <FormControl { ...inputOptions }>
           { defaultEmptyOption && <option /> }
           {options.map((item) => (
             <option key={item.value} value={item.value}>{item.text}</option>
@@ -33,4 +32,4 @@ class RenderSelect extends Component {
   }
 }
 
-export default RenderSelect;
+export default Select;

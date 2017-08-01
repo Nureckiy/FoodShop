@@ -10,6 +10,17 @@ class ControlledForm extends Component {
     this.renderOnChange = this.renderOnChange.bind(this);
     this.renderSubmit = this.renderSubmit.bind(this);
   }
+
+  render() {
+    const { className, id } = this.props;
+    const children = this.renderChilds();
+    return (
+      <Form className={className} onSubmit={this.renderSubmit} id={id}>
+        { children }
+      </Form>
+    );
+  }
+
   componentWillReceiveProps(props) {
     const { initialValues } = props;
     const oldInitial = this.props.initialValues;
@@ -17,10 +28,12 @@ class ControlledForm extends Component {
       this.setState( initialValues );
     }
   }
+
   renderChilds() {
     const { children } = this.props;
     return utils.mapChildren(children, (child, key) => this.renderChild(child, key));
   }
+
   renderChild(child, key) {
     let newProps = { key };
     if(!child) return;
@@ -29,6 +42,7 @@ class ControlledForm extends Component {
     }
     return React.cloneElement(child, newProps);
   }
+
   transformFormGroupChildren(item) {
     return utils.mapChildren(item.props.children, (child, key) =>
       this.cloneObject(child, {
@@ -38,11 +52,13 @@ class ControlledForm extends Component {
       })
     );
   }
+
   cloneObject(item, props) {
     if(item && item.props) {
       return React.cloneElement(item, props);
     }
   }
+
   renderValue(child) {
     if(!child || !child.props) return;
     const { type, id, section } = child.props;
@@ -53,11 +69,13 @@ class ControlledForm extends Component {
       ? { checked:  value }
       : { value };
   }
+
   renderOnChange(event, child) {
     const { onChange, section } = child.props;
     onChange && onChange(event);
     this.handleChildChange(event, section);
   }
+
   handleChildChange(event, section) {
     const { type, checked, value, id } = event.target;
     const itemValue = type === 'checkbox' ? checked : value;
@@ -69,19 +87,11 @@ class ControlledForm extends Component {
     }
     this.setState(item);
   }
+
   renderSubmit(e) {
     e.preventDefault();
     const { onSubmit } = this.props;
     onSubmit(this.state);
-  }
-  render() {
-    const { className, id } = this.props;
-    const children = this.renderChilds();
-    return (
-      <Form className={className} onSubmit={this.renderSubmit} id={id}>
-        { children }
-      </Form>
-    );
   }
 }
 

@@ -10,12 +10,7 @@ class OrderItem extends Component {
     };
     this.toggleHeader = this.toggleHeader.bind(this);
   }
-  toggleHeader() {
-    const { open } = this.state;
-    this.setState({
-      open: !open
-    });
-  }
+
   render() {
     const { open } = this.state;
     const { order, order: { Configurations } } = this.props;
@@ -41,6 +36,13 @@ class OrderItem extends Component {
         </li>
       </div>
     );
+  }
+
+  toggleHeader() {
+    const { open } = this.state;
+    this.setState({
+      open: !open
+    });
   }
 }
 

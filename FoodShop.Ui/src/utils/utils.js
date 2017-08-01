@@ -1,3 +1,5 @@
+import dateformat from 'dateformat';
+
 const idComparison = (firstItem, secondItem) => firstItem.id === secondItem.id;
 
 export function mergeSelectedConfigurations(selected, newItem) {
@@ -63,16 +65,20 @@ export function removeElementFromArray(array, id) {
 }
 
 export function calculateBookingTotal(rooms) {
-  const daysCount = ({ arrivalDate, departureDate }) => departureDate.diff(arrivalDate, 'days');
-  return rooms.map(room => room.price * daysCount(room)).reduce(add, 0);
+  return rooms.map(room => calculateRoomTotal(room)).reduce(add, 0);
+}
+
+export function calculateRoomTotal(room) {
+  const daysCount = room.departureDate.diff(room.arrivalDate, 'days');
+  return room.price * daysCount;
 }
 
 export function parseRoomBooking(rooms) {
   return (rooms.map(room => {
     return {
       roomId: room.id,
-      startDate: renderDate(room.arrivalDate),
-      endDate: renderDate(room.departureDate)
+      startDate: requestDateFormat(room.arrivalDate),
+      endDate: requestDateFormat(room.departureDate)
     };
   }));
 }
@@ -102,8 +108,25 @@ export function renderDateRange({ arrivalDate, departureDate }) {
   return result;
 }
 
-function renderDate(date) {
-  return date.format('MM/DD/YYYY');
+export const full = 'dd mmmm yyyy';
+export const request = 'MM/DD/YYYY';
+export const clipped = 'dd.mm';
+export const standard = 'dd mmmm';
+
+export function requestDateFormat(date) {
+  return dateformat(date, request);
+}
+
+export function clippedDateFormat(date) {
+  return dateformat(date, clipped);
+}
+
+export function fullDateFormat(date) {
+  return dateformat(date, full);
+}
+
+export function standardDateFormat(date) {
+  return dateformat(date, standard);
 }
 
 function addOptionIfExist(item, option, optionName) {
@@ -172,4 +195,8 @@ function excludeFromArray(arr, item, comparison) {
 
 export function getProfile() {
   return JSON.parse(localStorage.getItem('profile'));
+}
+
+export function deleteProps(object, propNames) {
+  propNames.forEach(propName => delete object[propName]);
 }

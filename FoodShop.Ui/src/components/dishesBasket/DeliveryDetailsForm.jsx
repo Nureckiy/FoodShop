@@ -3,7 +3,7 @@ import { FormGroup } from 'react-bootstrap';
 
 import Field from '../common/Field.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
-import RenderSelect from '../common/RenderSelect';
+import Select from '../common/Select';
 import * as utils from '../../utils/utils';
 
 class DeliveryDetailsForm extends Component {
@@ -12,23 +12,15 @@ class DeliveryDetailsForm extends Component {
     this.state = {};
     this.handleDeliveryClick = this.handleDeliveryClick.bind(this);
   }
+
   componentWillMount() {
     const { getAvailableAddresses } = this.props;
     getAvailableAddresses();
   }
-  getInitialValues() {
-    const { surname, phone, name, email } = utils.getProfile().user_metadata;
-    return { userName: name, email, surname, phone };
-  }
-  handleDeliveryClick(event) {
-    this.setState({
-      hideAddress: event.target.checked
-    });
-  }
+
   render() {
     const { onBack, onSubmit, selected, availableAddresses } = this.props;
     const { hideAddress } = this.state;
-    const initial = this.getInitialValues();
     const total = utils.calculateSelectedTotal(selected);
     return (
       <div className="row animate-box">
@@ -38,7 +30,7 @@ class DeliveryDetailsForm extends Component {
           </div>
         </div>
         <div className="row">
-        <ControlledForm onSubmit={onSubmit} initialValues={initial} className="col-md-6">
+        <ControlledForm onSubmit={onSubmit} initialValues={getInitialValues()} className="col-md-6">
           <FormGroup>
             <Field
               id="userName"
@@ -69,7 +61,7 @@ class DeliveryDetailsForm extends Component {
           </FormGroup>
           <FormGroup>
             {!hideAddress &&
-              <RenderSelect
+              <Select
                 id="address"
                 type="text"
                 label="Доставить в номер"
@@ -94,6 +86,17 @@ class DeliveryDetailsForm extends Component {
       </div>
     );
   }
+
+  handleDeliveryClick(event) {
+    this.setState({
+      hideAddress: event.target.checked
+    });
+  }
+}
+
+function getInitialValues() {
+  const { surname, phone, name, email } = utils.getProfile().user_metadata;
+  return { userName: name, email, surname, phone };
 }
 
 export default DeliveryDetailsForm;

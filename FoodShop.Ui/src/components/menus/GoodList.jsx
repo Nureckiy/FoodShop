@@ -1,73 +1,85 @@
 import React, { Component } from 'react';
 
-import ControlledModal from '../common/ControlledModal.jsx';
+import ItemMaintenanceModal from '../common/ItemMaintenanceModal.jsx';
 import Tile from '../common/Tile.jsx';
+import AddTile from '../admin/AddTile.jsx';
 import AddDishForm from './AddDishForm.jsx';
 import DishControlForm from '../admin/DishControlForm.jsx';
 
 class GoodList extends Component {
   constructor() {
     super();
-    this.state = {
-      currentDish: {}
-    };
-    this.submitAddDishForm = this.submitAddDishForm.bind(this);
-    this.getTileOptions = this.getTileOptions.bind(this);
+    this.state = { currentDish: {} };
+    this.getCreateOptions = this.getCreateOptions.bind(this);
+    this.getEditOptions = this.getEditOptions.bind(this);
+    this.openCreateModal = this.openCreateModal.bind(this);
   }
-  openAddDishModal(currentDish) {
-    this.setState({ currentDish });
-    this.refs.addDishModal.toggle();
-  }
-  openEditDishModal(currentDish) {
-    this.setState({ currentDish });
-    this.refs.editDishModal.toggle();
-  }
-  submitAddDishForm() {
-    const { onSelect } = this.props;
-    const { addDishModal, addDishForm } = this.refs;
-    const values = addDishForm.getSelected();
-    onSelect(values);
-    addDishModal.toggle();
-  }
-  renderTiles() {
-    const { items } = this.props;
-    return items.map(item => <Tile {...this.getTileOptions(item)} />);
-  }
-  getTileOptions(item) {
-    const { auth } = this.props;
-    let options = { key: item.id, item, onClick: () => this.openAddDishModal(item) };
-    if (auth.isAdmin()) {
-      options.withOptionsBtn = true;
-      options.onOptionsBtnClick= () => this.openEditDishModal(item);
-    }
-    return options;
-  }
+
   render() {
-    const { selected, editDish, removeDish } = this.props;
-    const { currentDish } = this.state;
+    const { selected, auth, onSelect, items } = this.props;
+    const { currentDish, addToOrder } = this.state;
     const model = selected.find(x => x.id === currentDish.id);
-    const tiles = this.renderTiles();
     return (
       <div>
-        <ControlledModal ref="addDishModal" onSubmit={this.submitAddDishForm} title="Добавить в корзину">
-          <AddDishForm
-            ref="addDishForm"
-            model={model ? model : currentDish}
-          />
-        </ControlledModal>
-        <ControlledModal ref="editDishModal" title="Редактировать" closeOnSubmit>
-          <DishControlForm
-            formId="editDishModal"
-            initialValues={ currentDish }
-            onSubmit={editDish}
-            onRemove={removeDish}
-          />
-        </ControlledModal>
-        { tiles }
+        { auth.isAdmin() &&
+          <AddTile onClick={this.openCreateModal} />
+        }
+        <ItemMaintenanceModal ref="dishControlModal" title={ addToOrder ? 'Добавить в корзину' : false }
+            createOptions={this.getCreateOptions()} editOptions={this.getEditOptions()} >
+          { addToOrder
+            ? <AddDishForm
+                model={model ? model : currentDish}
+                onSubmit={this.modalSubmit(onSelect)}
+                formId="addDishForm" />
+            : <DishControlForm />
+          }
+        </ItemMaintenanceModal>
+        { items.map(item =>
+          <Tile
+            key={item.id}
+            item={item}
+            onClick={() => this.openAddDishModal(item)}
+            withOptionsBtn={auth.isAdmin()}
+            onOptionsBtnClick={() => this.openEditModal(item)} />
+        )}
       </div>
     );
+  }
+
+  getCreateOptions() {
+    const { onCreate, defaultCategory } = this.props;
+    return { formId: 'dishControl',  defaultCategory, onSubmit: this.modalSubmit(onCreate) };
+  }
+
+  getEditOptions() {
+    return Object.assign(this.getCreateOptions(), {
+      initialValues: this.state.currentDish,
+      onSubmit: this.modalSubmit(this.props.editDish),
+      onRemove: this.modalSubmit(this.props.removeDish)
+    });
+  }
+
+  openAddDishModal(currentDish) {
+    this.setState({ currentDish,  addToOrder: true });
+    this.refs.dishControlModal.toggle();
+  }
+
+  openEditModal(currentDish) {
+    this.setState({ currentDish, addToOrder: false });
+    this.refs.dishControlModal.openInEditMode();
+  }
+
+  openCreateModal() {
+    this.setState({ addToOrder: false });
+    this.refs.dishControlModal.openInCreateMode();
+  }
+
+  modalSubmit(action) {
+    return values => {
+      action(values);
+      this.refs.dishControlModal.toggle();
+    };
   }
 }
 
 export default GoodList;
-

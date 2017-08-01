@@ -4,7 +4,7 @@ import { contactInfo } from '!json!../../sources/appVariables.json';
 
 class Footer extends Component {
   render() {
-    const { phone, email, develop } = contactInfo;
+    const { phone, email } = contactInfo;
     return (
       <footer role="contentinfo" className="row">
         <div className="overlay"/>
@@ -19,7 +19,6 @@ class Footer extends Component {
           <div className="copyright">
             <p>
               <span className="block">&copy; 2017 FoodShop. Все права в кармане.</span>
-              <span className="block">{ develop }</span>
             </p>
           </div>
         </div>

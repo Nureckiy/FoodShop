@@ -4,7 +4,7 @@ import { Glyphicon } from 'react-bootstrap';
 const AddTile = (props) => {
   const { onClick } = props;
   return (
-    <div className="col-xs-12 top-indent">
+    <div className="top-indent">
       <a className="card active" onClick={ onClick }>
         <figure>
           <div className="overlay"><Glyphicon glyph="plus" className="centered plus-btn"/></div>
