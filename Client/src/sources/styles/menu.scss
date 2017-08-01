@@ -1,0 +1,36 @@
+.title {
+  h2 {
+    font-size: 50px;
+    line-height: 1.5;
+  }
+  p {
+    font-size: 20px;
+  }
+}
+
+figure {
+  height: 240px;
+  overflow: hidden;
+  position: relative;
+
+  .img-responcive {
+    max-width: 100%;
+  }
+}
+
+.options-table {
+  th {
+    padding: 15px;
+    font-weight: 500;
+    border-bottom: 0;
+  }
+  tr {
+    border-top: 1px solid rgba(0, 0, 0, 0.2)
+  }
+  thead tr th {
+    border-bottom: none;
+  }
+  select {
+    border-width: 1px;
+  }
+}

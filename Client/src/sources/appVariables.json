@@ -1,0 +1,32 @@
+{
+  "mainCategories": {
+    "pizza": "Пицца",
+    "hot": "Горячие блюда",
+    "salads": "Салаты",
+    "sushi": "Суши"
+  },
+  "order": {
+    "booking": {
+      "message": "Ваша бронь оформлена. В ближайшие 15 минут вам перезвонят для подтверждения заказа.",
+      "img": "http://res.cloudinary.com/dum4mjc9q/image/upload/v1500384914/bron_qwc8ur.jpg"
+    },
+    "dishOrder": {
+      "message": "Ваш заказ оформлен. В ближайшие 15 минут вам перезвонят для подтверждения заказа.",
+      "img": "http://res.cloudinary.com/dum4mjc9q/image/upload/v1500384914/dostavka_twszgm.jpg"
+    },
+    "fail": "Что-то пошло не так. Повторите попытку позже.",
+    "failImg": ""
+  },
+  "orderStatuses": {
+    "notStarted": "Не начат",
+    "approved": "Подтвержден",
+    "opened": "Открыт",
+    "closed": "Закрыт",
+    "canceled": "Отменен"
+  },
+  "contactInfo": {
+    "phone": "+375 29 9239940",
+    "email": "info@foodshop.by",
+    "address": "г.Минск, ул. Петруся Бровки 6"
+  }
+}
