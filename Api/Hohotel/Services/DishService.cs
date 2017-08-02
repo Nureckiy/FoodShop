@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Expressions;
-using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
 namespace Hohotel.Services
 {

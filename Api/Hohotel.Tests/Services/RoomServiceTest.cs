@@ -12,7 +12,7 @@ using Hohotel.Tests.Mapper;
 using Xunit;
 using Moq;
 
-namespace Hohotel.Tests
+namespace Hohotel.Tests.Services
 {
     public class RoomServiceTest
     {

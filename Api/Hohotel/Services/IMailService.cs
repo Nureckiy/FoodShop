@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Hohotel.Models;
+﻿using Hohotel.Models;
 
 namespace Hohotel.Services
 {

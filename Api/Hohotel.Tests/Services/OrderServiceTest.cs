@@ -29,7 +29,7 @@ namespace Hohotel.Tests.Services
         [Fact]
         public void PlaceOrder_FilledObject_ShouldSaveToDatabase()
         {
-            var portions = TestData.Create.DishPortionOrders(3, 2, 0);
+            var portions = TestData.Create.DishPortionOrders(3, 2);
             var orderInfo = TestData.Create.OrderInfo(portions: portions);
             var portion = TestData.Create.DishPortion(price: 10.99m);
             var orderMock = DbSetMock.Create(new Order());
@@ -79,9 +79,11 @@ namespace Hohotel.Tests.Services
         public void CountTotal_ListObjects()
         {
             var portion = TestData.Create.DishPortion(price: 10.17m);
-            var portionOrders = new List<DishPortionOrder>();
-            portionOrders.Add(TestData.Create.DishPortionOrder(3, dishPortion: portion));
-            portionOrders.Add(TestData.Create.DishPortionOrder(2, dishPortion: portion));
+            var portionOrders = new List<DishPortionOrder>
+            {
+                TestData.Create.DishPortionOrder(3, dishPortion: portion),
+                TestData.Create.DishPortionOrder(2, dishPortion: portion)
+            };
             Assert.Equal(50.85m, _service.CountTotal(portionOrders));
         }
     }

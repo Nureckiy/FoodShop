@@ -73,8 +73,7 @@ namespace Hohotel.Tests.Controllers
         [Fact]
         public void Bookings()
         {
-            var responce = new List<BookingView>();
-            responce.Add(new BookingView() {Name = "some name"});
+            var responce = new List<BookingView> {new BookingView() {Name = "some name"}};
 
             _service.Setup(s => s.GetUserBookings(It.IsAny<string>())).Returns(responce);
 

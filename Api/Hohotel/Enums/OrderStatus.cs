@@ -3,8 +3,9 @@
     public enum OrderStatus
     {
         NotStarted = 0,
-        Opened = 1,
-        Closed = 2,
-        Canceled = 3,
+        Approved = 1,
+        Opened = 2,
+        Closed = 3,
+        Canceled = 4
     }
 }
