@@ -10,13 +10,20 @@ export function mergeSelectedConfigurations(selected, newItem) {
   }
 }
 
-export function mergeDishToArray(selectedDishes, dish) {
+export function mergeDishToSelectedArray(selectedDishes, dish) {
   const configurations = dish.selected.filter(x => x.number !== 0);
   if (configurations.length) {
     return mergeElementToArray(selectedDishes, dish);
   } else {
     return excludeFromArray(selectedDishes, dish, idComparison);
   }
+}
+
+export function mergeReturnedItem(array, item, category) {
+  if (category === item.category || category === item.category.name) {
+    return mergeElementToArray(array, item);
+  }
+  return array;
 }
 
 export function calculateSelectedTotal(array) {

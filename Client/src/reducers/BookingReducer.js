@@ -50,6 +50,18 @@ export default function RoomsReducer(state = initialState, action) {
         currentRoomCategory: action.data
       };
 
+    case types.CREATE_ROOM_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        roomCategories: utils.mergeElementToArray(state.roomCategories, action.data)
+      };
+
+    case types.REMOVE_ROOM_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        roomCategories: utils.removeElementFromArray(state.roomCategories, action.id)
+      };
+
     case types.GET_ROOMS:
       return {
         ...state,
@@ -93,6 +105,19 @@ export default function RoomsReducer(state = initialState, action) {
       return {
         ...state,
         selectedRooms: []
+      };
+
+    case types.CREATE_ROOM_SUCCESS:
+    case types.EDIT_ROOM_SUCCESS:
+      return {
+        ...state,
+        filteredRooms: utils.mergeReturnedItem(state.filteredRooms, action.data, state.currentRoomCategory.name)
+      };
+
+    case types.REMOVE_ROOM_SUCCESS:
+      return {
+        ...state,
+        filteredRooms: utils.removeElementFromArray(state.filteredRooms, action.id)
       };
 
     case types.BOOK_SUCCESS:

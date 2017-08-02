@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup } from 'react-bootstrap';
 
-import * as utils from '../../utils/utils';
-
 class ControlledForm extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +29,7 @@ class ControlledForm extends Component {
 
   renderChilds() {
     const { children } = this.props;
-    return utils.mapChildren(children, (child, key) => this.renderChild(child, key));
+    return React.Children.map(children, (child, key) => this.renderChild(child, key));
   }
 
   renderChild(child, key) {
@@ -44,7 +42,7 @@ class ControlledForm extends Component {
   }
 
   transformFormGroupChildren(item) {
-    return utils.mapChildren(item.props.children, (child, key) =>
+    return React.Children.map(item.props.children, (child, key) =>
       this.cloneObject(child, {
         ...this.renderValue(child),
         key,

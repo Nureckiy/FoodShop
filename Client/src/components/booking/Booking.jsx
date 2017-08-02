@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { Button, Glyphicon } from 'react-bootstrap';
 
 import RoomTile from '../common/RoomTile.jsx';
 import RoomTileControl from './RoomTileControl.jsx';
 import Header from '../layout/Header.jsx';
 import LoadingComponent from '../common/LoadingComponent.jsx';
 import Slider from '../common/Slider.jsx';
-import AddTile from '../admin/AddTile.jsx';
 import ItemMaintenanceModal from '../common/ItemMaintenanceModal.jsx';
 import RoomControlForm from '../admin/RoomControlForm.jsx';
 import DateRangePicker from '../common/DateRangePicker.jsx';
@@ -41,36 +41,40 @@ class Booking extends Component {
             </div>
           </div>
           <div className="row">
-            <h3>Описание номера:</h3>
-            <p>{currentRoomCategory.description}</p>
-            <b>Цена: <span className="cursive-font">от ${currentRoomCategory.minPrice}</span></b>
-            { auth.isAdmin() &&
-              <AddTile onClick={() => this.refs.roomControlModal.openInCreateMode()} />
-            }
+            <div className="col-xs-12">
+              <h3>Описание номера:</h3>
+              <p>{currentRoomCategory.description}</p>
+              <b>Цена: <span className="cursive-font">от ${currentRoomCategory.minPrice}</span></b>
+            </div>
           </div>
           <div className="row">
-            <div className="col-md-6 col-md-offset-3">
-              <div className="col-md-7 date-form">
+            <div className="col-md-6 col-md-offset-3 text-center bottom-indent">
+              <div className="date-form">
                 <DateRangePicker className="col-md-7 date-form" onChange={this.handleFilterChange}/>
               </div>
-              <div className="col-md-5 date-form">
+              <div className="date-form">
                 <button type="button" className="btn btn-orange" onClick={this.filter}>Найти номер</button>
               </div>
             </div>
           </div>
+          { auth.isAdmin() &&
+            <Button bsStyle="success" onClick={() => this.refs.roomControlModal.openInCreateMode()}>
+              <Glyphicon glyph="plus"/>   Добавить
+            </Button>
+          }
           <LoadingComponent showLoader={activeRequestStatus}>
             <div className="row sample">
               { filteredRooms.map(room =>
-                <span key={room.id}>
-                  <RoomTile {...room} className="col-md-9 col-sm-12" />
-                    <RoomTileControl
-                      room={room}
-                      onSubmit={addRoom}
-                      className="col-md-3 col-sm-4 date-form"
-                      withEditButton={auth.isAdmin()}
-                      onEdit={() => this.openEditModal(room)}
-                    />
-                </span>
+                <div key={room.id} className="top-indent">
+                  <RoomTile {...room} className="col-md-8 col-sm-12 no-padding" />
+                  <RoomTileControl
+                    room={room}
+                    onSubmit={addRoom}
+                    className="col-md-4 col-sm-5"
+                    withEditButton={auth.isAdmin()}
+                    onEdit={() => this.openEditModal(room)}
+                  />
+                </div>
               )}
             </div>
           </LoadingComponent>

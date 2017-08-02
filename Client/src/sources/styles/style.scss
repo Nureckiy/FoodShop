@@ -395,8 +395,16 @@ body {
   border: none;
 }
 
+.no-padding {
+  padding: 0;
+}
+
 .top-indent {
   margin-top: 20px;
+}
+
+.bottom-indent {
+  margin-bottom: 20px;
 }
 
 .full-headings-width {
@@ -446,4 +454,9 @@ body {
 
 .btn.small {
   padding: 5px 11px;
+}
+
+.tiles {
+  display: flex;
+  flex-wrap: wrap;
 }

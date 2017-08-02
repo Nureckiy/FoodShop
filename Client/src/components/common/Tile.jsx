@@ -3,10 +3,10 @@ import { Glyphicon } from 'react-bootstrap';
 
 class Tile extends Component {
   render() {
-    const {item: {name, description, imageUrl, coverUrl}, onClick, price, withOptionsBtn } = this.props;
+    const {item: {name, description, imageUrl, coverUrl}, onClick, price, withOptionsBtn, className } = this.props;
     let image = imageUrl ? imageUrl : coverUrl;
     return (
-      <div className="col-lg-4 col-md-4 col-sm-6">
+      <div className={className}>
         <a className="card" onClick={onClick}>
           <figure>
             <div className="overlay">
