@@ -89,21 +89,21 @@ export function deleteRoom(id) {
   };
 }
 
-export function createRoom(data) {
+export function createRoom(data, category) {
   return createAsync(service.addRoom,
     types.CREATE_ROOM,
     types.CREATE_ROOM_SUCCESS,
     types.CREATE_ROOM_FAIL,
-    data
+    data, { category }
   );
 }
 
-export function editRoom(data) {
+export function editRoom(data, category) {
   return createAsync(service.editRoom,
     types.EDIT_ROOM,
     types.EDIT_ROOM_SUCCESS,
     types.EDIT_ROOM_FAIL,
-    data
+    data, { category }
   );
 }
 

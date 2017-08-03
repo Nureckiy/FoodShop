@@ -101,23 +101,17 @@ class Booking extends Component {
 
   getCreateOptions() {
     const { createRoom, currentRoomCategory, getRoomCategoriesInfo, roomCategoriesInfo } = this.props;
-    return {
-      formId: 'roomControl',
-      loadCategories: getRoomCategoriesInfo,
-      categories: roomCategoriesInfo,
-      onSubmit: this.modalSubmit(createRoom),
-      defaultCategory: currentRoomCategory
+    return { formId: 'roomControl', loadCategories: getRoomCategoriesInfo, categories: roomCategoriesInfo,
+      submitFunctions: { onSubmit: (values) => createRoom(values, currentRoomCategory) }, defaultCategory: currentRoomCategory
     };
   }
 
   getEditOptions() {
-    const { editRoom, removeRoom } = this.props;
+    const { editRoom, removeRoom, currentRoomCategory } = this.props;
     const { selected } = this.state;
-    return Object.assign(this.getCreateOptions(), {
-      onSubmit: this.modalSubmit(editRoom),
-      onRemove: this.modalSubmit(removeRoom),
-      initial: selected
-    });
+    return {...this.getCreateOptions(), initial: selected, submitFunctions: {
+      onSubmit: (values) => editRoom(values, currentRoomCategory), onRemove: removeRoom
+    }};
   }
 
   openEditModal(selected) {
@@ -125,12 +119,6 @@ class Booking extends Component {
     this.refs.roomControlModal.openInEditMode();
   }
 
-  modalSubmit(action) {
-    return values => {
-      action(values);
-      this.refs.roomControlModal.toggle();
-    };
-  }
 }
 
 export default Booking;

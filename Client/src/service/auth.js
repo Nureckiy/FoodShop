@@ -12,7 +12,8 @@ export default class AuthService extends EventEmitter {
       auth: {
         redirectUrl: 'http://localhost:3000/',
         responseType: 'token',
-        params: { scope: 'openid name email' }
+        params: { scope: 'openid name groups roles' }
+
       },
       autoclose: true,
       closable: false,
@@ -86,7 +87,7 @@ export default class AuthService extends EventEmitter {
 
   isAdmin() {
     const profile = this.getProfile();
-    return profile && profile.roles && profile.roles.includes('ROLE_ADMIN');
+    return profile && profile.groups && profile.groups.includes('admins');
   }
 
   updateProfile(userId, data) {

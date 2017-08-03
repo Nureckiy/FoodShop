@@ -68,18 +68,15 @@ class Rooms extends Component {
 
   getCreateOptions() {
     const { createRoomCategory } = this.props;
-    return { formId: 'roomCategoryControl', onSubmit: this.modalSubmit(createRoomCategory) };
+    return { formId: 'roomCategoryControl', submitFunctions: { onSubmit: createRoomCategory } };
   }
 
   getEditOptions() {
     const { editRoomCategory, removeRoomCategory } = this.props;
     const { selected } = this.state;
-    return {
-      formId: 'roomCategoryControl',
-      onSubmit: this.modalSubmit(editRoomCategory),
-      onRemove: this.modalSubmit(removeRoomCategory),
-      initial: selected
-    };
+    return { formId: 'roomCategoryControl', initial: selected, submitFunctions: { onSubmit: editRoomCategory,
+        onRemove: removeRoomCategory,
+    }};
   }
 
   openCreateModal() {
@@ -89,13 +86,6 @@ class Rooms extends Component {
   openEditModal(selected) {
     this.setState({ selected });
     this.refs.roomCategoryControlModal.openInEditMode();
-  }
-
-  modalSubmit(action) {
-    return values => {
-      action(values);
-      this.refs.roomCategoryControlModal.toggle();
-    };
   }
 }
 

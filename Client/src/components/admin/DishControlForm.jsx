@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: "off"*/
 
 import React, { Component } from 'react';
-import { FormGroup, Button, Glyphicon } from 'react-bootstrap';
+import { FormGroup, Button, Glyphicon, Alert } from 'react-bootstrap';
 
 import Field from '../common/Field.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
@@ -12,7 +12,7 @@ import { mainCategories } from '!json!../../sources/appVariables.json';
 
 class DishControlForm extends Component {
   render() {
-    const { onSubmit, formId, defaultCategory, initialValues, onRemove } = this.props;
+    const { formId, defaultCategory, initialValues, onRemove, onSubmit } = this.props;
     let initial = initialValues;
     if(!initial) {
       const category = defaultCategory ? defaultCategory : Object.keys(mainCategories)[0];

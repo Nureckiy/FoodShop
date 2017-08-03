@@ -2,16 +2,8 @@ import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 class ControlledModal extends Component {
-  constructor() {
-    super();
-    this.state = {
-      show: false
-    };
-    this.toggle = this.toggle.bind(this);
-  }
-
   render() {
-    const { show } = this.state;
+    const show = this.state && this.state.show;
     const submitOptions = this.renderSubmitOptions();
     return (
       <Modal show={ show }>
@@ -20,11 +12,17 @@ class ControlledModal extends Component {
         </Modal.Header>
         <Modal.Body>{ this.renderChild() }</Modal.Body>
         <Modal.Footer className="no-border buttons">
-          <Button onClick={ this.toggle }>Отмена</Button>
+          <Button onClick={ this.close.bind(this) }>Отмена</Button>
           <Button {...submitOptions} >Добавить</Button>
         </Modal.Footer>
       </Modal>
     );
+  }
+
+  close() {
+    const { onClose } = this.props;
+    onClose && onClose();
+    this.toggle();
   }
 
   toggle() {
@@ -36,7 +34,7 @@ class ControlledModal extends Component {
     const { onSubmit } = this.props;
     const children = this.renderChild();
     let options = {};
-    if (children && children.props.formId) options.form = children.props.formId;
+    if (children[0] && children[0].props.formId) options.form = children[0].props.formId;
     options.onClick = onSubmit;
     options.type = 'submit';
     return options;
@@ -44,7 +42,7 @@ class ControlledModal extends Component {
 
   renderChild() {
     const { children } = this.props;
-    return children;
+    return React.Children.toArray(children);
   }
 
   getTitle() {

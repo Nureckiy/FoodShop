@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Form } from 'react-bootstrap';
+
 import Select from '../common/Select.jsx';
 import * as utils from '../../utils/utils';
 

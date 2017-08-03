@@ -6,17 +6,18 @@ import AddTile from '../admin/AddTile.jsx';
 import AddDishForm from './AddDishForm.jsx';
 import DishControlForm from '../admin/DishControlForm.jsx';
 
-class GoodList extends Component {
+class DishesList extends Component {
   constructor() {
     super();
     this.state = { currentDish: {} };
     this.getCreateOptions = this.getCreateOptions.bind(this);
     this.getEditOptions = this.getEditOptions.bind(this);
     this.openCreateModal = this.openCreateModal.bind(this);
+    this.handleDishSelect = this.handleDishSelect.bind(this);
   }
 
   render() {
-    const { selected, auth, onSelect, items } = this.props;
+    const { selected, auth, items } = this.props;
     const { currentDish, addToOrder } = this.state;
     const model = selected.find(x => x.id === currentDish.id);
     return (
@@ -26,7 +27,7 @@ class GoodList extends Component {
           { addToOrder
             ? <AddDishForm
                 model={model ? model : currentDish}
-                onSubmit={this.modalSubmit(onSelect)}
+                onSubmit={this.handleDishSelect}
                 formId="addDishForm" />
             : <DishControlForm />
           }
@@ -51,15 +52,14 @@ class GoodList extends Component {
 
   getCreateOptions() {
     const { onCreate, defaultCategory } = this.props;
-    return { formId: 'dishControl',  defaultCategory, onSubmit: this.modalSubmit(onCreate, defaultCategory) };
+    return { formId: 'dishControl',  defaultCategory, submitFunctions: { onSubmit: (values) => onCreate(values, defaultCategory) } };
   }
 
   getEditOptions() {
-    return Object.assign(this.getCreateOptions(), {
-      initialValues: this.state.currentDish,
-      onSubmit: this.modalSubmit(this.props.editDish, this.props.defaultCategory),
-      onRemove: this.modalSubmit(this.props.removeDish)
-    });
+    const { editDish, defaultCategory } = this.props;
+    return {...this.getCreateOptions(), initialValues: this.state.currentDish, submitFunctions: {
+      onSubmit: (values) => editDish(values, defaultCategory), onRemove: this.props.removeDish
+    }};
   }
 
   openAddDishModal(currentDish) {
@@ -77,12 +77,10 @@ class GoodList extends Component {
     this.refs.dishControlModal.openInCreateMode();
   }
 
-  modalSubmit(action, category) {
-    return values => {
-      action(values, category);
-      this.refs.dishControlModal.toggle();
-    };
+  handleDishSelect(value) {
+    this.props.onSelect(value);
+    this.refs.dishControlModal.toggle();
   }
 }
 
-export default GoodList;
+export default DishesList;

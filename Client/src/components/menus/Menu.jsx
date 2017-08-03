@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 
 import Header from '../layout/Header.jsx';
-import GoodList from './GoodList.jsx';
+import DishesList from './DishesList.jsx';
 import { mainCategories } from '!json!../../sources/appVariables.json';
-import DishControlForm from '../admin/DishControlForm.jsx';
 import LoadingComponent from '../common/LoadingComponent.jsx';
 import config from '../../config';
-import ControlledModal from '../common/ControlledModal.jsx';
 
 class Menu extends Component {
   componentWillMount() {
@@ -48,11 +46,8 @@ class Menu extends Component {
               Корзина <i id="basket-icon" className="glyphicon glyphicon-shopping-cart"/>
             </a>
           </div>
-          <ControlledModal ref="addDishModal" title="Добавить новое блюдо" onSubmit={() => this.refs.addDishModal.toggle()}>
-            <DishControlForm onSubmit={createDish} formId="createDishForm" defaultCategory={category}/>
-          </ControlledModal>
           <LoadingComponent showLoader={activeRequestStatus}>
-            <GoodList
+            <DishesList
               selected={selectedDishes}
               items={dishes}
               onCreate={createDish}
