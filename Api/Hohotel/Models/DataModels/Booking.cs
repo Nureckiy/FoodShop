@@ -20,6 +20,8 @@ namespace Hohotel.Models.DataModels
         public string Phone { get; set; }
         public virtual IList<RoomBooking> RoomBookings { get; set; }
         public OrderStatus Status { get; set; }
+        public string StatusUpdatedBy { get; set; }
+        public DateTime? StatusUpdatedDate { get; set; }
         public DateTime RegistrationTime {
             get => _registrationTime ?? DateTime.Now;
             set => _registrationTime = value;

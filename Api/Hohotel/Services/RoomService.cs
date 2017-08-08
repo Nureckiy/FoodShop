@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Hohotel.Enums;
+using Hohotel.Exceptions;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,8 @@ namespace Hohotel.Services
                 .Where(room => room.Category.Id == filter.CategoryId &&
                     (filter.EndDate == null ||
                     !room.RoomBookings.Any(roomBooking =>
-                        (roomBooking.Booking.Status == OrderStatus.NotStarted || roomBooking.Booking.Status == OrderStatus.Opened) &&
+                        roomBooking.Booking.Status != OrderStatus.Closed &&
+                        roomBooking.Booking.Status != OrderStatus.Canceled &&
                         filter.StartDate < roomBooking.EndDate &&
                         filter.EndDate > roomBooking.StartDate
                     ))
@@ -48,8 +50,8 @@ namespace Hohotel.Services
             }
             var isAvailable = !_context.Rooms.Any(room => 
                  room.Id == roomBooking.RoomId && room.RoomBookings.Any(booking =>
-                    (booking.Booking.Status == OrderStatus.NotStarted ||
-                    booking.Booking.Status == OrderStatus.Opened) &&
+                    booking.Booking.Status != OrderStatus.Closed &&
+                    booking.Booking.Status != OrderStatus.Canceled &&
                     roomBooking.StartDate < booking.EndDate &&
                     roomBooking.EndDate > booking.StartDate
                 ));
@@ -58,6 +60,10 @@ namespace Hohotel.Services
 
         public Booking Book(Booking booking)
         {
+            if (booking.RoomBookings.Any(rb => !IsAvailable(rb)))
+            {
+                throw new UnavailableException("One or more rooms are not available in the selected period");
+            }
             booking.RoomBookings.ToList()
                 .ForEach(roomBooking => 
                     roomBooking.Room = _context.Rooms.Single(room => room.Id == roomBooking.RoomId));
@@ -75,6 +81,11 @@ namespace Hohotel.Services
                 .ToList();
         }
 
+        public IList<BookingView> GetBookings()
+        {
+            return _context.Bookings.ProjectTo<BookingView>(_mapper).ToList();
+        }
+
         public IList<string> GetActive(string userId)
         {
             var now = DateTime.Now;
@@ -87,6 +98,17 @@ namespace Hohotel.Services
                     && booking.EndDate >= now))
                 .Select(room => room.Address)
                 .ToList();
+        }
+
+        public BookingView ChangeStatus(UpdateStatusModel updateModel)
+        {
+            var booking = _context.Bookings.Find(updateModel.Id);
+            _mapper.Map(updateModel, booking);
+            _context.Bookings.Update(booking);
+            _context.SaveChanges();
+            return _context.Bookings
+                .ProjectTo<BookingView>(_mapper)
+                .Single(b => b.Id == booking.Id);
         }
 
         public Room AddRoom(Room room)

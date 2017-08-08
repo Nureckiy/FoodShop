@@ -84,6 +84,33 @@ namespace Hohotel.Tests.Controllers
         }
 
         [Fact]
+        public void AllBookings()
+        {
+            var responce = new List<BookingView> { new BookingView() { Name = "some name" } };
+
+            _service.Setup(s => s.GetBookings()).Returns(responce);
+
+            var result = _controller.GetAllBookings();
+
+            Assert.Equal(responce, result);
+        }
+
+        [Fact]
+        public void BookingStatus()
+        {
+            var responce = new BookingView() {Name = "some name"};
+            var request = new UpdateStatusModel();
+
+            _service.Setup(s => s.ChangeStatus(It.IsAny<UpdateStatusModel>())).Returns(responce);
+
+            var result = _controller.ChangeBookingStatus(request);
+
+            Assert.Equal(responce, result);
+            Assert.Equal("test user", request.StatusUpdatedBy);
+            Assert.NotNull(request.StatusUpdatedDate);
+        }
+
+        [Fact]
         public void Post()
         {
             var request = new Room();

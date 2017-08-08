@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
+using Hohotel.Auth;
 using Hohotel.Models;
 using Hohotel.Services;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +32,7 @@ namespace Hohotel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var domain = $"https://{Configuration["auth0:domain"]}/";
             services.Configure<AppConfiguration>(Configuration.GetSection("AppVariables"));
 
             // Add framework services.
@@ -48,6 +51,13 @@ namespace Hohotel
                 p.AllowAnyMethod();
                 p.AllowAnyHeader();
             }));
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("change:bookingStatus",
+                    policy => policy.Requirements.Add(new PermissionRequirement("change:bookingStatus", domain)));
+                options.AddPolicy("change:orderStatus",
+                    policy => policy.Requirements.Add(new PermissionRequirement("change:orderStatus", domain)));
+            });
 
             // Add application services.
             services.AddTransient<IRoomService, RoomService>();

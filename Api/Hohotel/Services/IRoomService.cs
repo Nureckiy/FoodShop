@@ -14,7 +14,11 @@ namespace Hohotel.Services
 
         IList<BookingView> GetUserBookings(string userId);
 
+        IList<BookingView> GetBookings();
+
         IList<string> GetActive(string userId);
+
+        BookingView ChangeStatus(UpdateStatusModel updateModel);
 
         Room AddRoom(Room room);
 

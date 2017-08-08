@@ -34,7 +34,7 @@ namespace Hohotel.Controllers
         }
 
         // POST api/dish
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public Dish Post([FromBody]Dish dish)
         {
@@ -47,7 +47,7 @@ namespace Hohotel.Controllers
         }
 
         // PUT api/dish
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpPut]
         public Dish Put([FromBody]Dish dish)
         {
@@ -57,7 +57,7 @@ namespace Hohotel.Controllers
         }
 
         // DELETE api/dish/1
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

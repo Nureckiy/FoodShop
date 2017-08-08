@@ -43,6 +43,8 @@ namespace Hohotel.Services.Mapping
                 .ForMember(r => r.Price, o => o.MapFrom(rb => rb.Room.Price));
 
             CreateMap<RoomCategory, ItemInfo>();
+
+            CreateMap<UpdateStatusModel, Booking>();
         }
     }
 }

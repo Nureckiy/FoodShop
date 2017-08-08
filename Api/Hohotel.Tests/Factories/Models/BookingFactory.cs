@@ -44,7 +44,7 @@ namespace Hohotel.Tests.Factories.Models
 
         public static IList<Booking> Bookings(this ITestDataFactory factory, int count)
         {
-            return Enumerable.Range(0, count).Select(e => factory.Booking()).ToList();
+            return Enumerable.Range(0, count).Select((e, index) => factory.Booking(index)).ToList();
         }
     }
 }

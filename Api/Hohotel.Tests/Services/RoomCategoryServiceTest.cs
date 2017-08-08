@@ -21,7 +21,6 @@ namespace Hohotel.Tests.Services
         public RoomCategoryServiceTest()
         {
             _context = new Mock<HohotelContext>();
-            AutoMapper.Mapper.Initialize(a => a.AddProfile<MappingProfile>());
             var mapper = AutomapperConfig.Initialize();
             _service = new RoomCategoryService(_context.Object, mapper);
         }

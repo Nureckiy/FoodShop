@@ -40,7 +40,7 @@ namespace Hohotel.Controllers
         }
 
         // POST api/roomCategory
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public RoomCategory Post([FromBody]RoomCategory category)
         {
@@ -52,7 +52,7 @@ namespace Hohotel.Controllers
         }
 
         // PUT api/roomCategory
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpPut]
         public RoomCategory Put([FromBody]RoomCategory category)
         {
@@ -62,7 +62,7 @@ namespace Hohotel.Controllers
         }
 
         // DELETE api/roomCategory/1
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

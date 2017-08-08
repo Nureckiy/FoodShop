@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Hohotel.Services;
@@ -38,6 +39,7 @@ namespace Hohotel.Controllers
         public void Book([FromBody]Booking booking)
         {
             booking.UserId = User.Identity.Name;
+            booking.StatusUpdatedDate = DateTime.Now;
             _service.Book(booking);
         }
 
@@ -57,8 +59,26 @@ namespace Hohotel.Controllers
             return _service.GetUserBookings(User.Identity.Name);
         }
 
-        // POST api/room
+        // POST api/room/allBookings
         [Authorize]
+        [HttpGet("allBookings")]
+        public IList<BookingView> GetAllBookings()
+        {
+            return _service.GetBookings();
+        }
+
+        // PUT api/room/bookingStatus
+        [Authorize("change:bookingStatus")]
+        [HttpPut("bookingStatus")]
+        public BookingView ChangeBookingStatus([FromBody]UpdateStatusModel updateModel)
+        {
+            updateModel.StatusUpdatedBy = User.Identity.Name;
+            updateModel.StatusUpdatedDate = DateTime.Now;
+            return _service.ChangeStatus(updateModel);
+        }
+
+        // POST api/room
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public Room Post([FromBody]Room room)
         {
@@ -70,7 +90,7 @@ namespace Hohotel.Controllers
         }
 
         // PUT api/room
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpPut]
         public Room Put([FromBody]Room room)
         {
@@ -80,7 +100,7 @@ namespace Hohotel.Controllers
         }
 
         // DELETE api/room/1
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
