@@ -15,10 +15,11 @@ class Navbar extends Component {
             </div>
             <div className="col-sm-9">
               <ButtonToolbar className="pull-right">
-                {auth.isAdmin() &&
-                  <li className={this.renderClass('admin')}>
-                    <a href="#/admin/">Админ</a>
-                  </li>
+                { (auth.inGroup('kitchen-manager') || auth.inGroup('hotel-manager')) &&
+                  <NavDropdown className={this.renderClass('manage')} title="Управление" noCaret id="menu-category">
+                    <MenuItem eventKey="1" href="#/manage/bookings" disabled={!auth.inGroup('hotel-manager')}>Брони</MenuItem>
+                    <MenuItem eventKey="2" href="#/manage/restaurant" disabled={!auth.inGroup('kitchen-manager')}>Ресторан</MenuItem>
+                  </NavDropdown>
                 }
                 <li className={this.renderClass('booking')}>
                   <a href="#/booking/">Номера</a>
@@ -55,10 +56,11 @@ class Navbar extends Component {
 
   renderClass(tabName, className) {
     const { pathname } = this.props;
+    const path = pathname.split('/')[1];
     if (!className) {
       className = '';
     }
-    return pathname.includes(tabName) ? className + ' active' : className;
+    return path === tabName ? className + ' active' : className;
   }
 }
 

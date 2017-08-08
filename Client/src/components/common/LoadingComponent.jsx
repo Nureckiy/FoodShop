@@ -3,13 +3,13 @@ import React from 'react';
 import loader from '../../sources/img/loader.gif';
 
 const LoadingComponent = (props) => {
-  const { showLoader, children } = props;
+  const { showLoader, children, small } = props;
   if (showLoader) {
     return (
-      <img className="loader" src={loader}/>
+      <img className={small ? 'loader small' : 'loader'} src={loader}/>
     );
   }
-  return children;
+  return children ? children : <span />;
 };
 
 export default LoadingComponent;

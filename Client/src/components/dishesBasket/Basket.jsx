@@ -20,10 +20,7 @@ class Basket extends Component {
     const child = this.renderChild();
     return (
       <div>
-        <Header
-          backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
-          className="cut"
-        />
+        <Header backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg" />
         <div className="container content">
           { child  }
         </div>

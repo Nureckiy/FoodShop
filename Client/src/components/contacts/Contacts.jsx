@@ -17,6 +17,7 @@ class Contacts extends Component {
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340139/fon3_dhhfll.jpg"
           title="Добро пожаловать!"
           subtitle="интернет&mdash;магазин вкусностей"
+          className="banner"
         />
         <div className="container content">
           <div className="row">

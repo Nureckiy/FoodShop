@@ -9,7 +9,8 @@ export const create = (dispatch, actionType, additionalInfo) =>
 export const createAsync = (serviceMethod, actionType, successActionType, failedActionType, data, additionalInfo) => {
   return(dispatch) => {
     dispatch({
-      type: actionType
+      type: actionType,
+      ...additionalInfo
     });
     const success = create(dispatch, successActionType, additionalInfo);
     const fail = create(dispatch, failedActionType, additionalInfo);

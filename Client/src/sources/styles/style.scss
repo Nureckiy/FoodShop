@@ -204,9 +204,9 @@ nav {
 header {
   background: #4d4d4d;
   text-align: center;
-  height: 600px;
   background-size: cover;
   background-attachment: fixed;
+  height: 75px;
   .btn {
     display: block;
     width: 100%;
@@ -216,8 +216,8 @@ header {
     font-size: 80px;
     line-height: 1.5;
   }
-  &.cut {
-    height: 75px;
+  &.banner {
+    height: 600px;
   }
 }
 
@@ -364,6 +364,14 @@ body {
 .loader {
   display: block;
   margin: 100px auto;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+
+  &.small {
+    max-width: 30px;
+    max-height: 30px;
+  }
 }
 
 .black {
@@ -460,4 +468,16 @@ body {
 .tiles {
   display: flex;
   flex-wrap: wrap;
+}
+
+.row-collapse {
+  transition: max-height 0.5s;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.row-collapse.in {
+  transition: max-height 3s;
+  max-height: 1000px;
+  margin: 15px 5px;
 }

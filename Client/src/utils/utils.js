@@ -1,6 +1,7 @@
 import dateformat from 'dateformat';
 
-const idComparison = (firstItem, secondItem) => firstItem.id === secondItem.id;
+const idComparison = (first, second) => first.id === second.id;
+const sameComparison = (first, second) => first === second;
 
 export function mergeSelectedConfigurations(selected, newItem) {
   if (parseInt(newItem.number)) {
@@ -13,7 +14,7 @@ export function mergeSelectedConfigurations(selected, newItem) {
 export function mergeDishToSelectedArray(selectedDishes, dish) {
   const configurations = dish.selected.filter(x => x.number !== 0);
   if (configurations.length) {
-    return mergeElementToArray(selectedDishes, dish);
+    return mergeElementToArrayById(selectedDishes, dish);
   } else {
     return excludeFromArray(selectedDishes, dish, idComparison);
   }
@@ -21,7 +22,7 @@ export function mergeDishToSelectedArray(selectedDishes, dish) {
 
 export function mergeReturnedItem(array, item, category) {
   if (category === item.category || category === item.category.name) {
-    return mergeElementToArray(array, item);
+    return mergeElementToArrayById(array, item);
   }
   return array;
 }
@@ -63,12 +64,20 @@ export function findNumber(selected, id) {
   return current ? current.number : 0;
 }
 
-export function mergeElementToArray(array, element) {
+export function mergeElementToArrayById(array, element) {
   return joinElementToArray(array, element, idComparison);
 }
 
-export function removeElementFromArray(array, id) {
+export function removeElementFromArrayById(array, id) {
   return excludeFromArray(array, { id }, idComparison);
+}
+
+export function setElementToArray(array, element) {
+  return joinElementToArray(array, element, sameComparison);
+}
+
+export function removeElementFromArray(array, element) {
+  return excludeFromArray(array, element, sameComparison);
 }
 
 export function calculateBookingTotal(rooms) {
@@ -84,8 +93,8 @@ export function parseRoomBooking(rooms) {
   return (rooms.map(room => {
     return {
       roomId: room.id,
-      startDate: requestDateFormat(room.arrivalDate),
-      endDate: requestDateFormat(room.departureDate)
+      startDate: room.arrivalDate,
+      endDate: room.departureDate
     };
   }));
 }
@@ -102,12 +111,6 @@ export function makePortionsList(array) {
   return res;
 }
 
-export function mapChildren(children, callback) {
-  return Array.isArray(children)
-    ? children.map(callback)
-    : callback(children, 0);
-}
-
 export function renderDateRange({ arrivalDate, departureDate }) {
   let result = {};
   addOptionIfExist(result, arrivalDate, 'startDate');
@@ -116,13 +119,8 @@ export function renderDateRange({ arrivalDate, departureDate }) {
 }
 
 export const full = 'dd mmmm yyyy';
-export const request = 'MM/DD/YYYY';
 export const clipped = 'dd.mm';
 export const standard = 'dd mmmm';
-
-export function requestDateFormat(date) {
-  return dateformat(date, request);
-}
 
 export function clippedDateFormat(date) {
   return dateformat(date, clipped);

@@ -27,6 +27,7 @@ class Rooms extends Component {
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/fon4_dg32ge.jpg"
           title="Найдите свой номер у нас!"
           subtitle="ЛУЧШИЙ ОТЕЛЬ ВОСТОЧНОГО ПОБЕРЕЖЬЯ БЕЛАРУСИ"
+          className="banner"
         />
         <div className="container content">
           <div className="row">
@@ -46,7 +47,7 @@ class Rooms extends Component {
           </div>
           <LoadingComponent showLoader={activeRequestStatus}>
             <div className="row tiles">
-              { auth.isAdmin() && <AddTile className="col-md-4 col-sm-6" onClick={this.openCreateModal}/> }
+              { auth.inGroup('admins') && <AddTile className="col-md-4 col-sm-6" onClick={this.openCreateModal}/> }
               { roomCategories && roomCategories.map(item => <Tile {...this.getTileOptions(item)} /> )}
             </div>
           </LoadingComponent>
@@ -59,7 +60,7 @@ class Rooms extends Component {
     const { auth } = this.props;
     let options = { key: item.id, item, price: `От $${item.minPrice}`, className: 'col-md-4 col-sm-6',
       onClick: () => history.push(`/booking/${item.id}`)};
-    if(auth.isAdmin) {
+    if(auth.inGroup('admins')) {
       options.withOptionsBtn = true;
       options.onOptionsBtnClick = () => this.openEditModal(item);
     }

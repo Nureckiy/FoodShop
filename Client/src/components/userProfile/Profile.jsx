@@ -13,10 +13,7 @@ class Profile extends Component {
     const profileInfo = Object.assign({ login: profile.name, email: profile.email, id: profile.user_id }, profile.user_metadata );
     return (
       <div>
-        <Header
-           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
-           className="cut"
-        />
+        <Header backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg" />
         <div className="container content">
           <Tab.Container id="view-profile" defaultActiveKey="1">
               <Row>

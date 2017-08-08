@@ -35,7 +35,7 @@ class Menu extends Component {
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
           title={category ? '' : 'Оцените наше меню!'}
           subtitle={category ? '' : 'интернет-магазин вкусностей'}
-          className={category ? 'cut' : ''}
+          className={category ? '' : 'banner'}
         />
         <div className="container content">
           <div className="col-md-8 col-md-offset-2 text-center title">

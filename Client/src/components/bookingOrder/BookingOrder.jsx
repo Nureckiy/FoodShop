@@ -11,9 +11,7 @@ class BookingOrder extends Component {
     const { selectedRooms, deleteRoom, clearSelectedRooms, book } = this.props;
     return (
       <div>
-        <Header
-          backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/fon4_dg32ge.jpg"
-          className="cut"/>
+        <Header backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/fon4_dg32ge.jpg" />
         <div className="container content">
           <div className="row">
             <div className="col-md-8 col-md-offset-2 text-center title">

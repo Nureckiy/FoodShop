@@ -33,7 +33,7 @@ class DishesList extends Component {
           }
         </ItemMaintenanceModal>
         <div className="col-xs-12 tiles">
-          { auth.isAdmin() &&
+          { auth.inGroup('admins') &&
             <AddTile onClick={this.openCreateModal} className="col-md-4 col-sm-6" />
           }
           { items.map(item =>
@@ -41,7 +41,7 @@ class DishesList extends Component {
               key={item.id}
               item={item}
               onClick={() => this.openAddDishModal(item)}
-              withOptionsBtn={auth.isAdmin()}
+              withOptionsBtn={auth.inGroup('admins')}
               onOptionsBtnClick={() => this.openEditModal(item)}
               className="col-md-4 col-sm-6" />
           )}

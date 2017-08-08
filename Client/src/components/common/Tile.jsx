@@ -12,7 +12,7 @@ class Tile extends Component {
             <div className="overlay">
               <Glyphicon glyph="plus" className="centered plus-btn"/>
               { withOptionsBtn &&
-              <Glyphicon glyph="cog" className="pull-right settings-btn"
+                <Glyphicon glyph="cog" className="pull-right settings-btn"
                          onClick={this.handleOptionsBtnClick.bind(this)}/>
               }
             </div>

@@ -31,9 +31,7 @@ class Booking extends Component {
     const { currentRoomCategory, filteredRooms, activeRequestStatus, selectedRooms, addRoom, auth, deleteRoom } = this.props;
     return (
       <div>
-        <Header
-          backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/fon4_dg32ge.jpg"
-          className="cut" />
+        <Header backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/fon4_dg32ge.jpg" />
         <div className="container content">
           <div className="row">
             <div className="col-md-8 col-md-offset-2">
@@ -57,7 +55,7 @@ class Booking extends Component {
               </div>
             </div>
           </div>
-          { auth.isAdmin() &&
+          { auth.inGroup('admins') &&
             <Button bsStyle="success" onClick={() => this.refs.roomControlModal.openInCreateMode()}>
               <Glyphicon glyph="plus"/>   Добавить
             </Button>
@@ -71,7 +69,7 @@ class Booking extends Component {
                     room={room}
                     onSubmit={addRoom}
                     className="col-md-4 col-sm-5"
-                    withEditButton={auth.isAdmin()}
+                    withEditButton={auth.inGroup('admins')}
                     onEdit={() => this.openEditModal(room)}
                   />
                 </div>
@@ -118,7 +116,6 @@ class Booking extends Component {
     this.setState({ selected });
     this.refs.roomControlModal.openInEditMode();
   }
-
 }
 
 export default Booking;

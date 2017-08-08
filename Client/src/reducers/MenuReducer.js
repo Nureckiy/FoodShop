@@ -78,7 +78,7 @@ export default function MenuReducer(state = initialState, action) {
     case types.REMOVE_DISH_SUCCESS:
       return {
         ...state,
-        dishes: utils.removeElementFromArray(state.dishes, action.id)
+        dishes: utils.removeElementFromArrayById(state.dishes, action.id)
       };
 
     default:

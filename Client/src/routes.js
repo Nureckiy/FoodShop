@@ -7,13 +7,15 @@ import BookingOrderContainer from './containers/BookingOrderContainer';
 import BasketContainer from '../src/containers/BasketContainer.jsx';
 import MenuContainer from '../src/containers/MenuContainer.jsx';
 import UserProfileContainer from '../src/containers/UserProfileContainer.jsx';
+import ManageBookingsContainer from '../src/containers/ManageBookingsContainer.jsx';
+import ManageOrdersContainer from '../src/containers/ManageOrdersContainer.jsx';
 import Contacts from '../src/components/contacts/Contacts.jsx';
-import Admin from './containers/AdminContainer';
 import NotFound from './components/layout/NotFound.jsx';
 import Login from './components/layout/Login.jsx';
 import OrderSummary from './components/common/OrderSummary.jsx';
 import auth from './service/auth';
 import config from './config';
+import history from './store/History';
 
 const authService = new auth(config.auth0.clientId, config.auth0.domain);
 
@@ -23,10 +25,12 @@ const requireAuth = (nextState, replace) => {
   }
 };
 
-const requireAdminRole = () => {
-    if (!authService.loggedIn() || !authService.isAdmin()) {
-      login();
+const requireGroupBelonging = (group) => {
+  return () => {
+    if (!authService.loggedIn() || !authService.inGroup(group)) {
+      history.goBack();
     }
+  };
 };
 
 function login() {
@@ -45,8 +49,9 @@ const routes = (
       <Route path="/basket" component={BasketContainer} onEnter={requireAuth} />
       <Route path="/profile" component={UserProfileContainer} onEnter={requireAuth} />
       <Route path="/contacts" component={Contacts} />
-      <Route path="/admin" component={Admin} onEnter={requireAdminRole} />
       <Route path="/summary/:orderType" component={OrderSummary} />
+      <Route path="/manage/bookings" component={ManageBookingsContainer} onEnter={requireGroupBelonging('hotel-manager')} />
+      <Route path="/manage/kitchen" component={ManageOrdersContainer} onEnter={requireGroupBelonging('kitchen-manager')} />
     </Route>
     <Route path="/login" component={Login} auth={authService} />
     <Route path="*" component={NotFound} />
