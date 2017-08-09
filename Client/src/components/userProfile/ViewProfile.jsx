@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Loc } from 'redux-react-i18n';
 
 class ViewProfile extends Component {
   render() {
@@ -14,19 +15,19 @@ class ViewProfile extends Component {
           <ul>
             <li className=""><h2 style={{color: 'black'}}>{surname} {name} {patronymic}</h2></li>
             <li>
-              <div className="col-sm-2"><p>Логин:</p></div>
+              <div className="col-sm-2"><p><Loc locKey="viewLogin" />:</p></div>
               <div className="col-sm-10"><p><strong>{login}</strong></p></div>
             </li>
             <li>
-              <div className="col-sm-2"><p>Email:</p></div>
+              <div className="col-sm-2"><p><Loc locKey="email" />:</p></div>
               <div className="col-sm-10"><p><strong>{email}</strong></p></div>
             </li>
             <li>
-              <div className="col-sm-2"><p>Номер телефона:</p></div>
+              <div className="col-sm-2"><p><Loc locKey="phone" />:</p></div>
               <div className="col-sm-10"><p><strong>{phone}</strong></p></div>
             </li>
             <li>
-              <div className="col-sm-2"><p>Адрес:</p></div>
+              <div className="col-sm-2"><p><Loc locKey="address" />:</p></div>
               <div className="col-sm-10"><p><strong>{address}</strong></p></div>
             </li>
           </ul>

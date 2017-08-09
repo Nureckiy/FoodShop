@@ -5,6 +5,7 @@ import DishesList from './DishesList.jsx';
 import { mainCategories } from '!json!../../sources/appVariables.json';
 import LoadingComponent from '../common/LoadingComponent.jsx';
 import config from '../../config';
+import { Loc } from 'redux-react-i18n';
 
 class Menu extends Component {
   componentWillMount() {
@@ -38,6 +39,9 @@ class Menu extends Component {
           className={category ? '' : 'banner'}
         />
         <div className="container content">
+          <p>
+            <Loc locKey="key_1" />
+          </p>
           <div className="col-md-8 col-md-offset-2 text-center title">
             <h2 className="cursive-font primary-color">{categoryName}</h2>
             <p>Приготовлением вкусностей занимаются профессиональные повара и используются только самые свежие

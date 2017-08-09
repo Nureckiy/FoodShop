@@ -46,14 +46,20 @@
   font-weight: normal;
 }
 
-.btn {
+.btn, .active .btn {
   margin-right: 4px;
   margin-bottom: 4px;
   font-size: 16px;
   padding: 8px 30px;
+  span {
+    color: #fff;
+  }
   .btn:hover, .btn:active, .btn:focus {
     box-shadow: none;
     outline: none;
+    span {
+      color: #fff;
+    }
   }
 }
 
@@ -150,13 +156,11 @@ ul li {
   background: #FBB448;
   border: 1px solid #FBB448;
   transition: 0.2s;
-    color: #fff;
 
   &:hover, &:active, &:focus {
     background: #fcbe61;
     border-color: #fcbe61;
     outline: none;
-    color: #fff;
   }
 }
 
@@ -328,15 +332,14 @@ body {
 }
 
 .btn-cta {
-  span {
+  a>span {
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 4px;
     padding: 8px 20px;
     color: #fff;
     transition: 0.2s;
   }
-
-  &:hover span {
+  &:hover a>span {
     color: #FBB448;
     background-color: #fff;
   }
@@ -374,7 +377,7 @@ body {
   }
 }
 
-.black {
+.black, .active .black {
   color: #000;
 }
 

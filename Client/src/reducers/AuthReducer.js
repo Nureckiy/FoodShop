@@ -18,12 +18,17 @@ export default function AuthReducer(state = initialState, action) {
       };
 
 
-    case types.LOGOUT: {
+    case types.LOGOUT:
       return {
         ...state,
         profile: null
       };
-    }
+
+    case types.UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        profile: action.data
+      };
 
     default:
       return state;

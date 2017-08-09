@@ -8,15 +8,24 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer.jsx';
 
 class App extends Component {
-  render() {
-    let { children, app, actions, auth: { profile }, authActions, location: { pathname }, localize } = this.props;
-    if (children) {
-      children = React.cloneElement(children, { profile, app, actions, authActions });
+  componentWillMount() {
+    this.updateLanguage(this.props);
+  }
+  componentWillReceiveProps(props) {
+    this.updateLanguage(props);
+  }
+  updateLanguage({ auth, localize }) {
+    if(auth.profile) {
+      localize.setCurrentLanguage(auth.profile.user_metadata.language);
     }
+  }
+  render() {
+    const { children, app, actions,  auth: { profile }, localize: { setCurrentLanguage },
+      location: { pathname } } = this.props;
     return (
       <div>
-        <Navbar profile={profile} authActions={authActions} pathname={pathname} {...localize} />
-          {children}
+        <Navbar profile={profile} pathname={pathname} onLanguageChange={setCurrentLanguage} />
+          { React.cloneElement(children, { profile, app, actions, }) }
         <Footer/>
       </div>
     );

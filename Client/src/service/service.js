@@ -95,7 +95,7 @@ class service {
   };
 
   updateUser = (data, success, fail) => {
-    return this.requestHelper.patchToExternal(`https://${data.domain}/api/v2/users/${data.user_id}`, data.data, success, fail);
+    return this.requestHelper.patchToExternal(`https://${data.domain}/api/v2/users/${data.user_id}`, data.values, success, fail);
   };
 
   getAllBookings = (success, failed) => {

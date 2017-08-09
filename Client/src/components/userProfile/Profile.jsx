@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Header from '../layout/Header.jsx';
 import { Tab, Row, Col, Nav, NavItem } from 'react-bootstrap';
+import { Loc } from 'redux-react-i18n';
+
+import Header from '../layout/Header.jsx';
 import ViewProfile from './ViewProfile.jsx';
 import EditProfile from './EditProfile.jsx';
 import BookingsList from './BookingsList.jsx';
@@ -18,11 +20,11 @@ class Profile extends Component {
               <Row>
                 <Col sm={12}>
                   <Nav bsStyle="tabs">
-                    <NavItem eventKey="1">Профиль</NavItem>
-                    <NavItem eventKey="2">Настройки</NavItem>
-                    <NavItem eventKey="3">Брони</NavItem>
-                    <NavItem eventKey="4">Активность</NavItem>
-                    <NavItem className="pull-right" onClick={logout}>Выйти</NavItem>
+                    <NavItem eventKey="1"><Loc locKey="profile" /></NavItem>
+                    <NavItem eventKey="2"><Loc locKey="settings" /></NavItem>
+                    <NavItem eventKey="3"><Loc locKey="reservations" /></NavItem>
+                    <NavItem eventKey="4"><Loc locKey="activities" /></NavItem>
+                    <NavItem className="pull-right" onClick={logout}><Loc locKey="logout" /></NavItem>
                   </Nav>
                 </Col>
                 <Col sm={12}>

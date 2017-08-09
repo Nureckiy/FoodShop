@@ -18,7 +18,7 @@ class Footer extends Component {
           </div>
           <div className="copyright">
             <p>
-              <span className="block">&copy; 2017 FoodShop. Все права в кармане.</span>
+              <span className="block">&copy; { new Date().getFullYear() } HOHOTEL. Все права в кармане.</span>
             </p>
           </div>
         </div>
