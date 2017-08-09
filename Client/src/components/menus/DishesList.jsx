@@ -5,6 +5,7 @@ import Tile from '../common/Tile.jsx';
 import AddTile from '../admin/AddTile.jsx';
 import AddDishForm from './AddDishForm.jsx';
 import DishControlForm from '../admin/DishControlForm.jsx';
+import * as utils from '../../utils/utils';
 
 class DishesList extends Component {
   constructor() {
@@ -17,7 +18,7 @@ class DishesList extends Component {
   }
 
   render() {
-    const { selected, auth, items } = this.props;
+    const { selected, profile, items } = this.props;
     const { currentDish, addToOrder } = this.state;
     const model = selected.find(x => x.id === currentDish.id);
     return (
@@ -33,7 +34,7 @@ class DishesList extends Component {
           }
         </ItemMaintenanceModal>
         <div className="col-xs-12 tiles">
-          { auth.inGroup('admins') &&
+          { utils.isInGroup(profile, 'admins') &&
             <AddTile onClick={this.openCreateModal} className="col-md-4 col-sm-6" />
           }
           { items.map(item =>
@@ -41,7 +42,7 @@ class DishesList extends Component {
               key={item.id}
               item={item}
               onClick={() => this.openAddDishModal(item)}
-              withOptionsBtn={auth.inGroup('admins')}
+              withOptionsBtn={utils.isInGroup(profile, 'admins')}
               onOptionsBtnClick={() => this.openEditModal(item)}
               className="col-md-4 col-sm-6" />
           )}

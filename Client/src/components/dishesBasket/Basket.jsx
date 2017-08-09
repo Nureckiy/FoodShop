@@ -43,7 +43,7 @@ class Basket extends Component {
   }
 
   renderChild() {
-    const { auth, selectedDishes, clearSelected, changeConfiguration, getAvailableAddresses, availableAddresses } = this.props;
+    const { profile, selectedDishes, clearSelected, changeConfiguration, getAvailableAddresses, availableAddresses } = this.props;
     const { isFirstStep } = this.state;
     if (!selectedDishes.length) {
       return <h2 className="cursive-font primary-color text-center">Корзина пуста</h2>;
@@ -56,7 +56,7 @@ class Basket extends Component {
         onSubmit={this.goToNext}
       />
       : <DeliveryDetailsForm
-        auth={auth}
+        profile={profile}
         onSubmit={this.addOrder}
         onBack={this.goBack}
         selected={selectedDishes}

@@ -95,7 +95,7 @@ class DeliveryDetailsForm extends Component {
 }
 
 function getInitialValues() {
-  const { surname, phone, name, email } = utils.getProfile().user_metadata;
+  const { surname, phone, name, email } = this.props.profile.user_metadata;
   return { userName: name, email, surname, phone };
 }
 

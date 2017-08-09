@@ -36,6 +36,7 @@
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "redux-promise": "^0.5.3",
+    "redux-react-i18n": "^1.1.0",
     "redux-thunk": "^2.1.0",
     "service": "^0.1.4",
     "utils": "^0.3.1"

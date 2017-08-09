@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../actions/AppActions';
+import * as actions from '../actions/ManageActions';
 
 import ManageOrders from '../components/manage/ManageOrders.jsx';
+import Header from '../components/layout/Header.jsx';
 
 class ManageOrdersContainer extends Component {
   render() {
     const { view, actions } = this.props;
     return (
-      <ManageOrders {...actions} {...view} />
+      <div>
+        <Header style={{ backgroundColor: '#a5a5a5' }} />
+        <ManageOrders {...actions} {...view} />
+      </div>
     );
   }
 }

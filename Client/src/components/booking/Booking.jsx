@@ -10,6 +10,7 @@ import ItemMaintenanceModal from '../common/ItemMaintenanceModal.jsx';
 import RoomControlForm from '../admin/RoomControlForm.jsx';
 import DateRangePicker from '../common/DateRangePicker.jsx';
 import BookingTotal from './BookingTotal.jsx';
+import * as utils from '../../utils/utils';
 
 class Booking extends Component {
   constructor(){
@@ -28,7 +29,8 @@ class Booking extends Component {
   }
 
   render() {
-    const { currentRoomCategory, filteredRooms, activeRequestStatus, selectedRooms, addRoom, auth, deleteRoom } = this.props;
+    const { currentRoomCategory, filteredRooms, activeRequestStatus, selectedRooms, addRoom, profile, deleteRoom } = this.props;
+    const isInGroup = group => utils.isInGroup(profile, group);
     return (
       <div>
         <Header backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/fon4_dg32ge.jpg" />
@@ -55,7 +57,7 @@ class Booking extends Component {
               </div>
             </div>
           </div>
-          { auth.inGroup('admins') &&
+          { isInGroup('admins') &&
             <Button bsStyle="success" onClick={() => this.refs.roomControlModal.openInCreateMode()}>
               <Glyphicon glyph="plus"/>   Добавить
             </Button>
@@ -69,7 +71,7 @@ class Booking extends Component {
                     room={room}
                     onSubmit={addRoom}
                     className="col-md-4 col-sm-5"
-                    withEditButton={auth.inGroup('admins')}
+                    withEditButton={isInGroup('admins')}
                     onEdit={() => this.openEditModal(room)}
                   />
                 </div>

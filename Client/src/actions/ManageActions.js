@@ -18,3 +18,20 @@ export function changeBookingStatus(id, status) {
     { id, status }, { id }
   );
 }
+
+export function getOrders() {
+  return createAsync(service.getAllOrders,
+    types.GET_ALL_ORDERS,
+    types.GET_ALL_ORDERS_SUCCESS,
+    types.GET_ALL_ORDERS_FAIL
+  );
+}
+
+export function changeOrderStatus(id, status) {
+  return createAsync(service.changeOrderStatus,
+    types.CHANGE_ORDER_STATUS,
+    types.CHANGE_ORDER_STATUS_SUCCESS,
+    types.CHANGE_ORDER_STATUS_FAIL,
+    { id, status }, { id }
+  );
+}

@@ -8,14 +8,14 @@ import Booking from '../components/booking/Booking.jsx';
 
 class BookingContainer extends Component {
   render() {
-    const { view, app, actions, params: { id }, auth } = this.props;
+    const { view, app, actions, params: { id }, profile } = this.props;
     if (id) {
       return (
-        <Booking id={id} {...app} {...actions} {...view} auth={auth} />
+        <Booking id={id} {...app} {...actions} {...view} profile={profile} />
       );
     } else {
       return (
-        <Rooms {...view} {...actions} auth={auth} />
+        <Rooms {...view} {...actions} profile={profile} />
       );
     }
   }

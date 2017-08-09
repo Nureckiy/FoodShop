@@ -7,9 +7,9 @@ import Profile from '../components/userProfile/Profile.jsx';
 
 class UserProfileContainer extends Component {
   render() {
-    const { view, app, actions, auth } = this.props;
+    const { view, actions, profile, authActions } = this.props;
     return (
-      <Profile {...view} {...app} {...actions} auth={auth} />
+      <Profile {...view} {...actions} {...authActions} profile={profile} />
     );
   }
 }

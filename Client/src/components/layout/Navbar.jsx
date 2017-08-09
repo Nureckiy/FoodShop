@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-
 import { ButtonToolbar, MenuItem, NavDropdown } from 'react-bootstrap';
+
 import { mainCategories } from '!json!../../sources/appVariables.json';
 
 class Navbar extends Component {
   render() {
-    const { auth } = this.props;
-    const profile = auth.getProfile();
+    const { profile } = this.props;
+    const isInGroup = (group) => profile && profile.groups.includes(group);
     return (
       <nav className="row">
           <div className="container">
@@ -15,10 +15,10 @@ class Navbar extends Component {
             </div>
             <div className="col-sm-9">
               <ButtonToolbar className="pull-right">
-                { (auth.inGroup('kitchen-manager') || auth.inGroup('hotel-manager')) &&
+                {(isInGroup('hotel-manages') || isInGroup('kitchen-manager')) &&
                   <NavDropdown className={this.renderClass('manage')} title="Управление" noCaret id="menu-category">
-                    <MenuItem eventKey="1" href="#/manage/bookings" disabled={!auth.inGroup('hotel-manager')}>Брони</MenuItem>
-                    <MenuItem eventKey="2" href="#/manage/restaurant" disabled={!auth.inGroup('kitchen-manager')}>Ресторан</MenuItem>
+                    <MenuItem eventKey="1" href="#/manage/bookings" disabled={!isInGroup('hotel-manager')} >Брони</MenuItem>
+                    <MenuItem eventKey="2" href="#/manage/kitchen" disabled={!isInGroup('kitchen-manager')}>Ресторан</MenuItem>
                   </NavDropdown>
                 }
                 <li className={this.renderClass('booking')}>
@@ -39,10 +39,7 @@ class Navbar extends Component {
                   <a href="#/contacts/">Контакты</a>
                 </li>
                 <li className={this.renderClass('profile')}>
-                  {profile
-                    ? <a href="#/profile/">{ profile.name }</a>
-                    : <a href="#/login">Войти</a>
-                  }
+                  <a href="#/profile/">{ profile ? profile.name : 'Войти' }</a>
                 </li>
                 <li className={this.renderClass('order', 'btn-cta')}>
                   <a href="#/order"><span>Бронь <i id="basket-icon" className="glyphicon glyphicon-bed" /></span></a>

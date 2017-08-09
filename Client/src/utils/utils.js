@@ -205,3 +205,7 @@ export function getProfile() {
 export function deleteProps(object, propNames) {
   propNames.forEach(propName => delete object[propName]);
 }
+
+export function isInGroup(profile, group) {
+  return profile && profile.groups.includes(group);
+}

@@ -59,8 +59,8 @@ class EditProfile extends Component {
   }
 
   handleSubmit(values) {
-    const { initial: { id }, onSubmit } = this.props;
-    onSubmit(id, {user_metadata:  values });
+    const { onSubmit } = this.props;
+    onSubmit({ user_metadata:  values });
   }
 }
 

@@ -27,7 +27,7 @@ class Menu extends Component {
   render() {
     const { dishes, activeRequestStatus, selectedDishes } = this.props.model;
     const { selectDish, createDish, editDish, removeDish } = this.props.actions;
-    const { category, auth } = this.props;
+    const { category, profile } = this.props;
     const categoryName = category && mainCategories[category] ? mainCategories[category] : 'Популярные блюда';
     return (
       <div>
@@ -53,7 +53,7 @@ class Menu extends Component {
               onCreate={createDish}
               onSelect={selectDish}
               editDish={editDish}
-              auth={auth}
+              profile={profile}
               defaultCategory={category}
               removeDish={removeDish}/>
           </LoadingComponent>

@@ -8,8 +8,7 @@ import Activities from './Activities.jsx';
 
 class Profile extends Component {
   render() {
-    const { getBookings, getOrders, bookings, orders, auth, auth: { updateProfile, logout } } = this.props;
-    const profile = auth.getProfile();
+    const { getBookings, getOrders, bookings, orders, profile, updateProfile, logout } = this.props;
     const profileInfo = Object.assign({ login: profile.name, email: profile.email, id: profile.user_id }, profile.user_metadata );
     return (
       <div>

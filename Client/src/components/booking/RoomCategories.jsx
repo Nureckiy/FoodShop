@@ -7,6 +7,7 @@ import AddTile from '../admin/AddTile.jsx';
 import ItemMaintenanceModal from '../common/ItemMaintenanceModal.jsx';
 import RoomCategoryControlForm from '../admin/RoomCategoryControlForm.jsx';
 import history from '../../store/History';
+import * as utils from '../../utils/utils';
 
 class Rooms extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Rooms extends Component {
   }
 
   render() {
-    const { auth, activeRequestStatus, roomCategories } = this.props;
+    const { profile, activeRequestStatus, roomCategories } = this.props;
     return (
       <div>
         <Header
@@ -47,7 +48,9 @@ class Rooms extends Component {
           </div>
           <LoadingComponent showLoader={activeRequestStatus}>
             <div className="row tiles">
-              { auth.inGroup('admins') && <AddTile className="col-md-4 col-sm-6" onClick={this.openCreateModal}/> }
+              { utils.isInGroup(profile, 'admins') &&
+                <AddTile className="col-md-4 col-sm-6" onClick={this.openCreateModal} />
+              }
               { roomCategories && roomCategories.map(item => <Tile {...this.getTileOptions(item)} /> )}
             </div>
           </LoadingComponent>
@@ -57,10 +60,10 @@ class Rooms extends Component {
   }
 
   getTileOptions(item) {
-    const { auth } = this.props;
+    const { profile } = this.props;
     let options = { key: item.id, item, price: `От $${item.minPrice}`, className: 'col-md-4 col-sm-6',
       onClick: () => history.push(`/booking/${item.id}`)};
-    if(auth.inGroup('admins')) {
+    if(utils.isInGroup(profile, 'admins')) {
       options.withOptionsBtn = true;
       options.onOptionsBtnClick = () => this.openEditModal(item);
     }

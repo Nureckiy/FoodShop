@@ -5,6 +5,7 @@ const initialState = {
   bookings: [],
   orders: [],
   bookingsInProcess: [],
+  ordersInProcess: [],
   activeRequestStatus: false,
 };
 
@@ -41,6 +42,38 @@ export default function ManageReducer(state = initialState, action) {
       return {
         ...state,
         bookingsInProcess: utils.removeElementFromArray(state.bookingsInProcess, action.id)
+      };
+
+    case types.GET_ALL_ORDERS:
+      return {
+        ...state,
+        activeRequestStatus: true
+      };
+
+    case types.GET_ALL_ORDERS_SUCCESS:
+      return {
+        ...state,
+        activeRequestStatus: false,
+        orders: action.data
+      };
+
+    case types.CHANGE_ORDER_STATUS:
+      return {
+        ...state,
+        ordersInProcess: utils.setElementToArray(state.ordersInProcess, action.id)
+      };
+
+    case types.CHANGE_ORDER_STATUS_SUCCESS:
+      return {
+        ...state,
+        orders: utils.mergeElementToArrayById(state.orders, action.data),
+        ordersInProcess: utils.removeElementFromArray(state.ordersInProcess, action.id)
+      };
+
+    case types.CHANGE_ORDER_STATUS_FAIL:
+      return {
+        ...state,
+        ordersInProcess: utils.removeElementFromArray(state.ordersInProcess, action.id)
       };
 
     default:
