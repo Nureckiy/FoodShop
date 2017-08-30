@@ -4,7 +4,7 @@ import { FormControl, ControlLabel } from 'react-bootstrap';
 import * as utils from '../../utils/utils';
 
 class Select extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { id, defaultValue, onChange } = this.props;
     if (defaultValue) {
       onChange({ target: { id, value: defaultValue }});

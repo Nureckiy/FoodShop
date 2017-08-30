@@ -1,34 +1,22 @@
-/*eslint no-unused-vars: "off"*/
-
 import React, { Component } from 'react';
 
-class Row extends Component {
-  render() {
-    const { children, className, active, onClick } = this.props;
-    return (
-      <tr className={renderClassName(className, active, 'row-head')} onClick={onClick}>
-        { children }
-      </tr>
-    );
-  }
-}
+const Row = props => (
+  <tr className={renderClassName(props.className, props.active, 'row-head')} onClick={props.onClick}>
+    { props.children }
+  </tr>
+);
 
-class Content extends Component {
-  render() {
-    const { children, active, collapsed, className } = this.props;
-    return (
-      <tr className="expandable-content">
-        <td colSpan="100%">
-          <div className={renderClassName(className, active || collapsed, 'row-collapse')}>
-            <div>
-              { children }
-            </div>
-          </div>
-        </td>
-      </tr>
-    );
-  }
-}
+const Content = props => (
+  <tr className="expandable-content">
+    <td colSpan="100%">
+      <div className={renderClassName(props.className, props.active || props.collapsed, 'row-collapse')}>
+        <div>
+          { props.children }
+        </div>
+      </div>
+    </td>
+  </tr>
+);
 
 class ExpandableTableBody extends Component {
   constructor() {

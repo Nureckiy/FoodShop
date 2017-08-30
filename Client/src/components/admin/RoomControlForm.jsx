@@ -8,7 +8,7 @@ import * as utils from '../../utils/utils';
 import { Button } from 'react-bootstrap';
 
 class RoomControlForm extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { loadCategories } = this.props;
     loadCategories();
   }
@@ -59,7 +59,7 @@ class RoomControlForm extends Component {
   prepareInitial() {
     const { initial, defaultCategory } = this.props;
     let initialValues = initial ? initial : {};
-    let category = defaultCategory ? defaultCategory : initialValues.category;
+    let category = initialValues.category ? initialValues.category : defaultCategory;
     if (category) {
       category = { id: category.id, name: category.name };
     }

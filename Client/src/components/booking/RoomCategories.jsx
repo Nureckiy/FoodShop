@@ -4,23 +4,26 @@ import Header from '../layout/Header.jsx';
 import LoadingComponent from '../common/LoadingComponent.jsx';
 import Tile from '../common/Tile.jsx';
 import AddTile from '../admin/AddTile.jsx';
-import ItemMaintenanceModal from '../common/ItemMaintenanceModal.jsx';
+import ResponsiveActionModal from '../common/ResponsiveActionModal.jsx';
 import RoomCategoryControlForm from '../admin/RoomCategoryControlForm.jsx';
 import history from '../../store/History';
 import * as utils from '../../utils/utils';
 
-class Rooms extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { selected: {} };
-    const { getRoomCategories } = props;
-    getRoomCategories();
-    this.getCreateOptions = this.getCreateOptions.bind(this);
-    this.getEditOptions = this.getEditOptions.bind(this);
+class RoomCategories extends Component {
+  constructor() {
+    super();
+    this.state = {};
     this.openCreateModal = this.openCreateModal.bind(this);
+    this.getSubmitFunctions = this.getSubmitFunctions.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getRoomCategories();
   }
 
   render() {
+    const { showModal, selected, isInEditMode } = this.state;
     const { profile, activeRequestStatus, roomCategories } = this.props;
     return (
       <div>
@@ -40,11 +43,16 @@ class Rooms extends Component {
             </div>
           </div>
           <div className="row">
-            <ItemMaintenanceModal ref="roomCategoryControlModal"
-                createOptions={this.getCreateOptions()}
-                editOptions={this.getEditOptions()} >
-              <RoomCategoryControlForm />
-            </ItemMaintenanceModal>
+            <ResponsiveActionModal
+              show={showModal}
+              close={this.closeModal}
+              responsiveActions={this.getSubmitFunctions()}
+              title={isInEditMode ? 'Редактировать': 'Создать'}>
+              <RoomCategoryControlForm
+                formId="roomCategoryControl"
+                initial={isInEditMode ? selected : {}}
+              />
+            </ResponsiveActionModal>
           </div>
           <LoadingComponent showLoader={activeRequestStatus}>
             <div className="row tiles">
@@ -70,27 +78,26 @@ class Rooms extends Component {
     return options;
   }
 
-  getCreateOptions() {
-    const { createRoomCategory } = this.props;
-    return { formId: 'roomCategoryControl', submitFunctions: { onSubmit: createRoomCategory } };
-  }
-
-  getEditOptions() {
-    const { editRoomCategory, removeRoomCategory } = this.props;
-    const { selected } = this.state;
-    return { formId: 'roomCategoryControl', initial: selected, submitFunctions: { onSubmit: editRoomCategory,
-        onRemove: removeRoomCategory,
-    }};
+  getSubmitFunctions() {
+    const { isInEditMode } = this.state;
+    const { createRoomCategory, editRoomCategory, removeRoomCategory } = this.props;
+    if (isInEditMode) {
+      return { onSubmit: editRoomCategory, onRemove: removeRoomCategory };
+    }
+    return { onSubmit: createRoomCategory };
   }
 
   openCreateModal() {
-    this.refs.roomCategoryControlModal.openInCreateMode();
+    this.setState({ showModal: true, isInEditMode: false });
   }
 
   openEditModal(selected) {
-    this.setState({ selected });
-    this.refs.roomCategoryControlModal.openInEditMode();
+    this.setState({ showModal: true, isInEditMode: true, selected });
+  }
+
+  closeModal() {
+    this.setState({ showModal: false });
   }
 }
 
-export default Rooms;
+export default RoomCategories;

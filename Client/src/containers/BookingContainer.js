@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/BookingActions';
 
-import Rooms from '../components/booking/RoomCategories.jsx';
+import RoomCategories from '../components/booking/RoomCategories.jsx';
 import Booking from '../components/booking/Booking.jsx';
 
 class BookingContainer extends Component {
@@ -15,7 +15,7 @@ class BookingContainer extends Component {
       );
     } else {
       return (
-        <Rooms {...view} {...actions} profile={profile} />
+        <RoomCategories {...view} {...actions} profile={profile} />
       );
     }
   }
@@ -26,7 +26,6 @@ function mapStateToProps(state) {
     view: state.BookingReducer
   };
 }
-
 
 function mapDispatchToProps(dispatch) {
   return {

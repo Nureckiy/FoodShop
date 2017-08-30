@@ -13,7 +13,7 @@ class DeliveryDetailsForm extends Component {
     this.handleDeliveryClick = this.handleDeliveryClick.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { getAvailableAddresses } = this.props;
     getAvailableAddresses();
   }
@@ -30,7 +30,7 @@ class DeliveryDetailsForm extends Component {
           </div>
         </div>
         <div className="row">
-        <ControlledForm onSubmit={onSubmit} initialValues={getInitialValues()} className="col-md-6">
+        <ControlledForm onSubmit={onSubmit} initialValues={this.getInitialValues()} className="col-md-6">
           <FormGroup>
             <Field
               id="userName"
@@ -92,11 +92,11 @@ class DeliveryDetailsForm extends Component {
       hideAddress: event.target.checked
     });
   }
-}
 
-function getInitialValues() {
-  const { surname, phone, name, email } = this.props.profile.user_metadata;
-  return { userName: name, email, surname, phone };
+  getInitialValues() {
+    const { surname, phone, name, email } = this.props.profile.user_metadata;
+    return { userName: name, email, surname, phone };
+  }
 }
 
 export default DeliveryDetailsForm;

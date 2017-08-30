@@ -5,7 +5,7 @@ import ManageTable from './ManageTable.jsx';
 import * as utils from '../../utils/utils';
 
 class ManageOrders extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { getOrders } = this.props;
     getOrders();
   }

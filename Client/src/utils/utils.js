@@ -21,10 +21,10 @@ export function mergeDishToSelectedArray(selectedDishes, dish) {
 }
 
 export function mergeReturnedItem(array, item, category) {
-  if (category === item.category || category === item.category.name) {
+  if (category === item.category.name) {
     return mergeElementToArrayById(array, item);
   }
-  return array;
+  return excludeFromArray(array, item, idComparison);
 }
 
 export function calculateSelectedTotal(array) {
@@ -78,6 +78,10 @@ export function setElementToArray(array, element) {
 
 export function removeElementFromArray(array, element) {
   return excludeFromArray(array, element, sameComparison);
+}
+
+export function leaveSuitableById(array, element) {
+  console.log(element);
 }
 
 export function calculateBookingTotal(rooms) {

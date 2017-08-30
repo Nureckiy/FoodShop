@@ -5,7 +5,7 @@ import ManageTable from './ManageTable.jsx';
 import * as utils from '../../utils/utils';
 
 class ManageBookings extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { getBookings } = this.props;
     getBookings();
   }

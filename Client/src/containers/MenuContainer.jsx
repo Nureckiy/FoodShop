@@ -8,10 +8,10 @@ import Menu from '../components/menus/Menu.jsx';
 
 class MenusContainer extends Component {
   render() {
-    const { view, app, actions, params, profile } = this.props;
+    const { view, app, actions, params, profile, translate } = this.props;
     const model = Object.assign({}, view, app);
     return (
-      <Menu model={model} actions={actions} {...params} profile={profile} />
+      <Menu model={model} actions={actions} {...params} profile={profile} translate={translate} />
     );
   }
 }

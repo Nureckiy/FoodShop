@@ -1,78 +1,70 @@
-import React, { Component } from 'react';
-import { Loc } from 'redux-react-i18n';
+import React from 'react';
+import { FormGroup, Button } from 'react-bootstrap';
 
-import { FormGroup } from 'react-bootstrap';
 import Field from '../common/Field.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
 import Select from '../common/Select';
-import languages from '!json!../../localization/languages.json';
+import languages from '../../sources/translations/translations';
 
-class EditProfile extends Component {
-  render() {
-    const languageOptions = languages.map(language => {
-      return { value: language.code, text: language.name };
-    });
-    const { initial } = this.props;
-    return (
-      <ControlledForm initialValues={initial} onSubmit={this.handleSubmit.bind(this)}>
-        <h3 style={{color: 'black'}}><Loc locKey="profileSettings" className="black" /></h3>
-        <FormGroup className="col-md-6">
-          <Select
-            id="language"
-            label={<Loc locKey="language" />}
-            options={languageOptions}
-          />
-          <Field
-            id="name"
-            type="text"
-            label={<Loc locKey="name" />}
-            placeholder={<Loc locKey="enterName" />}
-          />
-          <Field
-            id="surname"
-            type="text"
-            label={<Loc locKey="surname" />}
-            placeholder={<Loc locKey="enterSurname" />}
-          />
-          <Field
-            id="patronymic"
-            type="text"
-            label={<Loc locKey="patronymic" />}
-            placeholder={<Loc locKey="enterPatronymic" />}
-          />
-        </FormGroup>
-        <FormGroup className="col-md-6">
-          <Field
-            id="phone"
-            type="text"
-            label={<Loc locKey="phone" />}
-            pattern="8[0-9]{10}"
-            placeholder={<span><Loc locKey="enterPhoneInFormat" /> 80291234567</span>}
-          />
-          <Field
-            id="email"
-            type="email"
-            label={<Loc locKey="email" />}
-            placeholder={<Loc locKey="enterEmail" />}
-          />
-          <Field
-            id="address"
-            type="text"
-            label={<Loc locKey="address" />}
-            placeholder={<Loc locKey="enterAddress" />}
-          />
-        </FormGroup>
-        <div className="col-md-12">
-          <button type="submit" className="btn btn-orange pull-left">{<Loc locKey="save" />}</button>
-        </div>
-      </ControlledForm>
-    );
-  }
+const EditProfile = props => (
+  <ControlledForm initialValues={props.initial} onSubmit={(values) => props.onSubmit({ user_metadata:  values })}>
+    <h3 style={{color: 'black'}}>{props.translate('profileSettings')}</h3>
+    <FormGroup className="col-md-6">
+      <Select
+        id="language"
+        label={props.translate('language')}
+        options={getLanguageOptions()}
+      />
+      <Field
+        id="name"
+        type="text"
+        label={props.translate('name')}
+        placeholder={props.translate('enterName')}
+      />
+      <Field
+        id="surname"
+        type="text"
+        label={props.translate('surname')}
+        placeholder={props.translate('enterSurname')}
+      />
+      <Field
+        id="patronymic"
+        type="text"
+        label={props.translate('patronymic')}
+        placeholder={props.translate('enterPatronymic')}
+      />
+    </FormGroup>
+    <FormGroup className="col-md-6">
+      <Field
+        id="phone"
+        type="text"
+        label={props.translate('phone')}
+        pattern="8[0-9]{10}"
+        placeholder={<span>props.translate('enterPhoneInFormat" /> 80291234567</span>}
+      />
+      <Field
+        id="email"
+        type="email"
+        label={props.translate('email')}
+        placeholder={props.translate('enterEmail')}
+      />
+      <Field
+        id="address"
+        type="text"
+        label={props.translate('address')}
+        placeholder={props.translate('enterAddress')}
+      />
+    </FormGroup>
+    <div className="col-md-12">
+      <Button type="submit" className="btn btn-orange pull-left">{props.translate('save')}</Button>
+    </div>
+  </ControlledForm>
+);
 
-  handleSubmit(values) {
-    const { onSubmit } = this.props;
-    onSubmit({ user_metadata:  values });
-  }
+function getLanguageOptions() {
+  return Object.keys(languages).map(key => {
+    return { value: key, text: languages[key].name };
+  });
 }
 
 export default EditProfile;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { i18nActions } from 'redux-react-i18n';
+import { IntlActions, withTranslate } from 'react-redux-multilingual';
 
 import * as actions from '../actions/AppActions';
 import Navbar from '../components/layout/Navbar';
@@ -14,18 +14,17 @@ class App extends Component {
   componentWillReceiveProps(props) {
     this.updateLanguage(props);
   }
-  updateLanguage({ auth, localize }) {
+  updateLanguage({ auth }) {
     if(auth.profile) {
-      localize.setCurrentLanguage(auth.profile.user_metadata.language);
+      this.props.actions.setLocale(auth.profile.user_metadata.language);
     }
   }
   render() {
-    const { children, app, actions,  auth: { profile }, localize: { setCurrentLanguage },
-      location: { pathname } } = this.props;
+    const { children, app, actions,  auth: { profile }, translate, location: { pathname } } = this.props;
     return (
       <div>
-        <Navbar profile={profile} pathname={pathname} onLanguageChange={setCurrentLanguage} />
-          { React.cloneElement(children, { profile, app, actions, }) }
+        <Navbar profile={profile} pathname={pathname} translate={translate} />
+          { React.cloneElement(children, { profile, app, actions, translate }) }
         <Footer/>
       </div>
     );
@@ -41,9 +40,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch),
-    localize: bindActionCreators(i18nActions, dispatch)
+    actions: bindActionCreators(Object.assign({}, actions, IntlActions), dispatch)
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslate(App));

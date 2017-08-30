@@ -13,11 +13,11 @@ class AuthContainer extends React.Component {
     }
   }
   render() {
-    const { profile, children, authActions } = this.props;
+    const { profile, children, authActions, translate } = this.props;
     if (!profile) {
       return null;
     }
-    return React.cloneElement(children, { authActions, profile });
+    return React.cloneElement(children, { authActions, profile, translate });
   }
 }
 

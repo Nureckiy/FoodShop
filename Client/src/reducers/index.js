@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import {routerReducer} from 'react-router-redux';
-import { i18nReducer } from 'redux-react-i18n';
+import { IntlReducer as Intl } from 'react-redux-multilingual';
 
 import AppReducer from './AppReducer';
 import AuthReducer from './AuthReducer';
@@ -16,6 +16,6 @@ export default combineReducers({
   UserProfileReducer,
   BookingReducer,
   ManageReducer,
-  i18n: i18nReducer,
+  Intl,
   routing: routerReducer
 });

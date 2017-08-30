@@ -6,7 +6,7 @@ import RoomTileControl from './RoomTileControl.jsx';
 import Header from '../layout/Header.jsx';
 import LoadingComponent from '../common/LoadingComponent.jsx';
 import Slider from '../common/Slider.jsx';
-import ItemMaintenanceModal from '../common/ItemMaintenanceModal.jsx';
+import ResponsiveActionModal from '../common/ResponsiveActionModal.jsx';
 import RoomControlForm from '../admin/RoomControlForm.jsx';
 import DateRangePicker from '../common/DateRangePicker.jsx';
 import BookingTotal from './BookingTotal.jsx';
@@ -18,18 +18,20 @@ class Booking extends Component {
     this.state = {};
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.filter = this.filter.bind(this);
-    this.getCreateOptions = this.getCreateOptions.bind(this);
-    this.getEditOptions = this.getEditOptions.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.openCreateModal = this.openCreateModal.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { getRoomCategory, id } = this.props;
     getRoomCategory(id);
     this.filter();
   }
 
   render() {
-    const { currentRoomCategory, filteredRooms, activeRequestStatus, selectedRooms, addRoom, profile, deleteRoom } = this.props;
+    const { currentRoomCategory, filteredRooms, activeRequestStatus, selectedRooms, addRoom, profile, deleteRoom,
+      getRoomCategoriesInfo, roomCategoriesInfo} = this.props;
+    const { selected, isInEditMode, showModal } = this.state;
     const isInGroup = group => utils.isInGroup(profile, group);
     return (
       <div>
@@ -58,7 +60,7 @@ class Booking extends Component {
             </div>
           </div>
           { isInGroup('admins') &&
-            <Button bsStyle="success" onClick={() => this.refs.roomControlModal.openInCreateMode()}>
+            <Button bsStyle="success" onClick={this.openCreateModal}>
               <Glyphicon glyph="plus"/>   Добавить
             </Button>
           }
@@ -80,11 +82,19 @@ class Booking extends Component {
           </LoadingComponent>
           <BookingTotal selected={selectedRooms} onRemove={deleteRoom}/>
         </div>
-        <ItemMaintenanceModal ref="roomControlModal"
-                              createOptions={this.getCreateOptions()}
-                              editOptions={this.getEditOptions()}>
-          <RoomControlForm />
-        </ItemMaintenanceModal>
+        <ResponsiveActionModal
+          show={showModal}
+          close={this.closeModal}
+          responsiveActions={this.getSubmitFunctions()}
+          title={isInEditMode ? 'Редактировать': 'Создать'}>
+          <RoomControlForm
+            formId="roomControl"
+            loadCategories={getRoomCategoriesInfo}
+            categories={roomCategoriesInfo}
+            initial={isInEditMode ? selected : {}}
+            defaultCategory={currentRoomCategory}
+          />
+        </ResponsiveActionModal>
       </div>
     );
   }
@@ -99,24 +109,25 @@ class Booking extends Component {
     this.setState({ arrivalDate, departureDate });
   }
 
-  getCreateOptions() {
-    const { createRoom, currentRoomCategory, getRoomCategoriesInfo, roomCategoriesInfo } = this.props;
-    return { formId: 'roomControl', loadCategories: getRoomCategoriesInfo, categories: roomCategoriesInfo,
-      submitFunctions: { onSubmit: (values) => createRoom(values, currentRoomCategory) }, defaultCategory: currentRoomCategory
-    };
-  }
-
-  getEditOptions() {
-    const { editRoom, removeRoom, currentRoomCategory } = this.props;
-    const { selected } = this.state;
-    return {...this.getCreateOptions(), initial: selected, submitFunctions: {
-      onSubmit: (values) => editRoom(values, currentRoomCategory), onRemove: removeRoom
-    }};
+  getSubmitFunctions() {
+    const { isInEditMode } = this.state;
+    const { createRoom, editRoom, currentRoomCategory, removeRoom } = this.props;
+    if(isInEditMode) {
+      return { onSubmit: (values) => editRoom(values, currentRoomCategory), onRemove: removeRoom};
+    }
+    return { onSubmit: (values) => createRoom(values, currentRoomCategory) };
   }
 
   openEditModal(selected) {
-    this.setState({ selected });
-    this.refs.roomControlModal.openInEditMode();
+    this.setState({ selected, showModal: true, isInEditMode: true });
+  }
+
+  openCreateModal() {
+    this.setState({ showModal: true, isInEditMode: false });
+  }
+
+  closeModal() {
+    this.setState({ showModal: false });
   }
 }
 
