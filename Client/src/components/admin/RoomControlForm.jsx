@@ -14,32 +14,32 @@ class RoomControlForm extends Component {
   }
 
   render() {
-    const { onSubmit, formId, categories, onRemove } = this.props;
+    const { onSubmit, formId, categories, onRemove, translate } = this.props;
     const initialValues = this.prepareInitial();
     return (
       <ControlledForm onSubmit={ onSubmit } id={ formId } initialValues={ initialValues } >
-        { onRemove && <Button bsStyle="danger" onClick={() => onRemove(initialValues.id)}>Удалить</Button> }
+        { onRemove && <Button bsStyle="danger" onClick={() => onRemove(initialValues.id)}>{translate('remove')}</Button> }
         <FormGroup>
           <Field
             id="address"
             type="text"
-            label="Адрес"
+            label={translate('address')}
             required
           />
           <Field
             id="description"
             type="text"
-            label="Описание"
+            label={translate('description')}
           />
           <Field
             id="imageUrl"
             type="text"
-            label="Ссылка на изображение"
+            label={translate('imgLink')}
           />
           <Field
             id="price"
             type="number"
-            label="Стоимость за сутки, $"
+            label={translate('price') + ', $'}
             min="0"
             step="0.01"
             required
@@ -47,7 +47,7 @@ class RoomControlForm extends Component {
           <Select
             id="id"
             section="category"
-            label="Категория"
+            label={translate('category')}
             options={utils.renderObjectArrayOptions(categories)}
             required
           />

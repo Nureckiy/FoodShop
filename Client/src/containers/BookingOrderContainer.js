@@ -5,11 +5,11 @@ import * as actions from '../actions/BookingActions';
 
 import BookingOrder from '../components/bookingOrder/BookingOrder.jsx';
 
-class BookingContainer extends Component {
+class BookingOrderContainer extends Component {
   render() {
-    const { view, actions } = this.props;
+    const { view, actions, translate } = this.props;
     return (
-      <BookingOrder {...view} {...actions} />
+      <BookingOrder {...view} {...actions} translate={translate} />
     );
   }
 }
@@ -27,4 +27,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookingContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(BookingOrderContainer);

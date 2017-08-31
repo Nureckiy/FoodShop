@@ -25,7 +25,7 @@ class App extends Component {
       <div>
         <Navbar profile={profile} pathname={pathname} translate={translate} />
           { React.cloneElement(children, { profile, app, actions, translate }) }
-        <Footer/>
+        <Footer translate={translate}/>
       </div>
     );
   }

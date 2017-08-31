@@ -11,48 +11,48 @@ const Contacts = props => (
   <div>
     <Header
       backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340139/fon3_dhhfll.jpg"
-      title="Добро пожаловать!"
-      subtitle="интернет&mdash;магазин вкусностей"
-      className="banner"
+      title={props.translate('titleContacts')}
+      subtitle={props.translate('subtitle')}
+      big
     />
     <div className="container content">
       <div className="row">
         <div className="col-md-12">
           <div className="col-md-6">
-            <h3>Пишите нам</h3>
+            <h3>{props.translate('feedbackTitle')}</h3>
             <ControlledForm initialValues={getInitialValues()} onSubmit={props.actions.sendFeedback}>
               <FormGroup>
                 <Field
                   id="userName"
                   type="text"
-                  placeholder="Представтесь"
-                  label="Имя"
+                  placeholder={props.translate('enterName')}
+                  label={props.translate('name')}
                 />
                 <Field
                   id="email"
                   type="email"
-                  placeholder="Ваш e-mail"
-                  label="E-mail"
+                  placeholder={props.translate('enterEmail')}
+                  label={props.translate('email')}
                   required
                 />
                 <Field
                   id="message"
                   componentClass="textarea"
-                  placeholder="Введите сообщение"
-                  label="Сообщение"
+                  placeholder={props.translate('enterMessage')}
+                  label={props.translate('message')}
                   cols="30"
                   rows="10"
                   required
                 />
               </FormGroup>
               <div className="form-group">
-                <Button type="submit" className="btn btn-orange">Отправить</Button>
+                <Button type="submit" className="btn btn-orange">{props.translate('submit')}</Button>
               </div>
             </ControlledForm>
           </div>
           <div className="col-md-5 col-md-push-1 animate-box">
             <div className="contact-info">
-              <h3>Контактная информация</h3>
+              <h3>{props.translate('contactInfo')}</h3>
               <ul>
                 <li><span className="glyphicon glyphicon-map-marker"/>{contactInfo.address}</li>
                 <li><span className="glyphicon glyphicon-earphone"/><a href={`tel://${ contactInfo.phone }`}>{ contactInfo.phone }</a></li>

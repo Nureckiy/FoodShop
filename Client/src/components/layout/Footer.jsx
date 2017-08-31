@@ -2,7 +2,7 @@ import React from 'react';
 
 import { contactInfo } from '!json!../../sources/appVariables.json';
 
-const Footer = () => (
+const Footer = props => (
   <footer role="contentinfo" className="row">
     <div className="overlay"/>
     <div className="container-fluid">
@@ -15,7 +15,7 @@ const Footer = () => (
       </div>
       <div className="copyright">
         <p>
-          <span className="block">&copy; { new Date().getFullYear() } HOHOTEL. Все права в кармане.</span>
+          <span className="block">&copy; { new Date().getFullYear() } {props.translate('rightInThePocket')}</span>
         </p>
       </div>
     </div>

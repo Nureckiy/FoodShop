@@ -173,6 +173,12 @@ export function renderObjectArrayOptions(items) {
   });
 }
 
+export function getProcessedOptions(items, callback) {
+  return items.map(item => {
+    return { value: item, text: callback(item) };
+  });
+}
+
 export function arraysEqual(a, b) {
   if (a === b) return true;
   if (!a || !b) return false;

@@ -10,11 +10,11 @@ class ResponsiveActionModal extends Component {
     this.reject = this.reject.bind(this);
   }
   render() {
-    const { show, close, children, title } = this.props;
+    const { show, close, children, title, translate } = this.props;
     const { error } = this.state;
     const functions = this.bindResponsiveActions();
     return (
-      <ControlledModal show={show} error={error} close={close} title={title}>
+      <ControlledModal show={show} error={error} close={close} title={title} translate={translate}>
         { React.cloneElement(children, Object.assign({}, ...functions)) }
       </ControlledModal>
     );
@@ -39,7 +39,7 @@ class ResponsiveActionModal extends Component {
   }
 
   reject() {
-    this.setState({ error: 'Что-то пошло не так. Повторите попытку позже'});
+    this.setState({ error: this.props.translate('errorOccurred')});
   }
 }
 

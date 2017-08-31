@@ -12,14 +12,14 @@ class RoomTileControl extends Component {
   }
 
   render() {
-    const { className, room: { error }, withEditButton, onEdit } = this.props;
+    const { className, room: { error }, withEditButton, onEdit, translate } = this.props;
     const errorMsg = error ? error.message : this.state.error;
     return (
       <Form className={className} onSubmit={this.handleSubmit}>
         { withEditButton &&
-          <Button type="button" className="btn btn-success col-sm-12" onClick={onEdit}>Редактировать</Button>
+          <Button type="button" className="btn btn-success col-sm-12" onClick={onEdit}>{translate('edit')}</Button>
         }
-        <Button type="submit" className="btn btn-success col-sm-12">Добавить</Button>
+        <Button type="submit" className="btn btn-success col-sm-12">{translate('add')}</Button>
         <DateRangePicker onChange={this.handleDateChange} />
         <Panel className="col-sm-12 error-message" collapsible expanded={!!errorMsg}>
           {errorMsg && <p>{ errorMsg }</p>}
@@ -30,13 +30,13 @@ class RoomTileControl extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    const { onSubmit, room } = this.props;
+    const { onSubmit, room, translate } = this.props;
     const { arrivalDate, departureDate } = this.state;
-    const error = validate([arrivalDate, departureDate]);
-    if (error) {
-      this.setState({ error });
-    } else {
+    const isCorrect = isCorrectRange([arrivalDate, departureDate]);
+    if (isCorrect) {
       onSubmit(Object.assign(room, { arrivalDate, departureDate }));
+    } else {
+      this.setState({ error: translate('wrongRange') });
     }
   }
 
@@ -45,11 +45,8 @@ class RoomTileControl extends Component {
   }
 }
 
-function validate(params) {
-  const allIsNotNull = params.every(e => e);
-  if(!allIsNotNull) {
-    return 'Указан некорректный промежуток';
-  }
+function isCorrectRange(params) {
+  return params.every(e => e);
 }
 
 export default RoomTileControl;

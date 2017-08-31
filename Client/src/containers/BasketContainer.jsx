@@ -7,9 +7,9 @@ import Basket from '../components/dishesBasket/Basket.jsx';
 
 class BasketContainer extends Component {
   render() {
-    const { view, app, actions, profile } = this.props;
+    const { view, app, actions, profile, translate } = this.props;
     return (
-      <Basket {...view} {...app} {...actions} profile={profile} />
+      <Basket {...view} {...app} {...actions} profile={profile} translate={translate} />
     );
   }
 }

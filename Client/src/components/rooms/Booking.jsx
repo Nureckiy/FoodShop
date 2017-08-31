@@ -30,7 +30,7 @@ class Booking extends Component {
 
   render() {
     const { currentRoomCategory, filteredRooms, activeRequestStatus, selectedRooms, addRoom, profile, deleteRoom,
-      getRoomCategoriesInfo, roomCategoriesInfo} = this.props;
+      getRoomCategoriesInfo, roomCategoriesInfo, translate} = this.props;
     const { selected, isInEditMode, showModal } = this.state;
     const isInGroup = group => utils.isInGroup(profile, group);
     return (
@@ -44,9 +44,9 @@ class Booking extends Component {
           </div>
           <div className="row">
             <div className="col-xs-12">
-              <h3>Описание номера:</h3>
+              <h3>{translate('roomDescription')}:</h3>
               <p>{currentRoomCategory.description}</p>
-              <b>Цена: <span className="cursive-font">от ${currentRoomCategory.minPrice}</span></b>
+              <b>{translate('price')}: <span className="cursive-font">{translate('from')} ${currentRoomCategory.minPrice}</span></b>
             </div>
           </div>
           <div className="row">
@@ -55,45 +55,46 @@ class Booking extends Component {
                 <DateRangePicker className="col-md-7 date-form" onChange={this.handleFilterChange}/>
               </div>
               <div className="date-form">
-                <button type="button" className="btn btn-orange" onClick={this.filter}>Найти номер</button>
+                <button type="button" className="btn btn-orange" onClick={this.filter}>{translate('findRoom')}</button>
               </div>
             </div>
           </div>
           { isInGroup('admins') &&
             <Button bsStyle="success" onClick={this.openCreateModal}>
-              <Glyphicon glyph="plus"/>   Добавить
+              <Glyphicon glyph="plus"/>   {translate('create')}
             </Button>
           }
           <LoadingComponent showLoader={activeRequestStatus}>
             <div className="row sample">
               { filteredRooms.map(room =>
                 <div key={room.id} className="top-indent">
-                  <RoomTile {...room} className="col-md-8 col-sm-12 no-padding" />
+                  <RoomTile {...room} className="col-md-8 col-sm-12 no-padding" translate={translate} />
                   <RoomTileControl
                     room={room}
                     onSubmit={addRoom}
                     className="col-md-4 col-sm-5"
                     withEditButton={isInGroup('admins')}
                     onEdit={() => this.openEditModal(room)}
-                  />
+                    translate={translate} />
                 </div>
               )}
             </div>
           </LoadingComponent>
-          <BookingTotal selected={selectedRooms} onRemove={deleteRoom}/>
+          <BookingTotal selected={selectedRooms} onRemove={deleteRoom} translate={translate}/>
         </div>
         <ResponsiveActionModal
           show={showModal}
           close={this.closeModal}
           responsiveActions={this.getSubmitFunctions()}
-          title={isInEditMode ? 'Редактировать': 'Создать'}>
+          title={isInEditMode ? translate('edit'): translate('create')}
+          translate={translate}>
           <RoomControlForm
             formId="roomControl"
             loadCategories={getRoomCategoriesInfo}
             categories={roomCategoriesInfo}
             initial={isInEditMode ? selected : {}}
             defaultCategory={currentRoomCategory}
-          />
+            translate={translate} />
         </ResponsiveActionModal>
       </div>
     );

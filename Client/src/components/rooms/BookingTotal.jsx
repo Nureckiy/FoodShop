@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 
 import * as utils from '../../utils/utils';
 
-const BookingTotal = ({ selected, onRemove }) => (
+const BookingTotal = ({ selected, onRemove, translate }) => (
   <div className="row col-md-10 col-md-offset-2 date-form">
     <ul className="col-md-8 date-form room-list">
       {selected.map(room =>
@@ -17,7 +17,7 @@ const BookingTotal = ({ selected, onRemove }) => (
       )}
     </ul>
     <div className="col-md-4 date-form">
-      <a className="btn btn-orange" href="#/order">Забронировать</a>
+      <a className="btn btn-orange" href="#/order">{translate('bookIt')}</a>
     </div>
   </div>
 );

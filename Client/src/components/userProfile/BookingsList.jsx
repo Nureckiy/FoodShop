@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Panel, Accordion, ListGroup, ListGroupItem, Label } from 'react-bootstrap';
 
-import messages from '!json!../../sources/appVariables.json';
+import { orderStatuses } from '!json!../../sources/appVariables.json';
 import * as utils from '../../utils/utils';
 
 class BookingsList extends Component {
@@ -23,7 +23,7 @@ class BookingsList extends Component {
           header={utils.fullDateFormat(booking.registrationTime)}
         >
           <ListGroup fill className="options-list">
-            <ListGroupItem header={translate('status')}> { messages.orderStatuses[booking.status] }</ListGroupItem>
+            <ListGroupItem header={translate('status')}> { translate(booking.status) }</ListGroupItem>
             <ListGroupItem header={translate('order')}>
               <ListGroup className="paragraph">
               { booking.rooms && booking.rooms.map(room =>

@@ -8,53 +8,53 @@ import FieldArray from '../common/FieldArray';
 import * as utils from '../../utils/utils';
 import { mainCategories } from '!json!../../sources/appVariables.json';
 
-const DishControlForm = ({formId, defaultCategory, initialValues, onRemove, onSubmit}) => {
+const DishControlForm = ({formId, defaultCategory, initialValues, onRemove, onSubmit, translate}) => {
   let portions;
   return (
     <ControlledForm onSubmit={ onSubmit } id={ formId } initialValues={ transformInitial(initialValues, defaultCategory) }>
-      { onRemove && <Button bsStyle="danger" onClick={() => onRemove(initialValues.id)}>Удалить</Button> }
+      { onRemove && <Button bsStyle="danger" onClick={() => onRemove(initialValues.id)}>{translate('remove')}</Button> }
       <FormGroup>
         <Field
           id="name"
           type="text"
-          label="Название"
+          label={translate('itemName')}
           required
         />
         <Field
           id="description"
           type="text"
-          label="Описание"
+          label={translate('description')}
         />
         <Field
           id="imageUrl"
           type="text"
-          label="Ссылка на изображение"
+          label={translate('imgLink')}
         />
         <Select
           id="category"
-          label="Тип"
+          label={translate('type')}
           defaultValue={defaultCategory}
           options={utils.renderObjectOptions(mainCategories)}
           required
         />
       </FormGroup>
-      <h4>Порции</h4>
+      <h4>{translate('portions')}</h4>
       <FormGroup>
         <FieldArray id="dishPortions" ref={(input) => portions = input}>
           <Field
             id="size"
             type="text"
-            label="Размер"
+            label={translate('size')}
           />
           <Field
             id="weight"
             type="text"
-            label="Вес"
+            label={translate('weight')}
           />
           <Field
             id="price"
             type="number"
-            label="Стоимость, $"
+            label={translate('price') + ', $'}
             min="0"
             step="0.01"
             required

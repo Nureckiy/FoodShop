@@ -24,22 +24,20 @@ class RoomCategories extends Component {
 
   render() {
     const { showModal, selected, isInEditMode } = this.state;
-    const { profile, activeRequestStatus, roomCategories } = this.props;
+    const { profile, activeRequestStatus, roomCategories, translate } = this.props;
     return (
       <div>
         <Header
           backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1489388908/fon4_dg32ge.jpg"
-          title="Найдите свой номер у нас!"
-          subtitle="ЛУЧШИЙ ОТЕЛЬ ВОСТОЧНОГО ПОБЕРЕЖЬЯ БЕЛАРУСИ"
-          className="banner"
+          title={translate('titleRoomCategories')}
+          subtitle={translate('subtitle')}
+          big
         />
         <div className="container content">
           <div className="row">
             <div className="col-md-8 col-md-offset-2 text-center title">
-              <h2 className="cursive-font primary-color">Доступные номера</h2>
-              <p>
-                Как первый отель класса четыре лайка в Республике Беларусь, мы достойно держим марку лучшего отеля в сфере гостиничных услуг страны, и совершенствуем формы и методы обслуживания гостей.
-              </p>
+              <h2 className="cursive-font primary-color">{translate('availableRooms')}</h2>
+              <p>{translate('roomCategoriesTitle')}</p>
             </div>
           </div>
           <div className="row">
@@ -47,11 +45,12 @@ class RoomCategories extends Component {
               show={showModal}
               close={this.closeModal}
               responsiveActions={this.getSubmitFunctions()}
-              title={isInEditMode ? 'Редактировать': 'Создать'}>
+              title={isInEditMode ? translate('edit'): translate('create')}
+              translate={translate}>
               <RoomCategoryControlForm
                 formId="roomCategoryControl"
                 initial={isInEditMode ? selected : {}}
-              />
+                translate={translate} />
             </ResponsiveActionModal>
           </div>
           <LoadingComponent showLoader={activeRequestStatus}>
@@ -68,8 +67,8 @@ class RoomCategories extends Component {
   }
 
   getTileOptions(item) {
-    const { profile } = this.props;
-    let options = { key: item.id, item, price: `От $${item.minPrice}`, className: 'col-md-4 col-sm-6',
+    const { profile, translate } = this.props;
+    let options = { key: item.id, item, price: `${translate('from')} $${item.minPrice}`, className: 'col-md-4 col-sm-6',
       onClick: () => history.push(`/booking/${item.id}`)};
     if(utils.isInGroup(profile, 'admins')) {
       options.withOptionsBtn = true;

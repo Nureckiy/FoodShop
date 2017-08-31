@@ -1,5 +1,3 @@
-/*eslint no-unused-vars: "off"*/
-
 import React from 'react';
 import { ButtonToolbar, MenuItem, NavDropdown } from 'react-bootstrap';
 
@@ -27,13 +25,13 @@ const Navbar = props => {
               <a href="#/booking/">{translate('rooms')}</a>
             </li>
             <NavDropdown className={composeClass('menu')} title={translate('restaurant')} noCaret id="menu-category" href="#/menu/">
-              {Object.keys(mainCategories).map(key =>
+              {mainCategories.map(category =>
                 <MenuItem
-                  key={key}
-                  eventKey={key}
-                  href={`#/menu/${key}`}
+                  key={category}
+                  eventKey={category}
+                  href={`#/menu/${category}`}
                 >
-                  {mainCategories[key]}
+                  {translate(category)}
                 </MenuItem>
               )}
             </NavDropdown>

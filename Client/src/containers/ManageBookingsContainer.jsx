@@ -8,11 +8,11 @@ import Header from '../components/layout/Header.jsx';
 
 class ManageBookingsContainer extends Component {
   render() {
-    const { view, actions } = this.props;
+    const { view, actions, translate } = this.props;
     return (
       <div>
         <Header style={{ backgroundColor: '#a5a5a5' }} />
-        <ManageBookings {...actions} {...view} />
+        <ManageBookings {...actions} {...view} translate={translate} />
       </div>
     );
   }

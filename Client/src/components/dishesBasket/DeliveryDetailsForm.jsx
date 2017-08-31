@@ -19,14 +19,14 @@ class DeliveryDetailsForm extends Component {
   }
 
   render() {
-    const { onBack, onSubmit, selected, availableAddresses } = this.props;
+    const { onBack, onSubmit, selected, availableAddresses, translate } = this.props;
     const { hideAddress } = this.state;
     const total = utils.calculateSelectedTotal(selected);
     return (
       <div className="row animate-box">
         <div className="row">
           <div className="col-md-8 col-md-offset-2 text-center">
-            <h2 className="cursive-font primary-color">Корзина</h2>
+            <h2 className="cursive-font primary-color">{translate('basket')}</h2>
           </div>
         </div>
         <div className="row">
@@ -35,28 +35,28 @@ class DeliveryDetailsForm extends Component {
             <Field
               id="userName"
               type="text"
-              placeholder="Введите имя"
-              label="Ваше имя"
+              placeholder={translate('enterName')}
+              label={translate('name')}
               required
             />
             <Field
               id="phone"
               type="text"
-              placeholder="Номер телефона"
-              label="Телефон"
+              placeholder={translate('enterPhone')}
+              label={translate('phone')}
               pattern="8[0-9]{10}"
               required
             />
             <Field
               id="email"
               type="email"
-              placeholder="Email"
-              label="Email"
+              placeholder={translate('enterEmail')}
+              label={translate('email')}
             />
             <Field
               id="takeAway"
               type="checkbox"
-              label="Заберу сам"
+              label={translate('takeAway')}
               onChange={this.handleDeliveryClick} />
           </FormGroup>
           <FormGroup>
@@ -64,7 +64,7 @@ class DeliveryDetailsForm extends Component {
               <Select
                 id="address"
                 type="text"
-                label="Доставить в номер"
+                label={translate('selectRoom')}
                 options={utils.renderArrayOptions(availableAddresses)}
                 defaultEmptyOption
                 required
@@ -72,15 +72,15 @@ class DeliveryDetailsForm extends Component {
             }
           </FormGroup>
           <div className="col-sm-12 buttons text-center">
-            <button className="btn btn-orange">Заказать</button>
-            <button type="button" onClick={onBack} className="btn btn-default">Назад</button>
+            <button className="btn btn-orange">{translate('toOrder')}</button>
+            <button type="button" onClick={onBack} className="btn btn-default">{translate('goBack')}</button>
           </div>
         </ControlledForm>
         <ul className="col-md-6 total-list hidden-sm hidden-xs">
         { selected.map(item =>
           <li key={item.id}>{item.name}</li>
         )}
-        <b className="black">Итого: {total.toFixed(2)}</b>
+        <b className="black">{translate('total')}: {total.toFixed(2)}</b>
         </ul>
       </div>
       </div>

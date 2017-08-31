@@ -6,30 +6,32 @@ import ControlledForm from '../common/ControlledForm.jsx';
 
 const RoomCategoryControlForm = props => (
   <ControlledForm onSubmit={ props.onSubmit } id={ props.formId } initialValues={props.initial} >
-    { props.onRemove && <Button bsStyle="danger" onClick={() => props.onRemove(props.initial.id)}>Удалить</Button> }
+    { props.onRemove &&
+      <Button bsStyle="danger" onClick={() => props.onRemove(props.initial.id)}>{props.translate('remove')}</Button>
+    }
     <FormGroup>
       <Field
         id="name"
         type="text"
-        label="Название"
+        label={props.translate('itemName')}
         required
       />
       <Field
         id="guestsNumber"
         type="number"
-        label="Количество гостей"
+        label={props.translate('guestsQuantity')}
         min="0"
         required
       />
       <Field
         id="description"
         type="text"
-        label="Описание"
+        label={props.translate('description')}
       />
       <Field
         id="coverUrl"
         type="text"
-        label="Ссылка на изображение"
+        label={props.translate('imgLink')}
       />
     </FormGroup>
   </ControlledForm>

@@ -43,10 +43,11 @@ class Basket extends Component {
   }
 
   renderChild() {
-    const { profile, selectedDishes, clearSelected, changeConfiguration, getAvailableAddresses, availableAddresses } = this.props;
+    const { profile, selectedDishes, clearSelected, changeConfiguration, getAvailableAddresses,
+      availableAddresses, translate } = this.props;
     const { isFirstStep } = this.state;
     if (!selectedDishes.length) {
-      return <h2 className="cursive-font primary-color text-center">Корзина пуста</h2>;
+      return <h2 className="cursive-font primary-color text-center">{translate('basketIsEmpty')}</h2>;
     }
     return isFirstStep
       ? <EditSelectedList
@@ -54,7 +55,7 @@ class Basket extends Component {
         onChange={changeConfiguration}
         clearAll={clearSelected}
         onSubmit={this.goToNext}
-      />
+        translate={translate} />
       : <DeliveryDetailsForm
         profile={profile}
         onSubmit={this.addOrder}
@@ -62,7 +63,7 @@ class Basket extends Component {
         selected={selectedDishes}
         getAvailableAddresses={getAvailableAddresses}
         availableAddresses={availableAddresses}
-      />;
+        translate={translate} />;
   }
 }
 

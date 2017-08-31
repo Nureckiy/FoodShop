@@ -17,7 +17,7 @@ class DishesList extends Component {
   }
 
   render() {
-    const { selected, profile, items, defaultCategory } = this.props;
+    const { selected, profile, items, defaultCategory, translate } = this.props;
     const { currentDish, addToOrder, isInEditMode, showModal } = this.state;
     const model = selected.find(x => x.id === currentDish.id);
     return (
@@ -26,16 +26,19 @@ class DishesList extends Component {
           show={showModal}
           close={this.closeModal}
           responsiveActions={this.getSubmitActions()}
-          title={isInEditMode ? 'Редактировать': 'Добавить'}>
+          title={isInEditMode ? translate('edit'): translate('add')}
+          translate={translate}>
           { addToOrder
             ? <AddDishForm
                 formId="addDishForm"
                 model={model ? model : currentDish}
-                onSubmit={this.handleDishSelect} />
+                onSubmit={this.handleDishSelect}
+                translate={translate}/>
             : <DishControlForm
                 formId="dishControl"
                 defaultCategory={defaultCategory}
-                initialValues={isInEditMode ? currentDish : {}} />
+                initialValues={isInEditMode ? currentDish : {}}
+                translate={translate}/>
           }
         </ResponsiveActionModal>
         <div className="col-xs-12 tiles">

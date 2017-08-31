@@ -13,8 +13,8 @@ const ControlledModal = props => (
           <p>{ props.error }</p>
         </Alert>
       </Collapse>
-      <Button onClick={ props.close }>Отмена</Button>
-      <Button {...renderSubmitOptions(props.onSubmit, props.children)} >Отправить</Button>
+      <Button onClick={ props.close }>{props.translate('cancel')}</Button>
+      <Button {...renderSubmitOptions(props.onSubmit, props.children)} >{props.translate('submit')}</Button>
     </Modal.Footer>
   </Modal>
 );

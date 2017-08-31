@@ -16,7 +16,6 @@ const ManageTable = props => {
           <thead>
           <tr>
             { titles.map((title, key) => <th key={key}>{title}</th>) }
-            <th>Статус</th>
             <th/>
           </tr>
           </thead>
@@ -39,7 +38,7 @@ const ManageTable = props => {
         { getHeaderValues(item).map((value, index) => <td key={index}>{ value }</td>)}
         <td>
           <Select
-            options={utils.renderObjectOptions(orderStatuses)}
+            options={utils.getProcessedOptions(orderStatuses, (item) => props.translate(item))}
             value={status}
             onChange={handleStatusChange(id)}
             onClick={e => e.stopPropagation()}

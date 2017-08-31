@@ -2,24 +2,32 @@ import React from 'react';
 
 const Header = (props) => {
   const { backgroundUrl, title, subtitle } = props;
-  let { className, style } = props;
-  if(!className) {
-    className = '';
-  }
+  let { style } = props;
   if (backgroundUrl) {
     style = Object.assign({}, style, { backgroundImage: `url(${backgroundUrl})`});
   }
   return (
     <header
       style={style}
-      className={'row ' + className}
+      className={composeClassName()}
       role="banner">
       <div className="middle overlay">
-        <span className="intro-text-small">{subtitle}</span>
-        <h1 className="cursive-font">{title}</h1>
+        {props.big && <span>
+          <span className="intro-text-small">{subtitle && subtitle.toUpperCase()}</span>
+          <h1 className="cursive-font">{title}</h1>
+        </span>}
       </div>
     </header>
   );
+
+  function composeClassName() {
+    let className = 'row ';
+    if (props.className) className += props.className;
+    if (props.big) className += ' banner';
+    return className;
+  }
 };
+
+
 
 export default Header;

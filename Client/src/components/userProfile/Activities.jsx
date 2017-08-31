@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Panel, Accordion, ListGroup, ListGroupItem } from 'react-bootstrap';
 
-import messages from '!json!../../sources/appVariables.json';
 import * as utils from '../../utils/utils';
 
 class Activities extends Component {
@@ -19,7 +18,7 @@ class Activities extends Component {
             eventKey={order.id}
             header={utils.fullDateFormat(order.checkoutDate)}>
             <ListGroup fill className="options-list">
-              <ListGroupItem header={translate('status')}> { messages.orderStatuses[order.status] }</ListGroupItem>
+              <ListGroupItem header={translate('status')}> { translate(order.status) }</ListGroupItem>
               <ListGroupItem header={translate('completed')}> { order.completionDate
                 ? translate('completed') + utils.fullDateFormat(order.completionDate)
                 : translate('no')

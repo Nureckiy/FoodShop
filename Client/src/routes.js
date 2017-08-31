@@ -3,7 +3,8 @@ import React from 'react';
 
 import App from '../src/containers/App';
 import AuthContainer from '../src/containers/AuthContainer';
-import BookingContainer from './containers/BookingContainer';
+import RoomsContainer from './containers/RoomsContainer';
+import RoomCategoriesContainer from './containers/RoomCategoriesContainer';
 import BookingOrderContainer from './containers/BookingOrderContainer';
 import BasketContainer from '../src/containers/BasketContainer.jsx';
 import MenuContainer from '../src/containers/MenuContainer.jsx';
@@ -19,8 +20,8 @@ const routes = (
   <div>
     <Route path="/" component={App}>
       <IndexRedirect to="/booking" />
-      <Route path="/booking" component={BookingContainer} />
-      <Route path="/booking/:id" component={BookingContainer} />
+      <Route path="/booking" component={RoomCategoriesContainer} />
+      <Route path="/booking/:id" component={RoomsContainer} />
       <Route path="/contacts" component={Contacts} />
       <Route path="/summary/:orderType" component={OrderSummary} />
       <Route component={AuthContainer}>
