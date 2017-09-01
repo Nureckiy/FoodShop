@@ -10,14 +10,14 @@ const BookingTotal = ({ selected, onRemove, translate }) => (
         <li key={room.id}>
           <span className="glyphicon glyphicon-calendar" />
           {dateformat(room)} { room.category.name } (${utils.calculateRoomTotal(room)})
-          <Button type="button" className="btn-icon" onClick={() => onRemove(room.id)}>
+          <span className="control-icon" onClick={() => onRemove(room.id)}>
             <span className="glyphicon glyphicon-remove grey-remove"/>
-          </Button>
+          </span>
         </li>
       )}
     </ul>
     <div className="col-md-4 date-form">
-      <a className="btn btn-orange" href="#/order">{translate('bookIt')}</a>
+      <Button bsStyle="primary" href="#/order">{translate('bookIt')}</Button>
     </div>
   </div>
 );

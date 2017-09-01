@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup } from 'react-bootstrap';
+import { FormGroup, Button } from 'react-bootstrap';
 
 import Field from '../common/Field.jsx';
 import ControlledForm from '../common/ControlledForm.jsx';
@@ -72,8 +72,8 @@ class DeliveryDetailsForm extends Component {
             }
           </FormGroup>
           <div className="col-sm-12 buttons text-center">
-            <button className="btn btn-orange">{translate('toOrder')}</button>
-            <button type="button" onClick={onBack} className="btn btn-default">{translate('goBack')}</button>
+            <Button bsStyle="primary">{translate('toOrder')}</Button>
+            <Button type="button" onClick={onBack}>{translate('goBack')}</Button>
           </div>
         </ControlledForm>
         <ul className="col-md-6 total-list hidden-sm hidden-xs">

@@ -55,7 +55,7 @@ class Booking extends Component {
                 <DateRangePicker className="col-md-7 date-form" onChange={this.handleFilterChange}/>
               </div>
               <div className="date-form">
-                <button type="button" className="btn btn-orange" onClick={this.filter}>{translate('findRoom')}</button>
+                <Button type="button" bsStyle="primary" onClick={this.filter}>{translate('findRoom')}</Button>
               </div>
             </div>
           </div>
@@ -65,9 +65,9 @@ class Booking extends Component {
             </Button>
           }
           <LoadingComponent showLoader={activeRequestStatus}>
-            <div className="row sample">
+            <span>
               { filteredRooms.map(room =>
-                <div key={room.id} className="top-indent">
+                <div key={room.id} className="top-indent row sample">
                   <RoomTile {...room} className="col-md-8 col-sm-12 no-padding" translate={translate} />
                   <RoomTileControl
                     room={room}
@@ -78,7 +78,7 @@ class Booking extends Component {
                     translate={translate} />
                 </div>
               )}
-            </div>
+            </span>
           </LoadingComponent>
           <BookingTotal selected={selectedRooms} onRemove={deleteRoom} translate={translate}/>
         </div>

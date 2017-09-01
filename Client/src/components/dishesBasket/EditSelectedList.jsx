@@ -1,4 +1,6 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
+
 import TotalGoodItem from './TotalGoodItem.jsx';
 import * as utils from '../../utils/utils';
 
@@ -30,8 +32,8 @@ const EditSelectedList = props => {
           </li>
         </ul>
         <div className="col-sm-12 buttons text-center top-indent">
-          <button className="btn btn-orange">{translate('toOrder')}</button>
-          <button type="button" className="btn btn-defult" onClick={clearAll}>{translate('clear')}</button>
+          <Button bsStyle="primary" type="submit">{translate('toOrder')}</Button>
+          <Button type="button" onClick={clearAll}>{translate('clear')}</Button>
         </div>
       </form>
     </div>

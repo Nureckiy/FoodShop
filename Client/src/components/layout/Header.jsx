@@ -13,7 +13,7 @@ const Header = (props) => {
       role="banner">
       <div className="middle overlay">
         {props.big && <span>
-          <span className="intro-text-small">{subtitle && subtitle.toUpperCase()}</span>
+          <span className="intro-text-small">{subtitle}</span>
           <h1 className="cursive-font">{title}</h1>
         </span>}
       </div>

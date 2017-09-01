@@ -14,7 +14,7 @@ const ControlledModal = props => (
         </Alert>
       </Collapse>
       <Button onClick={ props.close }>{props.translate('cancel')}</Button>
-      <Button {...renderSubmitOptions(props.onSubmit, props.children)} >{props.translate('submit')}</Button>
+      <Button {...renderSubmitOptions(props.onSubmit, props.children)} bsStyle="primary" >{props.translate('submit')}</Button>
     </Modal.Footer>
   </Modal>
 );

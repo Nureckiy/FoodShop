@@ -46,7 +46,7 @@ const Contacts = props => (
                 />
               </FormGroup>
               <div className="form-group">
-                <Button type="submit" className="btn btn-orange">{props.translate('submit')}</Button>
+                <Button type="submit" bsStyle="primary">{props.translate('submit')}</Button>
               </div>
             </ControlledForm>
           </div>

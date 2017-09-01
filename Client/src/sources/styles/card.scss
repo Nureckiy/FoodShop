@@ -6,14 +6,12 @@
 
   .overlay {
     opacity: 0;
-    visibility: hidden;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     position: absolute;
     background: rgba(0, 0, 0, 0.4);
-    transition: 0.7s;
 
     .centered {
       margin: 0 50%;
@@ -35,6 +33,12 @@
     }
   }
 
+  figure {
+    height: 240px;
+    overflow: hidden;
+    position: relative;
+  }
+
   &.active figure {
     margin: 0;
   }
@@ -43,7 +47,6 @@
     box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2);
     .overlay {
       opacity: 1;
-      visibility: visible;
       z-index: 2;
     }
   }
@@ -83,16 +86,6 @@
   }
 }
 
-figure {
-  height: 240px;
-  overflow: hidden;
-  position: relative;
-
-  .img-responcive {
-    max-width: 100%;
-  }
-}
-
 .solid {
   margin-bottom: 30px;
   min-height: 350px;
@@ -123,4 +116,9 @@ figure {
   font-family: "sans-serif";
   font-size: 50px;
   color: #fff;
+}
+
+.tiles {
+  display: flex;
+  flex-wrap: wrap;
 }

@@ -42,7 +42,7 @@ const Navbar = props => {
               <a href="#/profile/">{ profile ? profile.name : translate('login') }</a>
             </li>
             <li className={composeClass('order', 'btn-cta')}>
-              <a href="#/order"><span>{translate('booking')} <i id="basket-icon" className="glyphicon glyphicon-bed" /></span></a>
+              <a href="#/order">{translate('booking')} <i id="basket-icon" className="glyphicon glyphicon-bed" /></a>
             </li>
           </ButtonToolbar>
         </div>

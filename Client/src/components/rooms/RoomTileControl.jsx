@@ -15,11 +15,11 @@ class RoomTileControl extends Component {
     const { className, room: { error }, withEditButton, onEdit, translate } = this.props;
     const errorMsg = error ? error.message : this.state.error;
     return (
-      <Form className={className} onSubmit={this.handleSubmit}>
+      <Form className={className + ' tile-control'} onSubmit={this.handleSubmit}>
         { withEditButton &&
-          <Button type="button" className="btn btn-success col-sm-12" onClick={onEdit}>{translate('edit')}</Button>
+        <Button type="button" bsStyle="success" onClick={onEdit}>{translate('edit')}</Button>
         }
-        <Button type="submit" className="btn btn-success col-sm-12">{translate('add')}</Button>
+        <Button type="submit" bsStyle="success">{translate('add')}</Button>
         <DateRangePicker onChange={this.handleDateChange} />
         <Panel className="col-sm-12 error-message" collapsible expanded={!!errorMsg}>
           {errorMsg && <p>{ errorMsg }</p>}
@@ -35,6 +35,7 @@ class RoomTileControl extends Component {
     const isCorrect = isCorrectRange([arrivalDate, departureDate]);
     if (isCorrect) {
       onSubmit(Object.assign(room, { arrivalDate, departureDate }));
+      this.setState({ error: false });
     } else {
       this.setState({ error: translate('wrongRange') });
     }

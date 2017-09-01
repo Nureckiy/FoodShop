@@ -56,7 +56,7 @@ const EditProfile = props => (
       />
     </FormGroup>
     <div className="col-md-12">
-      <Button type="submit" className="btn btn-orange pull-left">{props.translate('save')}</Button>
+      <Button type="submit" bsStyle="primary pull-left">{props.translate('save')}</Button>
     </div>
   </ControlledForm>
 );

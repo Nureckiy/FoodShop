@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup, Alert, Fade } from 'react-bootstrap';
+import { FormGroup, Alert, Fade, Button } from 'react-bootstrap';
 
 import ControlledForm from '../common/ControlledForm.jsx';
 import Field from '../common/Field.jsx';
@@ -61,14 +61,14 @@ class BookingDetailsForm extends Component {
           />
         </FormGroup>
         <div className="col-sm-12 date-form">
-          <button type="submit" className="btn btn-orange col-md-3 col-md-offset-5">{translate('bookIt')}</button>
+          <Button type="submit" bsStyle="primary col-md-4 col-md-offset-4 col-xs-12">{translate('bookIt')}</Button>
         </div>
         <div className="date-form col-sm-12">
           <Fade in={!!error}>
             <Alert bsStyle="danger">
-              <button type="button" className="close" aria-label="Close" onClick={this.hideErrorMsg}>
+              <Button type="button" bsStyle="primary close" aria-label="Close" onClick={this.hideErrorMsg}>
                 <span aria-hidden="true">&times;</span>
-              </button>
+              </Button>
               <p>{ error }</p>
             </Alert>
           </Fade>
@@ -89,7 +89,7 @@ class BookingDetailsForm extends Component {
     const { book, selectedRooms, translate } = this.props;
     if(selectedRooms.length) {
       book({ roomBookings: utils.parseRoomBooking(selectedRooms), ...details });
-      history.push('summary/rooms');
+      history.push('summary/booking');
     } else {
       this.showErrorMsg(translate('noRoomsSelected'));
     }

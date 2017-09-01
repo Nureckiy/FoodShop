@@ -24,18 +24,19 @@ const OrderSummary = props => {
       </LoadingComponent>
     </div>
   );
-};
 
-function getContentInfo(orderType, isSuccessOrder) {
-  let message, imageUrl;
-  if (isSuccessOrder) {
-    message = messages.order[orderType].message;
-    imageUrl = messages.order[orderType].img;
-  } else {
-    message = messages.order.fail;
-    imageUrl = messages.order.img;
+  function getContentInfo() {
+    const { params: { orderType }, app: { isSuccessOrder }, translate } = props;
+    let message, imageUrl;
+    if (isSuccessOrder) {
+      message = translate('success_' + orderType);
+      imageUrl = messages.order[orderType].img;
+    } else {
+      message = translate('errorOccurred');
+      imageUrl = messages.order.failImg;
+    }
+    return { message, imageUrl };
   }
-  return { message, imageUrl };
-}
+};
 
 export default OrderSummary;
