@@ -66,7 +66,7 @@ class BookingDetailsForm extends Component {
         <div className="date-form col-sm-12">
           <Fade in={!!error}>
             <Alert bsStyle="danger">
-              <Button type="button" bsStyle="primary close" aria-label="Close" onClick={this.hideErrorMsg}>
+              <Button type="button" bsStyle="primary icon" aria-label="close" onClick={this.hideErrorMsg}>
                 <span aria-hidden="true">&times;</span>
               </Button>
               <p>{ error }</p>

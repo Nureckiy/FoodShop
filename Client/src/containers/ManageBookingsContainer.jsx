@@ -11,7 +11,7 @@ class ManageBookingsContainer extends Component {
     const { view, actions, translate } = this.props;
     return (
       <div>
-        <Header style={{ backgroundColor: '#a5a5a5' }} />
+        <Header />
         <ManageBookings {...actions} {...view} translate={translate} />
       </div>
     );

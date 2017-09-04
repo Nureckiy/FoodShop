@@ -177,9 +177,13 @@ nav {
   em {
     color: #FBB448;
   }
-  .btn-toolbar {
-    display: flex;
-    margin-top: 7px;
+}
+
+.toolbar {
+  display: flex;
+  margin-top: 7px;
+  li {
+    padding: 0 10px;
   }
 }
 
@@ -193,7 +197,7 @@ nav {
 
 /******  head *********/
 header {
-  background: #4d4d4d;
+  background: #a5a5a5;
   text-align: center;
   background-size: cover;
   background-attachment: fixed;
@@ -356,7 +360,7 @@ body {
   }
 }
 
-.close {
+.icon {
   font-size: 30px;
 }
 
@@ -503,4 +507,8 @@ img.view {
 
 .separated-list-item {
   border-bottom: 1px solid;
+}
+
+.error {
+  color: #d60606;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonToolbar, MenuItem, NavDropdown } from 'react-bootstrap';
+import { MenuItem, NavDropdown } from 'react-bootstrap';
 
 import { mainCategories } from '!json!../../sources/appVariables.json';
 
@@ -8,13 +8,12 @@ const Navbar = props => {
   const isInGroup = (group) => profile && profile.groups.includes(group);
   return (
     <nav className="row">
-
       <div className="container">
         <div className="col-sm-3 hidden-xs">
           <div id="logo"><a href="#">HOHOTEL <em>.</em></a></div>
         </div>
         <div className="col-sm-9">
-          <ButtonToolbar className="pull-right">
+          <ul className="toolbar pull-right">
             {(isInGroup('hotel-manages') || isInGroup('kitchen-manager')) &&
             <NavDropdown className={composeClass('manage')} title={translate('manage')} noCaret id="menu-category">
               <MenuItem eventKey="1" href="#/manage/bookings" disabled={!isInGroup('hotel-manager')} >{translate('reservations')}</MenuItem>
@@ -44,7 +43,7 @@ const Navbar = props => {
             <li className={composeClass('order', 'btn-cta')}>
               <a href="#/order">{translate('booking')} <i id="basket-icon" className="glyphicon glyphicon-bed" /></a>
             </li>
-          </ButtonToolbar>
+          </ul>
         </div>
       </div>
     </nav>
