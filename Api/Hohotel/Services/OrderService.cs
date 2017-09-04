@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -8,7 +9,7 @@ using Hohotel.Models.DataModels;
 
 namespace Hohotel.Services
 {
-    public class OrderService: IOrderService
+    public class OrderService: IOrderService 
     {
         private readonly HohotelContext _context;
         private readonly IMapper _mapper;
@@ -25,6 +26,27 @@ namespace Hohotel.Services
                 .Where(order => order.UserId == userId)
                 .ProjectTo<OrderView>(_mapper)
                 .ToList();
+        }
+
+        public IList<OrderView> GetOrders()
+        {
+            return _context.Orders.ProjectTo<OrderView>(_mapper).ToList();
+        }
+
+        public OrderView ChangeStatus(UpdateStatusModel updateModel)
+        {
+            var order = _context.Orders.Find(updateModel.Id);
+            if (order.Status == OrderStatus.Closed)
+            {
+                throw new ArgumentException("Can't change status from closed");
+            }
+
+            _mapper.Map(updateModel, order);
+            _context.Orders.Update(order);
+            _context.SaveChanges();
+            return _context.Orders
+                .ProjectTo<OrderView>(_mapper)
+                .Single(o => o.Id == order.Id);
         }
 
         public Order PlaceOrder(OrderInfo orderInfo)

@@ -24,10 +24,10 @@ namespace Hohotel.Auth
                 return Task.CompletedTask;
 
             // Split the scopes string into an array
-            var scopes = context.User.FindFirst(c => c.Type == "permissions" && c.Issuer == issuer).Value.Split(' ');
+            var permissions = context.User.FindAll(c => c.Type == "permissions" && c.Issuer == issuer).Select(p => p.Value);
 
             // Succeed if the permission array contains the required permission
-            if (scopes.Any(s => s == permission))
+            if (permissions.Any(s => s == permission))
                 context.Succeed(requirement);
 
             return Task.CompletedTask;

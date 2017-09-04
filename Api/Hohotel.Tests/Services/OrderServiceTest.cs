@@ -41,8 +41,8 @@ namespace Hohotel.Tests.Services
             
             orderMock.Verify(m => m.Add(It.IsAny<Order>()), Times.Once);
             _context.Verify(c => c.SaveChanges(), Times.Once);
-            Assert.Equal(order.Total, 65.94m);
-            Assert.Equal(order.Status, OrderStatus.Opened);
+            Assert.Equal(65.94m, order.Total);
+            Assert.Equal(OrderStatus.Opened, order.Status);
         }
 
         [Fact]
@@ -65,6 +65,19 @@ namespace Hohotel.Tests.Services
             var result = _service.GetUserOrders("first user");
             Assert.Equal(2, result.Count);
             Assert.True(result.All(o => o.UserId == "first user"));
+        }
+
+        [Fact]
+        public void GetOrders()
+        {
+            var orders = TestData.Create.Orders(3);
+
+            _context.Setup(c => c.Orders).Returns(DbSetMock.Create(orders.ToArray()).Object);
+
+            var result = _service.GetOrders();
+
+            Assert.Equal(3, result.Count);
+            Assert.All(result, item => Assert.Equal(OrderStatus.NotStarted, item.Status));
         }
 
         [Fact]

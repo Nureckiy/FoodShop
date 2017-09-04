@@ -60,7 +60,7 @@ namespace Hohotel.Controllers
         }
 
         // POST api/room/allBookings
-        [Authorize]
+        [Authorize(Roles = "hotel-manager")]
         [HttpGet("allBookings")]
         public IList<BookingView> GetAllBookings()
         {
@@ -72,6 +72,14 @@ namespace Hohotel.Controllers
         [HttpPut("bookingStatus")]
         public BookingView ChangeBookingStatus([FromBody]UpdateStatusModel updateModel)
         {
+            if (updateModel.Status == OrderStatus.Closed)
+            {
+                updateModel.CompletionDate = DateTime.Now;
+            }
+            else
+            {
+                updateModel.CompletionDate = null;
+            }
             updateModel.StatusUpdatedBy = User.Identity.Name;
             updateModel.StatusUpdatedDate = DateTime.Now;
             return _service.ChangeStatus(updateModel);

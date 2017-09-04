@@ -12,5 +12,6 @@ namespace Hohotel.Models
         public OrderStatus Status { get; set; }
         public string StatusUpdatedBy { get; set; }
         public DateTime? StatusUpdatedDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
     }
 }

@@ -45,6 +45,8 @@ namespace Hohotel.Services.Mapping
             CreateMap<RoomCategory, ItemInfo>();
 
             CreateMap<UpdateStatusModel, Booking>();
+
+            CreateMap<UpdateStatusModel, Order>();
         }
     }
 }

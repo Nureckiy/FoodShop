@@ -224,6 +224,28 @@ namespace Hohotel.Tests.Services
         }
 
         [Fact]
+        public void ChageStatus_ChangeFromCompleted_ThrowError()
+        {
+            var bookings = new[]
+            {
+                new Booking(),
+                new Booking() { Id = 1, Status = OrderStatus.Closed }
+            };
+            var updateStatusModel = new UpdateStatusModel
+            {
+                Id = 1,
+                Status = OrderStatus.Approved
+            };
+            var bookingsMock = DbSetMock.Create(bookings.ToArray());
+
+            _context.Setup(c => c.Bookings).Returns(bookingsMock.Object);
+
+            Exception validationException = Assert.Throws<ArgumentException>(() => _service.ChangeStatus(updateStatusModel));
+
+            Assert.Equal("Can't change status from closed", validationException.Message);
+        }
+
+        [Fact]
         public void CountTotal_RoomBookingObject_ReturnTotal()
         {
             var room = TestData.Create.Room(price: 14.56m);

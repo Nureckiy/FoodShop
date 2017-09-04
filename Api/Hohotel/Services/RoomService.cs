@@ -103,6 +103,10 @@ namespace Hohotel.Services
         public BookingView ChangeStatus(UpdateStatusModel updateModel)
         {
             var booking = _context.Bookings.Find(updateModel.Id);
+            if (booking.Status == OrderStatus.Closed)
+            {
+                throw new ArgumentException("Can't change status from closed");
+            }
             _mapper.Map(updateModel, booking);
             _context.Bookings.Update(booking);
             _context.SaveChanges();

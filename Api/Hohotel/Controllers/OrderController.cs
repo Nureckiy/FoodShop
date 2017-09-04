@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Hohotel.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hohotel.Controllers
@@ -21,6 +24,7 @@ namespace Hohotel.Controllers
         public Order Post([FromBody]OrderInfo order)
         {
             order.UserId = User.Identity.Name;
+            order.StatusUpdatedDate = DateTime.Now;
             return _service.PlaceOrder(order);
         }
 
@@ -29,6 +33,32 @@ namespace Hohotel.Controllers
         public IList<OrderView> Get()
         {
             return _service.GetUserOrders(User.Identity.Name);
+        }
+
+        //GET api/order/all
+        [Authorize(Roles = "kitchen-manager")]
+        [HttpGet("All")]
+        public IList<OrderView> GetAll()
+        {
+            return _service.GetOrders();
+        }
+
+        //PUT api/order/status
+        [Authorize("change:orderStatus")]
+        [HttpPut("Status")]
+        public OrderView ChangeStatus([FromBody]UpdateStatusModel updateModel)
+        {
+            if (updateModel.Status == OrderStatus.Closed)
+            {
+                updateModel.CompletionDate = DateTime.Now;
+            }
+            else
+            {
+                updateModel.CompletionDate = null;
+            }
+            updateModel.StatusUpdatedBy = User.Identity.Name;
+            updateModel.StatusUpdatedDate = DateTime.Now;
+            return _service.ChangeStatus(updateModel);
         }
     }
 }

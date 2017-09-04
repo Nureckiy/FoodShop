@@ -1,11 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Text;
 using AutoMapper;
 using Hohotel.Auth;
+using Hohotel.Middlewares;
 using Hohotel.Models;
 using Hohotel.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -82,7 +88,7 @@ namespace Hohotel
                 }
             };
             app.UseJwtBearerAuthentication(options);
-
+            app.UseExceptionMiddleware();
             app.UseCors("AllowAll");
             app.UseMvc();
         }

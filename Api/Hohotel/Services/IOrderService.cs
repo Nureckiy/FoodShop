@@ -9,5 +9,9 @@ namespace Hohotel.Services
         Order PlaceOrder(OrderInfo order);
 
         IList<OrderView> GetUserOrders(string userId);
+
+        IList<OrderView> GetOrders();
+
+        OrderView ChangeStatus(UpdateStatusModel updateModel);
     }
 }
