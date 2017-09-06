@@ -92,7 +92,7 @@ namespace Hohotel.Tests.Controllers
 
             _service.Setup(s => s.GetBookings()).Returns(responce);
 
-            var result = _controller.GetAllBookings();
+            var result = _controller.Sort();
 
             Assert.Equal(responce, result);
         }

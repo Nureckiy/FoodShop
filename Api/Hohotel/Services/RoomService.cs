@@ -8,6 +8,7 @@ using Hohotel.Exceptions;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Hohotel.Services
 {
@@ -15,11 +16,13 @@ namespace Hohotel.Services
     {
         private readonly HohotelContext _context;
         private readonly IMapper _mapper;
+        private readonly AppConfiguration _configuration;
 
-        public RoomService(HohotelContext context, IMapper mapper)
+        public RoomService(HohotelContext context, IMapper mapper, IOptions<AppConfiguration> configuration)
         {
             _context = context;
             _mapper = mapper;
+            _configuration = configuration.Value;
         }
 
         public IList<Room> Filter(RoomFilter filter)
@@ -77,13 +80,27 @@ namespace Hohotel.Services
         {
             return _context.Bookings
                 .Where(booking => booking.UserId == userId)
+                .OrderByDescending(booking => booking.StatusUpdatedDate)
                 .ProjectTo<BookingView>(_mapper)
                 .ToList();
         }
 
-        public IList<BookingView> GetBookings()
+        public PaginationModel<BookingView> GetBookings(int? pageNumber, int? itemsCount)
         {
-            return _context.Bookings.ProjectTo<BookingView>(_mapper).ToList();
+            var takePage = pageNumber ?? 1;
+            var takeCount = itemsCount ?? _configuration.DefaultPageRecordCount;
+            var bookings = _context.Bookings
+                .OrderByDescending(booking => booking.StatusUpdatedDate)
+                .ProjectTo<BookingView>(_mapper)
+                .Skip((takePage - 1) * takeCount)
+                .Take(takeCount)
+                .ToList();
+            var allBookingsCount = _context.Bookings.Count();
+            return new PaginationModel<BookingView>
+            {
+                Items = bookings,
+                TotalItems = allBookingsCount
+            };
         }
 
         public IList<string> GetActive(string userId)
@@ -93,7 +110,8 @@ namespace Hohotel.Services
                 .Include("RoomBookings")
                 .Where(room => room.RoomBookings.Any(booking =>
                     booking.Booking.UserId == userId &&
-                    booking.Booking.Status == OrderStatus.Opened &&
+                    booking.Booking.Status != OrderStatus.Closed &&
+                    booking.Booking.Status != OrderStatus.Canceled &&
                     booking.StartDate <= now
                     && booking.EndDate >= now))
                 .Select(room => room.Address)

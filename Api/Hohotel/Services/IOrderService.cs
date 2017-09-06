@@ -10,7 +10,7 @@ namespace Hohotel.Services
 
         IList<OrderView> GetUserOrders(string userId);
 
-        IList<OrderView> GetOrders();
+        PaginationModel<OrderView> GetOrders(int? pageNumber, int? itemsCount);
 
         OrderView ChangeStatus(UpdateStatusModel updateModel);
     }

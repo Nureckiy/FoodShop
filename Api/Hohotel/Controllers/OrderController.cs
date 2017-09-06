@@ -37,10 +37,10 @@ namespace Hohotel.Controllers
 
         //GET api/order/all
         [Authorize(Roles = "kitchen-manager")]
-        [HttpGet("All")]
-        public IList<OrderView> GetAll()
+        [HttpGet("sort")]
+        public PaginationModel<OrderView> Sort(int? pageNumber, int? itemsCount)
         {
-            return _service.GetOrders();
+            return _service.GetOrders(pageNumber, itemsCount);
         }
 
         //PUT api/order/status

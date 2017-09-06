@@ -61,10 +61,10 @@ namespace Hohotel.Controllers
 
         // POST api/room/allBookings
         [Authorize(Roles = "hotel-manager")]
-        [HttpGet("allBookings")]
-        public IList<BookingView> GetAllBookings()
+        [HttpGet("sort")]
+        public PaginationModel<BookingView> Sort(int? pageNumber, int? itemsCount)
         {
-            return _service.GetBookings();
+            return _service.GetBookings(pageNumber, itemsCount);
         }
 
         // PUT api/room/bookingStatus

@@ -6,6 +6,7 @@ using AutoMapper.QueryableExtensions;
 using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
+using Microsoft.Extensions.Options;
 
 namespace Hohotel.Services
 {
@@ -13,11 +14,13 @@ namespace Hohotel.Services
     {
         private readonly HohotelContext _context;
         private readonly IMapper _mapper;
+        private readonly AppConfiguration _configuration;
 
-        public OrderService(HohotelContext context, IMapper mapper)
+        public OrderService(HohotelContext context, IMapper mapper, IOptions<AppConfiguration> configuration)
         {
             _context = context;
             _mapper = mapper;
+            _configuration = configuration.Value;
         }
 
         public IList<OrderView> GetUserOrders(string userId)
@@ -25,12 +28,27 @@ namespace Hohotel.Services
             return _context.Orders
                 .Where(order => order.UserId == userId)
                 .ProjectTo<OrderView>(_mapper)
+                .OrderByDescending(order => order.StatusUpdatedDate)
                 .ToList();
         }
 
-        public IList<OrderView> GetOrders()
+        public PaginationModel<OrderView> GetOrders(int? pageNumber, int? itemsCount)
         {
-            return _context.Orders.ProjectTo<OrderView>(_mapper).ToList();
+            var takePage = pageNumber ?? 1;
+            var takeCount = itemsCount ?? _configuration.DefaultPageRecordCount;
+            var orders = _context.Orders
+                .ProjectTo<OrderView>(_mapper)
+                .OrderByDescending(order => order.StatusUpdatedDate)
+                .Skip((takePage - 1) * takeCount)
+                .Take(takeCount)
+                .ToList();
+            var allOrdersCount = _context.Orders.Count();
+            return new PaginationModel<OrderView>
+            {
+                Items = orders,
+                TotalItems = allOrdersCount
+            };
+
         }
 
         public OrderView ChangeStatus(UpdateStatusModel updateModel)

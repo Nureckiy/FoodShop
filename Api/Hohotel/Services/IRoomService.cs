@@ -14,7 +14,7 @@ namespace Hohotel.Services
 
         IList<BookingView> GetUserBookings(string userId);
 
-        IList<BookingView> GetBookings();
+        PaginationModel<BookingView> GetBookings(int? pageNumber, int? itemsCount);
 
         IList<string> GetActive(string userId);
 

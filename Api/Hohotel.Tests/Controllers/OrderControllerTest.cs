@@ -57,7 +57,7 @@ namespace Hohotel.Tests.Controllers
 
             _service.Setup(s => s.GetOrders()).Returns(responce);
 
-            Assert.Equal(responce, _controller.GetAll());
+            Assert.Equal(responce, _controller.Sort());
         }
 
         [Fact]
