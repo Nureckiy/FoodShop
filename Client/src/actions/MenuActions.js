@@ -61,21 +61,21 @@ export function getAvailableAddresses() {
   );
 }
 
-export function createDish(dish) {
+export function createDish(dish, currentCategory) {
   return createAsync(service.addDish,
     types.CREATE_DISH,
     types.CREATE_DISH_SUCCESS,
     types.CREATE_DISH_FAIL,
-    dish
+    dish, { currentCategory }
   );
 }
 
-export function editDish(dish) {
+export function editDish(dish, currentCategory) {
   return createAsync(service.editDish,
     types.EDIT_DISH,
     types.EDIT_DISH_SUCCESS,
     types.EDIT_DISH_FAIL,
-    dish
+    dish, { currentCategory }
   );
 }
 
@@ -84,6 +84,6 @@ export function removeDish(id) {
     types.REMOVE_DISH,
     types.REMOVE_DISH_SUCCESS,
     types.REMOVE_DISH_FAIL,
-    id
+    id, { id }
   );
 }

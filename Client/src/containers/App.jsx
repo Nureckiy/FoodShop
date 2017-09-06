@@ -1,27 +1,33 @@
-/*eslint no-unused-vars: "off"*/
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { IntlActions, withTranslate } from 'react-redux-multilingual';
 
 import * as actions from '../actions/AppActions';
+import { refreshProfile } from '../actions/AuthActions';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer.jsx';
 
 class App extends Component {
-  componentWillMount() {
-    this.props.route.auth.refreshProfile();
+  componentDidMount() {
+    this.updateLanguage(this.props);
+    this.props.refreshProfile();
+  }
+  componentWillReceiveProps(props) {
+    this.updateLanguage(props);
+  }
+  updateLanguage({ auth }) {
+    if(auth.profile && auth.profile.user_metadata.language) {
+      this.props.actions.setLocale(auth.profile.user_metadata.language);
+    }
   }
   render() {
-    const { auth } = this.props.route;
-    let { children, app, actions, location: { pathname } } = this.props;
-    if (children) {
-      children = React.cloneElement(children, { auth, app, actions });
-    }
+    const { children, app, actions,  auth: { profile }, translate, location: { pathname } } = this.props;
     return (
       <div>
-        <Navbar auth={auth} pathname={pathname} />
-        {children}
-        <Footer/>
+        <Navbar profile={profile} pathname={pathname} translate={translate} />
+          { React.cloneElement(children, { profile, app, actions, translate }) }
+        <Footer translate={translate}/>
       </div>
     );
   }
@@ -29,14 +35,16 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    app: state.AppReducer
+    app: state.AppReducer,
+    auth: state.AuthReducer
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch),
+    actions: bindActionCreators(Object.assign({}, actions, IntlActions), dispatch),
+    refreshProfile: () => dispatch(refreshProfile())
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslate(App));

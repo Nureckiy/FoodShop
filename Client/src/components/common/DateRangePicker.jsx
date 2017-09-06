@@ -3,12 +3,9 @@ import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
 class DatePickerRange extends Component {
-
   constructor() {
     super();
-    this.state = {
-      focused: false
-    };
+    this.state = {};
   }
 
   render() {

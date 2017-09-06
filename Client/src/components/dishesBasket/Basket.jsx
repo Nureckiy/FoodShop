@@ -20,10 +20,7 @@ class Basket extends Component {
     const child = this.renderChild();
     return (
       <div>
-        <Header
-          backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg"
-          className="cut"
-        />
+        <Header backgroundUrl="http://res.cloudinary.com/dum4mjc9q/image/upload/v1487340138/fon1_gex8nh.jpg" />
         <div className="container content">
           { child  }
         </div>
@@ -46,10 +43,11 @@ class Basket extends Component {
   }
 
   renderChild() {
-    const { auth, selectedDishes, clearSelected, changeConfiguration, getAvailableAddresses, availableAddresses } = this.props;
+    const { profile, selectedDishes, clearSelected, changeConfiguration, getAvailableAddresses,
+      availableAddresses, translate } = this.props;
     const { isFirstStep } = this.state;
     if (!selectedDishes.length) {
-      return <h2 className="cursive-font primary-color text-center">Корзина пуста</h2>;
+      return <h2 className="cursive-font primary-color text-center">{translate('basketIsEmpty')}</h2>;
     }
     return isFirstStep
       ? <EditSelectedList
@@ -57,15 +55,15 @@ class Basket extends Component {
         onChange={changeConfiguration}
         clearAll={clearSelected}
         onSubmit={this.goToNext}
-      />
+        translate={translate} />
       : <DeliveryDetailsForm
-        auth={auth}
+        profile={profile}
         onSubmit={this.addOrder}
         onBack={this.goBack}
         selected={selectedDishes}
         getAvailableAddresses={getAvailableAddresses}
         availableAddresses={availableAddresses}
-      />;
+        translate={translate} />;
   }
 }
 

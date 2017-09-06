@@ -2,6 +2,7 @@ import * as types from '../constants/BookingConstants';
 import service from '../service/service';
 import * as utils from '../utils/utils';
 import { createAsync } from './ActionCreator';
+import translations from '../sources/translations/translations';
 
 export function setCurrentRoomCategory(category) {
   return (dispatch) => {
@@ -48,13 +49,15 @@ export function getRooms(id, startDate, endDate) {
 }
 
 export function addRoom(room) {
-  return(dispatch) => {
+  return(dispatch, getState) => {
     dispatch({
       type: types.ADD_ROOM,
       room
     });
     const filter = Object.assign({ roomId: room.id, ...utils.renderDateRange(room)});
     service.checkRoomAvailability(filter, success, fail);
+    const locale = getState().Intl.locale;
+    const messages = translations[locale].messages;
 
     function success(data, status) {
       if (data) {
@@ -65,7 +68,7 @@ export function addRoom(room) {
           status
         });
       } else {
-        fail({ message: 'номер недоступен в выбранный промежуток'}, status);
+        fail({ message: messages.roomIsUnavailable}, status);
       }
     }
 
@@ -89,30 +92,30 @@ export function deleteRoom(id) {
   };
 }
 
-export function createRoom(data) {
+export function createRoom(data, category) {
   return createAsync(service.addRoom,
     types.CREATE_ROOM,
     types.CREATE_ROOM_SUCCESS,
     types.CREATE_ROOM_FAIL,
-    data
+    data, { category }
   );
 }
 
-export function editRoom(data) {
+export function editRoom(data, category) {
   return createAsync(service.editRoom,
     types.EDIT_ROOM,
     types.EDIT_ROOM_SUCCESS,
     types.EDIT_ROOM_FAIL,
-    data
+    data, { category }
   );
 }
 
-export function removeRoom(data) {
+export function removeRoom(id) {
   return createAsync(service.removeRoom,
     types.REMOVE_ROOM,
     types.REMOVE_ROOM_SUCCESS,
     types.REMOVE_ROOM_FAIL,
-    data
+    id, { id }
   );
 }
 
@@ -142,20 +145,20 @@ export function createRoomCategory(data) {
   );
 }
 
-export function editRoomCategory(data) {
+export function editRoomCategory(id) {
   return createAsync(service.editRoomCategory,
     types.EDIT_ROOM_CATEGORY,
     types.EDIT_ROOM_CATEGORY_SUCCESS,
     types.EDIT_ROOM_CATEGORY_FAIL,
-    data
+    id
   );
 }
 
-export function removeRoomCategory(data) {
+export function removeRoomCategory(id) {
   return createAsync(service.removeRoomCategory,
     types.REMOVE_ROOM_CATEGORY,
     types.REMOVE_ROOM_CATEGORY_SUCCESS,
     types.REMOVE_ROOM_CATEGORY_FAIL,
-    data
+    id, { id }
   );
 }

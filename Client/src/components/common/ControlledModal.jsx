@@ -1,55 +1,36 @@
-import React, { Component } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React from 'react';
+import { Modal, Button, Collapse, Alert } from 'react-bootstrap';
 
-class ControlledModal extends Component {
-  constructor() {
-    super();
-    this.state = {
-      show: false
-    };
-    this.toggle = this.toggle.bind(this);
-  }
+const ControlledModal = props => (
+  <Modal show={ props.show }>
+    <Modal.Header className="no-border">
+      <Modal.Title>{ props.title }</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>{ props.children }</Modal.Body>
+    <Modal.Footer className="no-border buttons">
+      <Collapse in={!!props.error}>
+        <Alert bsStyle="danger">
+          <p>{ props.error }</p>
+        </Alert>
+      </Collapse>
+      <Button onClick={ props.close }>{props.translate('cancel')}</Button>
+      <Button {...renderSubmitOptions(props.onSubmit, props.children)} bsStyle="primary" >{props.translate('submit')}</Button>
+    </Modal.Footer>
+  </Modal>
+);
 
-  render() {
-    const { show } = this.state;
-    const submitOptions = this.renderSubmitOptions();
-    return (
-      <Modal show={ show }>
-        <Modal.Header className="no-border">
-          <Modal.Title>{ this.getTitle() }</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{ this.renderChild() }</Modal.Body>
-        <Modal.Footer className="no-border buttons">
-          <Button onClick={ this.toggle }>Отмена</Button>
-          <Button {...submitOptions} >Добавить</Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
+function renderSubmitOptions(onSubmit, children) {
+  let options = {};
+  options.form = getFormId(children);
+  options.onClick = onSubmit;
+  options.type = 'submit';
+  return options;
+}
 
-  toggle() {
-    const show = !this.state.show;
-    this.setState({ show });
-  }
-
-  renderSubmitOptions() {
-    const { onSubmit } = this.props;
-    const children = this.renderChild();
-    let options = {};
-    if (children && children.props.formId) options.form = children.props.formId;
-    options.onClick = onSubmit;
-    options.type = 'submit';
-    return options;
-  }
-
-  renderChild() {
-    const { children } = this.props;
-    return children;
-  }
-
-  getTitle() {
-    return this.props.title;
-  }
+function getFormId(children) {
+  if (!children) return;
+  const firstChild = React.Children.toArray(children)[0];
+  return firstChild.props.formId;
 }
 
 export default ControlledModal;

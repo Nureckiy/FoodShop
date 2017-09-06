@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Glyphicon } from 'react-bootstrap';
 
-import * as utils from '../../utils/utils';
-
 class FieldArray extends Component {
   constructor() {
     super();
@@ -54,7 +52,7 @@ const renderFieldsGroup = (values, children, handleChange) => {
     values = Object.assign({}, values, { [id]: value });
     handleChange(values);
   }
-  return utils.mapChildren(children, (child, key) =>
+  return React.Children.map(children, (child, key) =>
     React.cloneElement(child, { key, value: values[child.props.id], onChange })
   );
 };

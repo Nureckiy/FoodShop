@@ -1,6 +1,5 @@
-/*eslint no-unused-vars: "off"*/
 import React, { Component } from 'react';
-import { FormGroup, Alert, Button, Fade } from 'react-bootstrap';
+import { FormGroup, Alert, Fade, Button } from 'react-bootstrap';
 
 import ControlledForm from '../common/ControlledForm.jsx';
 import Field from '../common/Field.jsx';
@@ -17,6 +16,7 @@ class BookingDetailsForm extends Component {
 
   render() {
     const { error } = this.state;
+    const { translate } = this.props;
     const initial = getInitialValues();
     return (
       <ControlledForm className="col-sm-12" initialValues={initial} onSubmit={this.handleSubmit}>
@@ -24,22 +24,22 @@ class BookingDetailsForm extends Component {
           <Field
             id="name"
             type="text"
-            label="Имя"
-            placeholder="Ваше имя"
+            label={translate('name')}
+            placeholder={translate('enterName')}
             required
           />
           <Field
             id="surname"
             type="text"
-            label="Фамилия"
-            placeholder="Ваша фамилия"
+            label={translate('surname')}
+            placeholder={translate('enterSurname')}
             required
           />
           <Field
             id="patronymic"
             type="text"
-            label="Отчество"
-            placeholder="Ваше отчество"
+            label={translate('patronymic')}
+            placeholder={translate('enterPatronymic')}
             required
           />
         </FormGroup>
@@ -47,28 +47,28 @@ class BookingDetailsForm extends Component {
           <Field
             id="email"
             type="email"
-            placeholder="Ваш e-mail"
-            label="Email"
+            placeholder={translate('enterEmail')}
+            label={translate('email')}
             required
           />
           <Field
             id="phone"
             type="text"
-            label="Телефон"
-            placeholder="Введите номер в формате: 80291234567"
+            label={translate('phone')}
+            placeholder={translate('enterPhoneInFormat')}
             pattern="8[0-9]{10}"
             required
           />
         </FormGroup>
         <div className="col-sm-12 date-form">
-          <button type="submit" className="btn btn-orange col-md-3 col-md-offset-5">Забронировать</button>
+          <Button type="submit" bsStyle="primary col-md-4 col-md-offset-4 col-xs-12">{translate('bookIt')}</Button>
         </div>
         <div className="date-form col-sm-12">
           <Fade in={!!error}>
             <Alert bsStyle="danger">
-              <button type="button" className="close" aria-label="Close" onClick={this.hideErrorMsg}>
+              <Button type="button" bsStyle="primary icon" aria-label="close" onClick={this.hideErrorMsg}>
                 <span aria-hidden="true">&times;</span>
-              </button>
+              </Button>
               <p>{ error }</p>
             </Alert>
           </Fade>
@@ -86,12 +86,12 @@ class BookingDetailsForm extends Component {
   }
 
   handleSubmit(details) {
-    const { book, selectedRooms } = this.props;
+    const { book, selectedRooms, translate } = this.props;
     if(selectedRooms.length) {
       book({ roomBookings: utils.parseRoomBooking(selectedRooms), ...details });
       history.push('summary/booking');
     } else {
-      this.showErrorMsg('Выберите хотя-бы один номер');
+      this.showErrorMsg(translate('noRoomsSelected'));
     }
   }
 }

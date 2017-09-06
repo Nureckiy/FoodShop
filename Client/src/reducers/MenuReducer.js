@@ -35,7 +35,7 @@ export default function MenuReducer(state = initialState, action) {
     case types.SELECT_DISH:
       return {
         ...state,
-        selectedDishes: utils.mergeDishToArray(state.selectedDishes, action.good)
+        selectedDishes: utils.mergeDishToSelectedArray(state.selectedDishes, action.good)
       };
 
     case types.CLEAR_SELECTED_DISHES:
@@ -66,6 +66,19 @@ export default function MenuReducer(state = initialState, action) {
       return {
         ...state,
         availableAddresses: action.data
+      };
+
+    case types.CREATE_DISH_SUCCESS:
+    case types.EDIT_DISH_SUCCESS:
+      return {
+        ...state,
+        dishes: utils.mergeReturnedItem(state.dishes, action.data, action.currentCategory)
+      };
+
+    case types.REMOVE_DISH_SUCCESS:
+      return {
+        ...state,
+        dishes: utils.removeElementFromArrayById(state.dishes, action.id)
       };
 
     default:

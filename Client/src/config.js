@@ -4,7 +4,9 @@ const config = {
     clientId: 'ORh8V4VtMHrvqod6rsxAx8RW9psns0v1',
     domain: 'nureckiy.eu.auth0.com'
   },
-  popularGoodsCount: 6
+  popularGoodsCount: 6,
+  orderItemsCount: 10,
+  bookingItemsCount: 10,
 };
 
 export default config;

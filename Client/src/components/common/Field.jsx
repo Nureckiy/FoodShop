@@ -1,44 +1,41 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
-class Field extends Component {
-  render() {
-    const { help, type, value } = this.props;
-    let { className } = this.props;
-    if (!className) {
-      className = '';
-    }
-    const label = this.renderLabel();
-    let inputOptions = this.props;
-    delete inputOptions.section;
+const Field = props => {
+  const { help, type, value, className } = props;
+  const label = <Label {...props} />;
+  let inputOptions = props;
+  delete inputOptions.section;
+  return (
+    <span className={composeClassName(className)}>
+      { type !== 'checkbox' && label }
+      <FormControl {...inputOptions} value={value ? value : ''} />
+      { type === 'checkbox' && label }
+      {help && <HelpBlock>{help}</HelpBlock>}
+    </span>
+  );
+};
+
+const Label = props => {
+  const { label, id, type, required, labelClass } = props;
+  if (!label) return null;
+  let labelClassName = composeClassName(labelClass,  required ? 'required ' : '' + 'check-label black');
+  if (type === 'checkbox') {
     return (
-      <span className={className}>
-        { type !== 'checkbox' && label }
-        <FormControl {...inputOptions} value={value ? value : ''} />
-        { type === 'checkbox' && label }
-        {help && <HelpBlock>{help}</HelpBlock>}
-      </span>
+      <ControlLabel id="samLabel" className={labelClassName} htmlFor={id}>
+        <span/>{label}
+      </ControlLabel>
     );
   }
+  return <ControlLabel htmlFor={id} className={labelClassName}>{label}</ControlLabel>;
+};
 
-  renderLabel() {
-    const { label, id, type, required } = this.props;
-    let { labelClass } = this.props;
-    if (!label) return;
-    labelClass = `${required?'required':''} ${labelClass}`;
-    if (type === 'checkbox') {
-      return <ControlLabel
-        id="samLabel"
-        className={'check-label black ' + labelClass}
-        htmlFor={id}
-      >
-        <span/>
-        {label}
-      </ControlLabel>;
-    }
-    return <ControlLabel htmlFor={id} className={labelClass}>{label}</ControlLabel>;
-  }
+function composeClassName(className, additional) {
+  let result = '';
+  if(className) result += className;
+  if(additional) result += ' ' + additional;
+  return result;
 }
 
 export default Field;

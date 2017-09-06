@@ -1,6 +1,4 @@
-/*eslint no-unused-vars: "off"*/
-
-import React, { Component } from 'react';
+import React from 'react';
 import { FormGroup, Button, Glyphicon } from 'react-bootstrap';
 
 import Field from '../common/Field.jsx';
@@ -10,71 +8,73 @@ import FieldArray from '../common/FieldArray';
 import * as utils from '../../utils/utils';
 import { mainCategories } from '!json!../../sources/appVariables.json';
 
-class DishControlForm extends Component {
-  render() {
-    const { onSubmit, formId, defaultCategory, initialValues, onRemove } = this.props;
-    let initial = initialValues;
-    if(!initial) {
-      const category = defaultCategory ? defaultCategory : Object.keys(mainCategories)[0];
-      initial = { category };
-    }
-    return (
-      <ControlledForm onSubmit={ onSubmit } id={ formId } initialValues={ initial }>
-        { onRemove && <Button bsStyle="danger" onClick={() => onRemove(initial.id)}>Удалить</Button> }
-        <FormGroup>
+const DishControlForm = ({formId, defaultCategory, initialValues, onRemove, onSubmit, translate}) => {
+  let portions;
+  return (
+    <ControlledForm onSubmit={ onSubmit } id={ formId } initialValues={ transformInitial(initialValues, defaultCategory) }>
+      { onRemove && <Button bsStyle="danger" onClick={() => onRemove(initialValues.id)}>{translate('remove')}</Button> }
+      <FormGroup>
+        <Field
+          id="name"
+          type="text"
+          label={translate('itemName')}
+          required
+        />
+        <Field
+          id="description"
+          type="text"
+          label={translate('description')}
+        />
+        <Field
+          id="imageUrl"
+          type="text"
+          label={translate('imgLink')}
+        />
+        <Select
+          id="category"
+          label={translate('type')}
+          defaultValue={defaultCategory}
+          options={utils.renderObjectOptions(mainCategories)}
+          required
+        />
+      </FormGroup>
+      <h4>{translate('portions')}</h4>
+      <FormGroup>
+        <FieldArray id="dishPortions" ref={(input) => portions = input}>
           <Field
-            id="name"
+            id="size"
             type="text"
-            label="Название"
+            label={translate('size')}
+          />
+          <Field
+            id="weight"
+            type="text"
+            label={translate('weight')}
+          />
+          <Field
+            id="price"
+            type="number"
+            label={translate('price') + ', $'}
+            min="0"
+            step="0.01"
             required
           />
-          <Field
-            id="description"
-            type="text"
-            label="Описание"
-          />
-          <Field
-            id="imageUrl"
-            type="text"
-            label="Ссылка на изображение"
-          />
-          <Select
-            id="category"
-            label="Тип"
-            defaultValue={defaultCategory}
-            options={utils.renderObjectOptions(mainCategories)}
-            required
-          />
-        </FormGroup>
-        <h4>Порции</h4>
-        <FormGroup>
-          <FieldArray id="dishPortions" ref="portions">
-            <Field
-              id="size"
-              type="text"
-              label="Размер"
-            />
-            <Field
-              id="weight"
-              type="text"
-              label="Вес"
-            />
-            <Field
-              id="price"
-              type="number"
-              label="Стоимость, $"
-              min="0"
-              step="0.01"
-              required
-            />
-          </FieldArray>
-          <Button bsStyle="success" bsClass="small btn" onClick={() => this.refs.portions.pushField()}>
-            <Glyphicon glyph="plus" />
-          </Button>
-        </FormGroup>
-      </ControlledForm>
-    );
+        </FieldArray>
+        <Button bsStyle="success" bsClass="small btn" onClick={() => portions.pushField()}>
+          <Glyphicon glyph="plus" />
+        </Button>
+      </FormGroup>
+    </ControlledForm>
+  );
+};
+
+const transformInitial = (initial, defaultCategory) => {
+  if(!initial) {
+    initial = { category: defaultCategory
+      ? defaultCategory
+      : Object.keys(mainCategories)[0]  };
   }
-}
+  return initial;
+};
 
 export default DishControlForm;

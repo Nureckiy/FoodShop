@@ -50,6 +50,19 @@ export default function RoomsReducer(state = initialState, action) {
         currentRoomCategory: action.data
       };
 
+    case types.CREATE_ROOM_CATEGORY_SUCCESS:
+    case types.EDIT_ROOM_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        roomCategories: utils.mergeElementToArrayById(state.roomCategories, action.data)
+      };
+
+    case types.REMOVE_ROOM_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        roomCategories: utils.removeElementFromArrayById(state.roomCategories, action.id)
+      };
+
     case types.GET_ROOMS:
       return {
         ...state,
@@ -73,26 +86,39 @@ export default function RoomsReducer(state = initialState, action) {
     case types.ADD_ROOM_SUCCESS:
       return {
         ...state,
-        selectedRooms: utils.mergeElementToArray(state.selectedRooms, removeProperty(action.room, 'error'))
+        selectedRooms: utils.mergeElementToArrayById(state.selectedRooms, removeProperty(action.room, 'error'))
       };
 
     case types.ADD_ROOM_FAIL:
       return {
         ...state,
-        filteredRooms: utils.mergeElementToArray(state.filteredRooms, { ...action.room, error: action.error }),
-        selectedRooms: utils.removeElementFromArray(state.selectedRooms, action.room.id)
+        filteredRooms: utils.mergeElementToArrayById(state.filteredRooms, { ...action.room, error: action.error }),
+        selectedRooms: utils.removeElementFromArrayById(state.selectedRooms, action.room.id)
       };
 
     case types.DELETE_ROOM:
       return {
         ...state,
-        selectedRooms: utils.removeElementFromArray(state.selectedRooms, action.id)
+        selectedRooms: utils.removeElementFromArrayById(state.selectedRooms, action.id)
       };
 
     case types.CLEAR_SELECTED_ROOMS:
       return {
         ...state,
         selectedRooms: []
+      };
+
+    case types.CREATE_ROOM_SUCCESS:
+    case types.EDIT_ROOM_SUCCESS:
+      return {
+        ...state,
+        filteredRooms: utils.mergeReturnedItem(state.filteredRooms, action.data, state.currentRoomCategory.name)
+      };
+
+    case types.REMOVE_ROOM_SUCCESS:
+      return {
+        ...state,
+        filteredRooms: utils.removeElementFromArrayById(state.filteredRooms, action.id)
       };
 
     case types.BOOK_SUCCESS:

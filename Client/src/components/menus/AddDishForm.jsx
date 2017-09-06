@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Form } from 'react-bootstrap';
+
 import Select from '../common/Select.jsx';
 import * as utils from '../../utils/utils';
 
@@ -25,7 +26,7 @@ class AddDishForm extends Component {
   }
 
   render() {
-    const { formId,  model: { dishPortions } } = this.props;
+    const { formId,  model: { dishPortions }, translate } = this.props;
     const { currentSelected } = this.state;
     const values = utils.renderNumberOptions(10);
     return (
@@ -33,10 +34,10 @@ class AddDishForm extends Component {
         <Table responsive className="options-table">
           <thead>
           <tr>
-            <th>Цена</th>
-            <th>Вес</th>
-            <th>Размер</th>
-            <th>Количество</th>
+            <th>{translate('price')}</th>
+            <th>{translate('weight')}</th>
+            <th>{translate('size')}</th>
+            <th>{translate('quantity')}</th>
           </tr>
           </thead>
           <tbody>

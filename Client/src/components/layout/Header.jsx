@@ -1,25 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Header extends Component {
-  render() {
-    const { backgroundUrl, title, subtitle } = this.props;
-    let { className } = this.props;
-    if(!className) {
-      className = '';
-    }
-    return (
-      <header
-        style={{ 'backgroundImage': `url(${backgroundUrl})` }}
-        className={'row ' + className}
-        role="banner"
-      >
-        <div className="middle overlay">
+const Header = (props) => {
+  const { backgroundUrl, title, subtitle } = props;
+  let { style } = props;
+  if (backgroundUrl) {
+    style = Object.assign({}, style, { backgroundImage: `url(${backgroundUrl})`});
+  }
+  return (
+    <header
+      style={style}
+      className={composeClassName()}
+      role="banner">
+      <div className="middle overlay">
+        {props.big && <span>
           <span className="intro-text-small">{subtitle}</span>
           <h1 className="cursive-font">{title}</h1>
-        </div>
-      </header>
-    );
+        </span>}
+      </div>
+    </header>
+  );
+
+  function composeClassName() {
+    let className = 'row ';
+    if (props.className) className += props.className;
+    if (props.big) className += ' banner';
+    return className;
   }
-}
+};
+
+
 
 export default Header;
