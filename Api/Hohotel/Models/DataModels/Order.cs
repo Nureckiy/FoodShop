@@ -24,6 +24,8 @@ namespace Hohotel.Models.DataModels
             get => _checkoutDate ?? DateTime.Now;
             set => _checkoutDate = value;
         }
+        public string StatusUpdatedBy { get; set; }
+        public DateTime? StatusUpdatedDate { get; set; }
         public DateTime? CompletionDate { get; set; }
     }
 }

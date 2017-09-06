@@ -6,8 +6,8 @@ namespace Hohotel.Enums
 {
     public enum DishTypes
     {
-        [EnumMember(Value = "salad")]
-        Salad = 1,
+        [EnumMember(Value = "salads")]
+        Salads = 1,
 
         [EnumMember(Value = "hot")]
         Hot = 2,

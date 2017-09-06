@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Hohotel.Enums;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Hohotel.Models.DataModels
 {

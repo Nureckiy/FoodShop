@@ -1,14 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Text;
 using AutoMapper;
+using Hohotel.Auth;
+using Hohotel.Middlewares;
 using Hohotel.Models;
 using Hohotel.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -31,6 +38,7 @@ namespace Hohotel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var domain = $"https://{Configuration["auth0:domain"]}/";
             services.Configure<AppConfiguration>(Configuration.GetSection("AppVariables"));
 
             // Add framework services.
@@ -49,6 +57,13 @@ namespace Hohotel
                 p.AllowAnyMethod();
                 p.AllowAnyHeader();
             }));
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("change:bookingStatus",
+                    policy => policy.Requirements.Add(new PermissionRequirement("change:bookingStatus", domain)));
+                options.AddPolicy("change:orderStatus",
+                    policy => policy.Requirements.Add(new PermissionRequirement("change:orderStatus", domain)));
+            });
 
             // Add application services.
             services.AddTransient<IRoomService, RoomService>();
@@ -73,7 +88,7 @@ namespace Hohotel
                 }
             };
             app.UseJwtBearerAuthentication(options);
-
+            app.UseExceptionMiddleware();
             app.UseCors("AllowAll");
             app.UseMvc();
         }

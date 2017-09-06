@@ -26,8 +26,7 @@ namespace Hohotel.Tests.Controllers
         [Fact]
         public void Get()
         {
-            var responce = new List<PreviewCategory>();
-            responce.Add(new PreviewCategory());
+            var responce = new List<PreviewCategory> {new PreviewCategory()};
 
             _service.Setup(s => s.GetRoomCategories()).Returns(responce);
 
@@ -51,8 +50,7 @@ namespace Hohotel.Tests.Controllers
         [Fact]
         public void InStock()
         {
-            var responce = new List<ItemInfo>();
-            responce.Add(new ItemInfo());
+            var responce = new List<ItemInfo> {new ItemInfo()};
 
             _service.Setup(s => s.GetCategoriesInfo()).Returns(responce);
 

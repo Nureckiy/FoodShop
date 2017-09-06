@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Hohotel.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Hohotel.Controllers
 {
@@ -42,6 +39,7 @@ namespace Hohotel.Controllers
         public void Book([FromBody]Booking booking)
         {
             booking.UserId = User.Identity.Name;
+            booking.StatusUpdatedDate = DateTime.Now;
             _service.Book(booking);
         }
 
@@ -61,8 +59,34 @@ namespace Hohotel.Controllers
             return _service.GetUserBookings(User.Identity.Name);
         }
 
+        // POST api/room/allBookings
+        [Authorize(Roles = "hotel-manager")]
+        [HttpGet("sort")]
+        public PaginationModel<BookingView> Sort(int? pageNumber, int? itemsCount)
+        {
+            return _service.GetBookings(pageNumber, itemsCount);
+        }
+
+        // PUT api/room/bookingStatus
+        [Authorize("change:bookingStatus")]
+        [HttpPut("bookingStatus")]
+        public BookingView ChangeBookingStatus([FromBody]UpdateStatusModel updateModel)
+        {
+            if (updateModel.Status == OrderStatus.Closed)
+            {
+                updateModel.CompletionDate = DateTime.Now;
+            }
+            else
+            {
+                updateModel.CompletionDate = null;
+            }
+            updateModel.StatusUpdatedBy = User.Identity.Name;
+            updateModel.StatusUpdatedDate = DateTime.Now;
+            return _service.ChangeStatus(updateModel);
+        }
+
         // POST api/room
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public Room Post([FromBody]Room room)
         {
@@ -74,7 +98,7 @@ namespace Hohotel.Controllers
         }
 
         // PUT api/room
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpPut]
         public Room Put([FromBody]Room room)
         {
@@ -84,7 +108,7 @@ namespace Hohotel.Controllers
         }
 
         // DELETE api/room/1
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

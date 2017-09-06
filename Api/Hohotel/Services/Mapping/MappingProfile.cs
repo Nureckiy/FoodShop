@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 
@@ -47,6 +43,10 @@ namespace Hohotel.Services.Mapping
                 .ForMember(r => r.Price, o => o.MapFrom(rb => rb.Room.Price));
 
             CreateMap<RoomCategory, ItemInfo>();
+
+            CreateMap<UpdateStatusModel, Booking>();
+
+            CreateMap<UpdateStatusModel, Order>();
         }
     }
 }

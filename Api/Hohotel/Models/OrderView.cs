@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Hohotel.Enums;
+﻿using System.Collections.Generic;
 using Hohotel.Models.DataModels;
 
 namespace Hohotel.Models

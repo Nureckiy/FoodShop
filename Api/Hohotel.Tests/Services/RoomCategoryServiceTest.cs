@@ -21,7 +21,6 @@ namespace Hohotel.Tests.Services
         public RoomCategoryServiceTest()
         {
             _context = new Mock<HohotelContext>();
-            AutoMapper.Mapper.Initialize(a => a.AddProfile<MappingProfile>());
             var mapper = AutomapperConfig.Initialize();
             _service = new RoomCategoryService(_context.Object, mapper);
         }
@@ -46,9 +45,11 @@ namespace Hohotel.Tests.Services
         public void GetRoomCategoryById_MatchedId_ReturnElement()
         {
             var categories = TestData.Create.RoomCategories(3);
-            var rooms = new List<Room>();
-            rooms.Add(TestData.Create.Room(category: categories[1], imageUrl: "first img", price: 15.15m));
-            rooms.Add(TestData.Create.Room(category: categories[1], imageUrl: "second img", price: 0.15m));
+            var rooms = new List<Room>
+            {
+                TestData.Create.Room(category: categories[1], imageUrl: "first img", price: 15.15m),
+                TestData.Create.Room(category: categories[1], imageUrl: "second img", price: 0.15m)
+            };
 
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(rooms.ToArray()).Object);
             _context.Setup(c => c.RoomCategories).Returns(DbSetMock.Create(categories.ToArray()).Object);

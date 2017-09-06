@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 
@@ -17,7 +14,11 @@ namespace Hohotel.Services
 
         IList<BookingView> GetUserBookings(string userId);
 
+        PaginationModel<BookingView> GetBookings(int? pageNumber, int? itemsCount);
+
         IList<string> GetActive(string userId);
+
+        BookingView ChangeStatus(UpdateStatusModel updateModel);
 
         Room AddRoom(Room room);
 

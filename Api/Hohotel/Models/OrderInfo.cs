@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Hohotel.Models.DataModels;
 
 namespace Hohotel.Models
@@ -15,6 +13,7 @@ namespace Hohotel.Models
         public string UserName { get; set; }
         public string Surname { get; set; }
         public bool TakeAway { get; set; }
+        public DateTime StatusUpdatedDate { get; set; }
         public IList<DishPortionOrder> Portions { get; set; }
     }
 }

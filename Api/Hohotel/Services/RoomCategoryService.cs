@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hohotel.Services
@@ -48,7 +45,7 @@ namespace Hohotel.Services
             {
                 var rooms = _context.Rooms.Where(room => room.Category.Id == id);
                 result.MinPrice = rooms.Select(room => room.Price).DefaultIfEmpty().Min();
-                result.Images = rooms.Select(room => room.ImageUrl);
+                result.Images = rooms.Select(room => room.ImageUrl).Where(img => img != null);
             }
             return result;
         }

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Hohotel.Controllers;
+using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Hohotel.Services;
@@ -73,8 +75,7 @@ namespace Hohotel.Tests.Controllers
         [Fact]
         public void Bookings()
         {
-            var responce = new List<BookingView>();
-            responce.Add(new BookingView() {Name = "some name"});
+            var responce = new List<BookingView> {new BookingView() {Name = "some name"}};
 
             _service.Setup(s => s.GetUserBookings(It.IsAny<string>())).Returns(responce);
 
@@ -82,6 +83,42 @@ namespace Hohotel.Tests.Controllers
 
             Assert.Equal(responce, result);
             _service.Verify(s => s.GetUserBookings("test user"));
+        }
+
+        [Fact]
+        public void AllBookings()
+        {
+            var responce = new List<BookingView> { new BookingView() { Name = "some name" } };
+
+            _service.Setup(s => s.GetBookings()).Returns(responce);
+
+            var result = _controller.Sort();
+
+            Assert.Equal(responce, result);
+        }
+
+        [Fact]
+        public void BookingStatus()
+        {
+            var responce = new BookingView() {Name = "some name"};
+            var request = new UpdateStatusModel()
+            {
+                CompletionDate = new DateTime(2017)
+            };
+
+            _service.Setup(s => s.ChangeStatus(It.IsAny<UpdateStatusModel>())).Returns(responce);
+
+            var result = _controller.ChangeBookingStatus(request);
+
+            Assert.Equal(responce, result);
+            Assert.Equal("test user", request.StatusUpdatedBy);
+            Assert.NotNull(request.StatusUpdatedDate);
+            Assert.Null(request.CompletionDate);
+
+            request.Status = OrderStatus.Closed;
+            _controller.ChangeBookingStatus(request);
+
+            Assert.NotNull(request.CompletionDate);
         }
 
         [Fact]

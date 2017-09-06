@@ -29,7 +29,7 @@ namespace Hohotel.Tests.Services
         [Fact]
         public void PlaceOrder_FilledObject_ShouldSaveToDatabase()
         {
-            var portions = TestData.Create.DishPortionOrders(3, 2, 0);
+            var portions = TestData.Create.DishPortionOrders(3, 2);
             var orderInfo = TestData.Create.OrderInfo(portions: portions);
             var portion = TestData.Create.DishPortion(price: 10.99m);
             var orderMock = DbSetMock.Create(new Order());
@@ -41,8 +41,8 @@ namespace Hohotel.Tests.Services
             
             orderMock.Verify(m => m.Add(It.IsAny<Order>()), Times.Once);
             _context.Verify(c => c.SaveChanges(), Times.Once);
-            Assert.Equal(order.Total, 65.94m);
-            Assert.Equal(order.Status, OrderStatus.Opened);
+            Assert.Equal(65.94m, order.Total);
+            Assert.Equal(OrderStatus.Opened, order.Status);
         }
 
         [Fact]
@@ -68,6 +68,19 @@ namespace Hohotel.Tests.Services
         }
 
         [Fact]
+        public void GetOrders()
+        {
+            var orders = TestData.Create.Orders(3);
+
+            _context.Setup(c => c.Orders).Returns(DbSetMock.Create(orders.ToArray()).Object);
+
+            var result = _service.GetOrders();
+
+            Assert.Equal(3, result.Count);
+            Assert.All(result, item => Assert.Equal(OrderStatus.NotStarted, item.Status));
+        }
+
+        [Fact]
         public void CountTotal_SingleObject()
         {
             var portion = TestData.Create.DishPortion(price: 10.17m);
@@ -79,9 +92,11 @@ namespace Hohotel.Tests.Services
         public void CountTotal_ListObjects()
         {
             var portion = TestData.Create.DishPortion(price: 10.17m);
-            var portionOrders = new List<DishPortionOrder>();
-            portionOrders.Add(TestData.Create.DishPortionOrder(3, dishPortion: portion));
-            portionOrders.Add(TestData.Create.DishPortionOrder(2, dishPortion: portion));
+            var portionOrders = new List<DishPortionOrder>
+            {
+                TestData.Create.DishPortionOrder(3, dishPortion: portion),
+                TestData.Create.DishPortionOrder(2, dishPortion: portion)
+            };
             Assert.Equal(50.85m, _service.CountTotal(portionOrders));
         }
     }

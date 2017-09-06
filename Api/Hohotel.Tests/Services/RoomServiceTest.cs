@@ -5,6 +5,7 @@ using Hohotel.Enums;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Hohotel.Services;
+using Hohotel.Services.Mapping;
 using Hohotel.Tests.Factories;
 using Hohotel.Tests.Factories.Models;
 using Hohotel.Tests.Helper;
@@ -12,7 +13,7 @@ using Hohotel.Tests.Mapper;
 using Xunit;
 using Moq;
 
-namespace Hohotel.Tests
+namespace Hohotel.Tests.Services
 {
     public class RoomServiceTest
     {
@@ -176,11 +177,72 @@ namespace Hohotel.Tests
             _context.Setup(c => c.Rooms).Returns(DbSetMock.Create(room).Object);
             _context.Setup(c => c.Bookings).Returns(bookingsMock.Object);
             
-            _service.Book(booking);
+            var result = _service.Book(booking);
 
             bookingsMock.Verify(m => m.Add(It.IsAny<Booking>()), Times.Once);
             _context.Verify(m => m.SaveChanges(), Times.Once);
-            Assert.Equal(room, booking.RoomBookings[0].Room);
+            Assert.Equal(room, result.RoomBookings[0].Room);
+        }
+
+        [Fact]
+        public void GetBookings()
+        {
+            var bookings = TestData.Create.Bookings(3);
+
+            _context.Setup(c => c.Bookings).Returns(DbSetMock.Create(bookings.ToArray()).Object);
+
+            var result = _service.GetBookings();
+
+            Assert.Equal(3, result.Count);
+            Assert.All(result, item => Assert.Equal(OrderStatus.NotStarted, item.Status));
+        }
+
+        [Fact]
+        public void ChageStatus()
+        {
+            var bookings = TestData.Create.Bookings(3);
+            var bookingsMock = DbSetMock.Create(bookings.ToArray());
+
+            var updateStatusModel = new UpdateStatusModel
+            {
+                Id = 1,
+                Status = OrderStatus.Approved,
+                StatusUpdatedBy = "some user",
+                StatusUpdatedDate = new DateTime(2017, 1, 1)
+            };
+
+            _context.Setup(c => c.Bookings).Returns(bookingsMock.Object);
+
+            //var result = _service.ChangeStatus(updateStatusModel);
+
+            //Assert.Equal(updateStatusModel.Id, result.Id);
+            //Assert.Equal(updateStatusModel.Status, result.Status);
+            //Assert.Equal(updateStatusModel.StatusUpdatedBy, result.StatusUpdatedBy);
+            //Assert.Equal(updateStatusModel.StatusUpdatedDate, result.StatusUpdatedDate);
+            //bookingsMock.Verify(bm => bm.Update(It.IsAny<Booking>()), Times.Once);
+            //_context.Verify(c => c.SaveChanges(), Times.Once);
+        }
+
+        [Fact]
+        public void ChageStatus_ChangeFromCompleted_ThrowError()
+        {
+            var bookings = new[]
+            {
+                new Booking(),
+                new Booking() { Id = 1, Status = OrderStatus.Closed }
+            };
+            var updateStatusModel = new UpdateStatusModel
+            {
+                Id = 1,
+                Status = OrderStatus.Approved
+            };
+            var bookingsMock = DbSetMock.Create(bookings.ToArray());
+
+            _context.Setup(c => c.Bookings).Returns(bookingsMock.Object);
+
+            Exception validationException = Assert.Throws<ArgumentException>(() => _service.ChangeStatus(updateStatusModel));
+
+            Assert.Equal("Can't change status from closed", validationException.Message);
         }
 
         [Fact]

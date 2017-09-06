@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Hohotel.Tests.Factories
+﻿namespace Hohotel.Tests.Factories
 {
     public interface ITestDataFactory
     {

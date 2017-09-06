@@ -4,9 +4,11 @@ using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Hohotel.Enums;
+using Hohotel.Exceptions;
 using Hohotel.Models;
 using Hohotel.Models.DataModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Hohotel.Services
 {
@@ -14,11 +16,13 @@ namespace Hohotel.Services
     {
         private readonly HohotelContext _context;
         private readonly IMapper _mapper;
+        private readonly AppConfiguration _configuration;
 
-        public RoomService(HohotelContext context, IMapper mapper)
+        public RoomService(HohotelContext context, IMapper mapper, IOptions<AppConfiguration> configuration)
         {
             _context = context;
             _mapper = mapper;
+            _configuration = configuration.Value;
         }
 
         public IList<Room> Filter(RoomFilter filter)
@@ -32,7 +36,8 @@ namespace Hohotel.Services
                 .Where(room => room.Category.Id == filter.CategoryId &&
                     (filter.EndDate == null ||
                     !room.RoomBookings.Any(roomBooking =>
-                        (roomBooking.Booking.Status == OrderStatus.NotStarted || roomBooking.Booking.Status == OrderStatus.Opened) &&
+                        roomBooking.Booking.Status != OrderStatus.Closed &&
+                        roomBooking.Booking.Status != OrderStatus.Canceled &&
                         filter.StartDate < roomBooking.EndDate &&
                         filter.EndDate > roomBooking.StartDate
                     ))
@@ -48,8 +53,8 @@ namespace Hohotel.Services
             }
             var isAvailable = !_context.Rooms.Any(room => 
                  room.Id == roomBooking.RoomId && room.RoomBookings.Any(booking =>
-                    (booking.Booking.Status == OrderStatus.NotStarted ||
-                    booking.Booking.Status == OrderStatus.Opened) &&
+                    booking.Booking.Status != OrderStatus.Closed &&
+                    booking.Booking.Status != OrderStatus.Canceled &&
                     roomBooking.StartDate < booking.EndDate &&
                     roomBooking.EndDate > booking.StartDate
                 ));
@@ -58,6 +63,10 @@ namespace Hohotel.Services
 
         public Booking Book(Booking booking)
         {
+            if (booking.RoomBookings.Any(rb => !IsAvailable(rb)))
+            {
+                throw new UnavailableException("One or more rooms are not available in the selected period");
+            }
             booking.RoomBookings.ToList()
                 .ForEach(roomBooking => 
                     roomBooking.Room = _context.Rooms.Single(room => room.Id == roomBooking.RoomId));
@@ -71,8 +80,27 @@ namespace Hohotel.Services
         {
             return _context.Bookings
                 .Where(booking => booking.UserId == userId)
+                .OrderByDescending(booking => booking.StatusUpdatedDate)
                 .ProjectTo<BookingView>(_mapper)
                 .ToList();
+        }
+
+        public PaginationModel<BookingView> GetBookings(int? pageNumber, int? itemsCount)
+        {
+            var takePage = pageNumber ?? 1;
+            var takeCount = itemsCount ?? _configuration.DefaultPageRecordCount;
+            var bookings = _context.Bookings
+                .OrderByDescending(booking => booking.StatusUpdatedDate)
+                .ProjectTo<BookingView>(_mapper)
+                .Skip((takePage - 1) * takeCount)
+                .Take(takeCount)
+                .ToList();
+            var allBookingsCount = _context.Bookings.Count();
+            return new PaginationModel<BookingView>
+            {
+                Items = bookings,
+                TotalItems = allBookingsCount
+            };
         }
 
         public IList<string> GetActive(string userId)
@@ -82,11 +110,27 @@ namespace Hohotel.Services
                 .Include("RoomBookings")
                 .Where(room => room.RoomBookings.Any(booking =>
                     booking.Booking.UserId == userId &&
-                    booking.Booking.Status == OrderStatus.Opened &&
+                    booking.Booking.Status != OrderStatus.Closed &&
+                    booking.Booking.Status != OrderStatus.Canceled &&
                     booking.StartDate <= now
                     && booking.EndDate >= now))
                 .Select(room => room.Address)
                 .ToList();
+        }
+
+        public BookingView ChangeStatus(UpdateStatusModel updateModel)
+        {
+            var booking = _context.Bookings.Find(updateModel.Id);
+            if (booking.Status == OrderStatus.Closed)
+            {
+                throw new ArgumentException("Can't change status from closed");
+            }
+            _mapper.Map(updateModel, booking);
+            _context.Bookings.Update(booking);
+            _context.SaveChanges();
+            return _context.Bookings
+                .ProjectTo<BookingView>(_mapper)
+                .Single(b => b.Id == booking.Id);
         }
 
         public Room AddRoom(Room room)
