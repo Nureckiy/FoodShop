@@ -2,6 +2,7 @@ import * as types from '../constants/BookingConstants';
 import service from '../service/service';
 import * as utils from '../utils/utils';
 import { createAsync } from './ActionCreator';
+import translations from '../sources/translations/translations';
 
 export function setCurrentRoomCategory(category) {
   return (dispatch) => {
@@ -48,13 +49,15 @@ export function getRooms(id, startDate, endDate) {
 }
 
 export function addRoom(room) {
-  return(dispatch) => {
+  return(dispatch, getState) => {
     dispatch({
       type: types.ADD_ROOM,
       room
     });
     const filter = Object.assign({ roomId: room.id, ...utils.renderDateRange(room)});
     service.checkRoomAvailability(filter, success, fail);
+    const locale = getState().Intl.locale;
+    const messages = translations[locale].messages;
 
     function success(data, status) {
       if (data) {
@@ -65,7 +68,7 @@ export function addRoom(room) {
           status
         });
       } else {
-        fail({ message: 'номер недоступен в выбранный промежуток'}, status);
+        fail({ message: messages.roomIsUnavailable}, status);
       }
     }
 

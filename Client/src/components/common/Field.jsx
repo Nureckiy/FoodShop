@@ -20,7 +20,7 @@ const Field = props => {
 const Label = props => {
   const { label, id, type, required, labelClass } = props;
   if (!label) return null;
-  let labelClassName = composeClassName(labelClass, 'check-label black ' + required ? 'required' : '');
+  let labelClassName = composeClassName(labelClass,  required ? 'required ' : '' + 'check-label black');
   if (type === 'checkbox') {
     return (
       <ControlLabel id="samLabel" className={labelClassName} htmlFor={id}>

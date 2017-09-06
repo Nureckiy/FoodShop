@@ -2,11 +2,12 @@ import * as types from '../constants/ManageConstants';
 import service from '../service/service';
 import { createAsync } from './ActionCreator';
 
-export function getBookings() {
+export function getBookings(pageNumber, itemsCount) {
   return createAsync(service.getAllBookings,
-    types.GET_ALL_BOOKINGS,
-    types.GET_ALL_BOOKINGS_SUCCESS,
-    types.GET_ALL_BOOKINGS_FAIL
+    types.SORT_BOOKINGS,
+    types.SORT_BOOKINGS_SUCCESS,
+    types.SORT_BOOKINGS_FAIL,
+    { pageNumber, itemsCount }, { pageNumber }
   );
 }
 
@@ -19,11 +20,12 @@ export function changeBookingStatus(id, status) {
   );
 }
 
-export function getOrders() {
+export function getOrders(pageNumber, itemsCount) {
   return createAsync(service.getAllOrders,
-    types.GET_ALL_ORDERS,
-    types.GET_ALL_ORDERS_SUCCESS,
-    types.GET_ALL_ORDERS_FAIL
+    types.SORT_ORDERS,
+    types.SORT_ORDERS_SUCCESS,
+    types.SORT_ORDERS_FAIL,
+    { pageNumber, itemsCount }, { pageNumber }
   );
 }
 

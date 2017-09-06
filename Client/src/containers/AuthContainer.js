@@ -6,8 +6,7 @@ import * as authActions from '../actions/AuthActions';
 
 class AuthContainer extends React.Component {
   componentDidMount() {
-    const { profile, authActions: { login, refreshProfile } } = this.props;
-    refreshProfile();
+    const { profile, authActions: { login } } = this.props;
     if (!profile) {
       login();
     }

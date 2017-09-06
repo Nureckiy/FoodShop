@@ -17,9 +17,9 @@ const BookingOrder = ({ selectedRooms, deleteRoom, clearSelectedRooms, book, tra
         </div>
       </div>
       {selectedRooms.map(room =>
-        <div key={room.id} className="row sample">
-          <RoomTile {...room} translate={translate} className="col-md-10 col-sm-12" />
-          <BookingSummaryControl onSubmit={deleteRoom} {...room} translate={translate} className="col-md-2 col-sm-4 date-form text-center" />
+        <div key={room.id} className="top-indent row sample">
+          <RoomTile {...room} translate={translate} className="col-md-9 col-sm-12 no-padding" />
+          <BookingSummaryControl onSubmit={deleteRoom} {...room} translate={translate} className="col-md-3 col-sm-5" />
         </div>
       )}
       <div className="row">

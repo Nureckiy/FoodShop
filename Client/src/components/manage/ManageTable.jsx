@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: "off"*/
 
 import React, { Component } from 'react';
-import { Table, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Table, Glyphicon, OverlayTrigger, Tooltip, Pagination } from 'react-bootstrap';
 
 import ExpandableTableBody from '../common/ExpandableTableBody.jsx';
 import LoadingComponent from '../common/LoadingComponent.jsx';
@@ -19,7 +19,7 @@ class ManageTable extends Component {
   }
 
   render() {
-    const { activeRequestStatus, items, titles } = this.props;
+    const { activeRequestStatus, items, titles, totalPagesCount, onPageChange, activePage } = this.props;
     return (
       <div className="container content">
         <div className="row">
@@ -37,6 +37,18 @@ class ManageTable extends Component {
               }
             </ExpandableTableBody>
           </Table>
+          <Pagination
+            prev
+            next
+            first
+            last
+            ellipsis
+            boundaryLinks
+            items={totalPagesCount}
+            maxButtons={5}
+            activePage={activePage}
+            onSelect={onPageChange}
+          />
         </div>
       </div>
     );

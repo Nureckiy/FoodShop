@@ -4,18 +4,20 @@ import { connect } from 'react-redux';
 import { IntlActions, withTranslate } from 'react-redux-multilingual';
 
 import * as actions from '../actions/AppActions';
+import { refreshProfile } from '../actions/AuthActions';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer.jsx';
 
 class App extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.updateLanguage(this.props);
+    this.props.refreshProfile();
   }
   componentWillReceiveProps(props) {
     this.updateLanguage(props);
   }
   updateLanguage({ auth }) {
-    if(auth.profile) {
+    if(auth.profile && auth.profile.user_metadata.language) {
       this.props.actions.setLocale(auth.profile.user_metadata.language);
     }
   }
@@ -40,7 +42,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Object.assign({}, actions, IntlActions), dispatch)
+    actions: bindActionCreators(Object.assign({}, actions, IntlActions), dispatch),
+    refreshProfile: () => dispatch(refreshProfile())
   };
 }
 

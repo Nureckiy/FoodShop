@@ -72,8 +72,8 @@ class DeliveryDetailsForm extends Component {
             }
           </FormGroup>
           <div className="col-sm-12 buttons text-center">
-            <Button bsStyle="primary">{translate('toOrder')}</Button>
             <Button type="button" onClick={onBack}>{translate('goBack')}</Button>
+            <Button type="submit" bsStyle="primary">{translate('toOrder')}</Button>
           </div>
         </ControlledForm>
         <ul className="col-md-6 total-list hidden-sm hidden-xs">

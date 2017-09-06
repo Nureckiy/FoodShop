@@ -8,7 +8,7 @@ import BookingsList from './BookingsList.jsx';
 import Activities from './Activities.jsx';
 
 const Profile = props => {
-  const { getBookings, getOrders, bookings, orders, profile, updateProfile, logout, translate } = props;
+  const { getBookings, getOrders, bookings, orders, profile, updateProfile, logout, translate, activeRequestStatus } = props;
   const profileInfo = Object.assign({ login: profile.name, email: profile.email, id: profile.user_id }, profile.user_metadata );
   return (
     <div>
@@ -29,8 +29,8 @@ const Profile = props => {
               <Tab.Content animation mountOnEnter unmountOnExit>
                 <Tab.Pane eventKey="1"><ViewProfile {...profileInfo} translate={translate} /></Tab.Pane>
                 <Tab.Pane eventKey="2"><EditProfile initial={profileInfo} onSubmit={updateProfile} translate={translate} /></Tab.Pane>
-                <Tab.Pane eventKey="3"><BookingsList load={getBookings} bookings={bookings} translate={translate} /></Tab.Pane>
-                <Tab.Pane eventKey="4"><Activities load={getOrders} orders={orders} translate={translate} /></Tab.Pane>
+                <Tab.Pane eventKey="3"><BookingsList load={getBookings} loading={activeRequestStatus} bookings={bookings} translate={translate} /></Tab.Pane>
+                <Tab.Pane eventKey="4"><Activities load={getOrders} loading={activeRequestStatus} orders={orders} translate={translate} /></Tab.Pane>
               </Tab.Content>
             </Col>
           </Row>

@@ -74,7 +74,7 @@ export function refreshProfile() {
     const profile = localStorage.getItem('profile');
     const token = localStorage.getItem('id_token');
     if (!token || isTokenExpired(token) || !profile) {
-      logout();
+      dispatch(logout());
     }
   };
 }

@@ -161,6 +161,16 @@ ul li {
   text-align: center;
 }
 
+.pagination {
+  li a {
+    color: #000;
+  }
+  .active a, .active a:active, .active a:hover, .active a:focus {
+    background-color: var(--main-color);
+    border-color: var(--active-color);
+  }
+}
+
 /******  navbar *********/
 
 nav {

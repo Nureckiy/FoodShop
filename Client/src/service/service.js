@@ -98,16 +98,16 @@ class service {
     return this.requestHelper.patchToExternal(`https://${data.domain}/api/v2/users/${data.user_id}`, data.values, success, fail);
   };
 
-  getAllBookings = (success, failed) => {
-    return this.requestHelper.getWithAjax('room/allBookings', '', success, failed);
+  getAllBookings = (data, success, failed) => {
+    return this.requestHelper.getWithAjax('room/sort', data, success, failed);
   };
 
   changeBookingStatus = (data, success, failed) => {
     return this.requestHelper.putWithAjax('room/bookingStatus', data, success, failed);
   };
 
-  getAllOrders = (success, failed) => {
-    return this.requestHelper.getWithAjax('order/all', '', success, failed);
+  getAllOrders = (data, success, failed) => {
+    return this.requestHelper.getWithAjax('order/sort', data, success, failed);
   };
 
   changeOrderStatus = (data, success, failed) => {

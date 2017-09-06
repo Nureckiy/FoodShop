@@ -3,16 +3,31 @@ import * as utils from '../utils/utils';
 
 const initialState = {
   bookings: [],
-  orders: []
+  currentBookingsPage: 1,
+  bookingsTotal: 0,
+  orders: [],
+  currentOrdersPage: 1,
+  ordersTotal: 0,
+  activeRequestStatus: false
 };
 
 export default function ManageReducer(state = initialState, action) {
   switch (action.type) {
 
-    case types.GET_ALL_BOOKINGS_SUCCESS:
+    case types.SORT_BOOKINGS:
+    case types.SORT_ORDERS:
       return {
         ...state,
-        bookings: action.data
+        activeRequestStatus: true
+      };
+
+    case types.SORT_BOOKINGS_SUCCESS:
+      return {
+        ...state,
+        bookings: action.data.items,
+        currentBookingsPage: action.pageNumber,
+        bookingsTotal: action.data.totalItems,
+        activeRequestStatus: false
       };
 
     case types.CHANGE_BOOKING_STATUS_SUCCESS:
@@ -21,10 +36,13 @@ export default function ManageReducer(state = initialState, action) {
         bookings: utils.mergeElementToArrayById(state.bookings, action.data)
       };
 
-    case types.GET_ALL_ORDERS_SUCCESS:
+    case types.SORT_ORDERS_SUCCESS:
       return {
         ...state,
-        orders: action.data
+        orders: action.data.items,
+        currentOrdersPage: action.pageNumber,
+        ordersTotal: action.data.totalItems,
+        activeRequestStatus: false
       };
 
     case types.CHANGE_ORDER_STATUS_SUCCESS:

@@ -10,11 +10,11 @@ class ResponsiveActionModal extends Component {
     this.reject = this.reject.bind(this);
   }
   render() {
-    const { show, close, children, title, translate } = this.props;
+    const { show, children, title, translate } = this.props;
     const { error } = this.state;
     const functions = this.bindResponsiveActions();
     return (
-      <ControlledModal show={show} error={error} close={close} title={title} translate={translate}>
+      <ControlledModal show={show} error={error} close={this.resolve} title={title} translate={translate}>
         { React.cloneElement(children, Object.assign({}, ...functions)) }
       </ControlledModal>
     );
