@@ -7,7 +7,7 @@ const Footer = props => (
     <div className="overlay"/>
     <div className="container-fluid">
       <div className="top-info">
-        <h3>МЫ НА СВЯЗИ</h3>
+        <h3>{props.translate('inTouch').toUpperCase()}</h3>
         <ul>
           <li><a href={`tel://${ contactInfo.phone }`}><i className="icon-phone"/>{ contactInfo.phone }</a></li>
           <li><a href={`mailto:${ contactInfo.email }`}><i className="icon-mail2"/>{ contactInfo.email }</a></li>

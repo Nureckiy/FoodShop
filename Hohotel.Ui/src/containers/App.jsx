@@ -20,6 +20,7 @@ class App extends Component {
     if(auth.profile && auth.profile.user_metadata.language) {
       this.props.actions.setLocale(auth.profile.user_metadata.language);
     }
+    document.title = this.props.translate('documentTitle');
   }
   render() {
     const { children, app, actions,  auth: { profile }, translate, location: { pathname } } = this.props;

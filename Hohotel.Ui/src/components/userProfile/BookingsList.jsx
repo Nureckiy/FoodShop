@@ -1,10 +1,7 @@
-/*eslint no-unused-vars: "off"*/
-
 import React, { Component } from 'react';
 import { Panel, Accordion, ListGroup, ListGroupItem, Label } from 'react-bootstrap';
 
 import LoadingComponent from '../common/LoadingComponent.jsx';
-import { orderStatuses } from '!json!../../sources/appVariables.json';
 import * as utils from '../../utils/utils';
 
 class BookingsList extends Component {
@@ -26,13 +23,11 @@ class BookingsList extends Component {
             <ListGroup fill className="options-list">
               <ListGroupItem header={translate('status')}> { translate(booking.status) }</ListGroupItem>
               <ListGroupItem header={translate('order')}>
-                <ListGroup className="paragraph">
-                { booking.rooms && booking.rooms.map(room =>
-                  <ListGroupItem key={room.id}>
-                    <Label>#{ room.address }</Label> { room.category.name }. {format(room.startDate)} - {format(room.endDate)}
-                  </ListGroupItem>
-                )}
-                </ListGroup>
+              { booking.rooms && booking.rooms.map(room =>
+                <ListGroupItem key={room.id} className="paragraph">
+                  <Label>#{ room.address }</Label> { room.category.name }. {format(room.startDate)} - {format(room.endDate)}
+                </ListGroupItem>
+              )}
               </ListGroupItem>
               <ListGroupItem header={translate('name')}>{ booking.name } { booking.surname } { booking.patronymic }</ListGroupItem>
               <ListGroupItem header={translate('email')}>{ booking.email }</ListGroupItem>

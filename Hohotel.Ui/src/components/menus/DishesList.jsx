@@ -5,6 +5,7 @@ import Tile from '../common/Tile.jsx';
 import AddTile from '../admin/AddTile.jsx';
 import AddDishForm from './AddDishForm.jsx';
 import DishControlForm from '../admin/DishControlForm.jsx';
+import Snackbar from '../common/Snackbar.jsx';
 import * as utils from '../../utils/utils';
 
 class DishesList extends Component {
@@ -14,11 +15,12 @@ class DishesList extends Component {
     this.openCreateModal = this.openCreateModal.bind(this);
     this.handleDishSelect = this.handleDishSelect.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.onHideSnackbar = this.onHideSnackbar.bind(this);
   }
 
   render() {
     const { selected, profile, items, defaultCategory, translate } = this.props;
-    const { currentDish, addToOrder, isInEditMode, showModal } = this.state;
+    const { currentDish, addToOrder, isInEditMode, showModal, showSnackbar } = this.state;
     const model = selected.find(x => x.id === currentDish.id);
     return (
       <div className="row">
@@ -55,6 +57,10 @@ class DishesList extends Component {
               className="col-md-4 col-sm-6" />
           )}
         </div>
+        <button onClick={() => this.setState({showSnackbar: true})}>Click</button>
+        <Snackbar autoHideTimeout={4000} show={showSnackbar} onClose={this.onHideSnackbar}>
+          <span className="primary-color">{ currentDish.name } </span> {translate('addedToBasketMsg')}
+        </Snackbar>
       </div>
     );
   }
@@ -81,11 +87,16 @@ class DishesList extends Component {
 
   handleDishSelect(value) {
     this.props.onSelect(value);
+    this.setState({ showSnackbar: true });
     this.closeModal();
   }
 
   closeModal() {
     this.setState({ showModal: false });
+  }
+
+  onHideSnackbar() {
+    this.setState({ showSnackbar: false });
   }
 }
 

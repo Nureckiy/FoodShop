@@ -10,6 +10,7 @@ import ResponsiveActionModal from '../common/ResponsiveActionModal.jsx';
 import RoomControlForm from '../admin/RoomControlForm.jsx';
 import DateRangePicker from '../common/DateRangePicker.jsx';
 import BookingTotal from './BookingTotal.jsx';
+import Snackbar from '../common/Snackbar.jsx';
 import * as utils from '../../utils/utils';
 
 class Booking extends Component {
@@ -20,6 +21,8 @@ class Booking extends Component {
     this.filter = this.filter.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openCreateModal = this.openCreateModal.bind(this);
+    this.handleAddRoom = this.handleAddRoom.bind(this);
+    this.onHideSnackbar = this.onHideSnackbar.bind(this);
   }
 
   componentDidMount() {
@@ -29,9 +32,9 @@ class Booking extends Component {
   }
 
   render() {
-    const { currentRoomCategory, filteredRooms, activeRequestStatus, selectedRooms, addRoom, profile, deleteRoom,
+    const { currentRoomCategory, filteredRooms, activeRequestStatus, selectedRooms, profile, deleteRoom,
       getRoomCategoriesInfo, roomCategoriesInfo, translate} = this.props;
-    const { selected, isInEditMode, showModal } = this.state;
+    const { selected, isInEditMode, showModal, showSnackbar } = this.state;
     const isInGroup = group => utils.isInGroup(profile, group);
     return (
       <div>
@@ -71,7 +74,7 @@ class Booking extends Component {
                   <RoomTile {...room} className="col-md-8 col-sm-12 no-padding" translate={translate} />
                   <RoomTileControl
                     room={room}
-                    onSubmit={addRoom}
+                    onSubmit={this.handleAddRoom}
                     className="col-md-4 col-sm-5"
                     withEditButton={isInGroup('admins')}
                     onEdit={() => this.openEditModal(room)}
@@ -96,6 +99,9 @@ class Booking extends Component {
             defaultCategory={currentRoomCategory}
             translate={translate} />
         </ResponsiveActionModal>
+        <Snackbar autoHideTimeout={4000} show={showSnackbar} onClose={this.onHideSnackbar}>
+          {translate('addedToBookingMsg')}. <a href="#/order">{translate('goToRegistration')}?</a>
+        </Snackbar>
       </div>
     );
   }
@@ -108,6 +114,12 @@ class Booking extends Component {
 
   handleFilterChange(arrivalDate, departureDate) {
     this.setState({ arrivalDate, departureDate });
+  }
+
+  handleAddRoom(value) {
+    const { addRoom } = this.props;
+    return addRoom(value)
+      .then(() => this.setState({ showSnackbar: true }));
   }
 
   getSubmitFunctions() {
@@ -129,6 +141,10 @@ class Booking extends Component {
 
   closeModal() {
     this.setState({ showModal: false });
+  }
+
+  onHideSnackbar() {
+    this.setState({ showSnackbar: false });
   }
 }
 

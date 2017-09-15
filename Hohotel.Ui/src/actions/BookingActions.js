@@ -1,8 +1,11 @@
+/*eslint no-unused-vars: "off"*/
+
 import * as types from '../constants/BookingConstants';
 import service from '../service/service';
 import * as utils from '../utils/utils';
-import { createAsync } from './ActionCreator';
+import { createAsync, create } from './ActionCreator';
 import translations from '../sources/translations/translations';
+import Promise from 'es6-promise';
 
 export function setCurrentRoomCategory(category) {
   return (dispatch) => {
@@ -55,31 +58,21 @@ export function addRoom(room) {
       room
     });
     const filter = Object.assign({ roomId: room.id, ...utils.renderDateRange(room)});
-    service.checkRoomAvailability(filter, success, fail);
     const locale = getState().Intl.locale;
     const messages = translations[locale].messages;
 
-    function success(data, status) {
-      if (data) {
-        dispatch({
-          type: types.ADD_ROOM_SUCCESS,
-          room,
-          data,
-          status
-        });
-      } else {
-        fail({ message: messages.roomIsUnavailable}, status);
-      }
-    }
+    const success = create(dispatch, types.ADD_ROOM_SUCCESS, { room });
+    const fail = create(dispatch, types.ADD_ROOM_FAIL, { room });
 
-    function fail(error, status) {
-      dispatch({
-        type: types.ADD_ROOM_FAIL,
-        error,
-        room,
-        status
+    return Promise.resolve(service.checkRoomAvailability(filter))
+      .then((isAvailable, status) => {
+        if (isAvailable) success(isAvailable, status);
+        else throw new Error(messages.roomIsUnavailable);
+      })
+      .catch((error, status) => {
+        fail(error, status);
+        throw error;
       });
-    }
   };
 }
 

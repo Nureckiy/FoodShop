@@ -398,6 +398,7 @@ body {
   &.small {
     max-width: 30px;
     max-height: 30px;
+    margin: auto;
   }
 }
 
@@ -521,4 +522,19 @@ img.view {
 
 .error {
   color: #d60606;
+}
+
+.snackbar {
+  background-color: #333;
+  color: #fff;
+  position: fixed;
+  z-index: 4;
+  bottom: 30px;
+  left: 50%;
+  transform: translate(-50%, 0px);
+  font-size: 14px;
+
+  .snackbar-content {
+    padding: 15px;
+  }
 }

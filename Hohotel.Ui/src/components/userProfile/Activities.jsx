@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Panel, Accordion, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Panel, Accordion, ListGroup, ListGroupItem, Label } from 'react-bootstrap';
 
 import LoadingComponent from '../common/LoadingComponent.jsx';
 import * as utils from '../../utils/utils';
@@ -32,9 +32,9 @@ class Activities extends Component {
                 }</ListGroupItem>
                 <ListGroupItem header={translate('order')}>
                   { order.portions && order.portions.map(portion =>
-                    <p key={portion.id} className="paragraph">
-                      {portion.parentName} ({ portion.size }, { portion.weight }) translate('orderCount" number={portion.count} />
-                    </p>
+                    <ListGroupItem key={portion.id} className="paragraph">
+                      <Label>{portion.count} {translate('pc')}</Label> {portion.parentName} ({ portion.size } { portion.weight })
+                    </ListGroupItem>
                   )}
                 </ListGroupItem>
                 <ListGroupItem header={translate('name')}>{ order.name } { order.surname }</ListGroupItem>

@@ -67,8 +67,10 @@ const Contacts = props => (
 );
 
 function getInitialValues() {
-  const { name, email } = utils.getProfile().user_metadata;
-  return { userName: name, email };
+  const profile = utils.getProfile();
+  if (profile) {
+    return { userName: profile.name, email: profile.email };
+  }
 }
 
 export default Contacts;

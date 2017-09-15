@@ -10,7 +10,7 @@
     "deploy_linux": "NODE_ENV=deploy webpack",
     "deploy": "SET NODE_ENV=deploy&webpack"
   },
-  "author": "Osetskaya Anna",
+  "author": "Nureckiy",
   "dependencies": {
     "auth0-lock": "^10.13.0",
     "babel-polyfill": "^6.23.0",

@@ -30,6 +30,13 @@ export default function UserProfileReducer(state = initialState, action) {
         activeRequestStatus: false
       };
 
+    case types.GET_ORDERS_FAIL:
+    case types.GET_BOOKINGS_FAIL:
+      return {
+        ...state,
+        activeRequestStatus: false
+      };
+
     default:
       return state;
   }

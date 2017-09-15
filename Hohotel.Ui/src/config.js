@@ -1,5 +1,5 @@
 const config = {
-  apiPath: 'http://localhost:1073/api/',
+  apiPath: 'http://localhost:5000/api/',
   auth0: {
     clientId: 'ORh8V4VtMHrvqod6rsxAx8RW9psns0v1',
     domain: 'nureckiy.eu.auth0.com'
